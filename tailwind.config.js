@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#1564C0',
+        secondary: '#034fa4',
+      },
+      backgroundColor: {
+        primary: '#1564C0',
+        secondary: '#034fa4',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -15,4 +23,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

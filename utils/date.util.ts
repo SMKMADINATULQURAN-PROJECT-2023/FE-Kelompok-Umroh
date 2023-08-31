@@ -1,21 +1,24 @@
 import { format, parseISO, isValid } from 'date-fns';
 import { id } from 'date-fns/locale';
 
-export const formatDate = (date: number | string | Date, args?: { format?: 'default' | 'server' }) => {
-  if (!date) return '-'
+export const formatDate = (
+  date: number | string | Date,
+  args?: { format?: 'default' | 'server' }
+) => {
+  if (!date) return '-';
 
   const formatValue = typeof date === 'string' ? new Date(date) : date;
-  if (!isValid(formatValue)) return '-'
+  if (!isValid(formatValue)) return '-';
 
   if (args?.format === 'server') {
-    return format(formatValue, 'yyyy-MM-dd', { locale: id })
+    return format(formatValue, 'yyyy-MM-dd', { locale: id });
   }
 
   return format(formatValue, 'dd/MM/yyyy', { locale: id });
 };
 
 export const formatDateServer = (date: number | string | Date) => {
-  if (!date) return '-'
+  if (!date) return '-';
 
   const formatValue = typeof date === 'string' ? new Date(date) : date;
 
@@ -28,28 +31,31 @@ export const formatDateTime = (date: number | string | Date) => {
   return format(formatValue, 'dd/MM/yyyy HH:mm', { locale: id });
 };
 
-export const getCurrentDate = () => format(new Date(), 'EEEE, dd MMMM yyyy', { locale: id });
+export const getCurrentDate = () =>
+  format(new Date(), 'EEEE, dd MMMM yyyy', { locale: id });
 
 export const parseDateObject = (date: Date) => {
   return {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
     day: date.getDate(),
-  }
-}
+  };
+};
 
 export const parseDateType = (date: any) => {
-  return new Date(date.year, date.month - 1, date.day)
-}
+  return new Date(date.year, date.month - 1, date.day);
+};
 
 export const formatDateObject = (date: any) => {
-  return format(new Date(date.year, date.month - 1, date.day), 'dd/MM/yyyy', { locale: id })
-}
+  return format(new Date(date.year, date.month - 1, date.day), 'dd/MM/yyyy', {
+    locale: id,
+  });
+};
 export const parseISODate = (date: any) => {
-  return parseISO(date)
-}
+  return parseISO(date);
+};
 
-export const formatDateInd = (isoString:any) => {
+export const formatDateInd = (isoString: any) => {
   if (!isoString) return '-';
 
   const date = new Date(isoString);
@@ -62,8 +68,6 @@ export const formatDateInd = (isoString:any) => {
 
   return new Date(date).toLocaleDateString('id-ID', options);
 };
-
-
 
 // export function getDifferenceInDays(date1, date2) {
 //   const oneDay = 24 * 60 * 60 * 1000; // Satu hari dalam milidetik

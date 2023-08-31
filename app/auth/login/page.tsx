@@ -1,10 +1,10 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Form, Formik, FormikProvider, useFormik } from "formik";
-import * as yup from "yup";
-import { useLoginService } from "../service";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Form, Formik, FormikProvider, useFormik } from 'formik';
+import * as yup from 'yup';
+import { useLoginService } from '../service';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import {
   FormControl,
@@ -22,15 +22,15 @@ import {
   Center,
   VStack,
   Spinner,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 const loginSchema = yup.object().shape({
   email: yup
     .string()
-    .default("")
-    .required("Email tidak boleh kosong")
-    .email("Gunakan Format Email"),
-  password: yup.string().default("").required("Passowrd tidak boleh kosong"),
+    .default('')
+    .required('Email tidak boleh kosong')
+    .email('Gunakan Format Email'),
+  password: yup.string().default('').required('Passowrd tidak boleh kosong'),
 });
 
 type LoginValues = yup.Asserts<typeof loginSchema>;
@@ -45,7 +45,6 @@ const Login = () => {
       ...loginSchema.getDefault(),
     },
     onSubmit: async (values: LoginValues) => {
-     
       return mutate(values);
     },
     validationSchema: loginSchema,
@@ -54,7 +53,7 @@ const Login = () => {
   let { values, errors, handleChange, handleBlur, handleSubmit } = formik;
   useEffect(() => {
     if (session) {
-      router.push("/admin/catatan");
+      router.push('/admin/catatan');
     }
   }, [session]);
 
@@ -67,10 +66,10 @@ const Login = () => {
   }
   return (
     <section className="flex items-center justify-center h-full w-full">
-      <Box w={{ base: "90%", sm: "90%", md: "80%", lg: "50%", xl: "30%" }}>
+      <Box w={{ base: '90%', sm: '90%', md: '80%', lg: '50%', xl: '30%' }}>
         {JSON.stringify(session)}
         <FormikProvider value={formik}>
-          <Heading marginBottom={5} size={"lg"} color="#38A169">
+          <Heading marginBottom={5} size={'lg'} color="#38A169">
             Login Form
           </Heading>
           <Form onSubmit={handleSubmit}>
@@ -92,7 +91,7 @@ const Login = () => {
                   placeholder="Ketik email"
                 />
 
-                <FormErrorMessage  color={"red"} fontWeight="bold">
+                <FormErrorMessage color={'red'} fontWeight="bold">
                   {errors?.email}
                 </FormErrorMessage>
               </FormControl>
@@ -107,8 +106,8 @@ const Login = () => {
                 <InputGroup>
                   <Input
                     className="w-full"
+                    type={show ? 'text' : 'password'}
                     id="password"
-                    type={show ? "text" : "password"}
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -122,25 +121,25 @@ const Login = () => {
                         setShow(!show);
                       }}
                     >
-                      {show ? "Hide" : "Show"}
+                      {show ? 'Hide' : 'Show'}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
 
-                <FormErrorMessage size={'xs'} color={"red"} fontWeight="bold">
+                <FormErrorMessage size={'xs'} color={'red'} fontWeight="bold">
                   {errors?.password}
                 </FormErrorMessage>
               </FormControl>
 
               <Button
                 type="submit"
-                width={"100%"}
+                width={'100%'}
                 height={10}
                 borderRadius={10}
                 isLoading={isLoading}
                 isDisabled={isLoading}
-                color={"white"}
-                backgroundColor={"#38A169"}
+                color={'white'}
+                backgroundColor={'#38A169'}
               >
                 Login
               </Button>
