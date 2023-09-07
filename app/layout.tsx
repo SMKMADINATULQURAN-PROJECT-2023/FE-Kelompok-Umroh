@@ -7,7 +7,6 @@ import CustomChakra from '@/component/CustomChakra';
 import NextAuthProvider from '@/component/NextAuthProvider';
 import { Session } from 'next-auth';
 import Nav from './nav';
-import 'react-responsive-datepicker/dist/index.css';
 
 interface NextAuthProps {
   children: ReactNode;

@@ -78,7 +78,7 @@ export default function Home() {
                 <Stack spacing={5} className="mb-10">
                   <FormControl isInvalid={!!errors?.email}>
                     <FormLabel
-                      color="#1564C0"
+                      color="#262A56"
                       htmlFor="email"
                       fontWeight="semibold"
                     >
@@ -92,7 +92,7 @@ export default function Home() {
                       onBlur={handleBlur}
                       color={'black'}
                       backgroundColor={'gray.100'}
-                      _hover={{ bgColor: 'blue.100' }}
+                      _hover={{ bgColor: 'violet.100' }}
                       _placeholder={{ opacity: 1, color: 'gray.500' }}
                       // borderColor={'gray'}
                       variant="filled"
@@ -107,7 +107,7 @@ export default function Home() {
 
                   <FormControl isInvalid={!!errors?.password}>
                     <FormLabel
-                      color="#1564C0"
+                      color="#262A56"
                       htmlFor="password"
                       fontWeight="semibold"
                     >
@@ -121,7 +121,7 @@ export default function Home() {
                         onBlur={handleBlur}
                         color={'black'}
                         backgroundColor={'gray.100'}
-                        _hover={{ bgColor: 'blue.100' }}
+                        _hover={{ bgColor: 'violet.100' }}
                         _placeholder={{ opacity: 1, color: 'gray.500' }}
                         // borderColor={'gray'}
                         variant="filled"
@@ -151,7 +151,7 @@ export default function Home() {
                       >
                         {errors?.password}
                       </FormErrorMessage>
-                      <p className="text-right biru cursor-pointer hover:text-[#034fa4] hover:pr-2">
+                      <p className="text-right biru cursor-pointer hover:text-[#1c1e3b] hover:pr-2">
                         Lupa password
                       </p>
                     </div>
@@ -164,8 +164,8 @@ export default function Home() {
                   isLoading={isLoading}
                   isDisabled={isLoading}
                   h="50px"
-                  backgroundColor={'#1564C0'}
-                  _hover={{ bgColor: '#034fa4' }}
+                  backgroundColor={'#262A56'}
+                  _hover={{ bgColor: '#1c1e3b' }}
                 >
                   LOGIN
                 </Button>
@@ -174,7 +174,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-[40%] h-full bg-[#1564C0] rounded-tl-[70px]"></section>
+      <section className="w-[40%] h-full bg-[#262A56] rounded-tl-[70px]"></section>
     </div>
   );
 }
