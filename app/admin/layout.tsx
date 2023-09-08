@@ -61,8 +61,8 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <title>jkt48</title>
         <meta name="description" content="This is the page description." />
       </Head>
-      <section className="grid grid-cols-7 w-full h-screen  bg-white">
-        <section className="col-span-1 w-full h-full py-[30px] flex flex-col overflow-y-scroll justify-start items-center px-5 bg-primary space-y-2 rounded-tr-[50px]">
+      <section className="grid grid-cols-7 w-full  bg-white">
+        <section className="sticky top-0 col-span-1 w-full h-screen py-[30px] flex flex-col overflow-y-scroll justify-start items-center px-5 bg-primary space-y-2 rounded-tr-[50px]">
           <div className="uppercase underline underline-offset-4 text-white w-full text-center text-[25px] font-extrabold mb-[50px]">
             al - hilal
           </div>
