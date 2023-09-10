@@ -19,13 +19,14 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+p, h1 {
+  color: #262a56;
+}
 * {
   transition-property: all;
   /* overflow: hidden; */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-  color: #262a56;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   /* outline: red dashed 1px; */
   font-family: 'Poppins', sans-serif;

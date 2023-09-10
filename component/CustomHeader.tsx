@@ -1,31 +1,55 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Avatar,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
-} from '@chakra-ui/react';
+  Button,
+} from "@chakra-ui/react";
 import { FaGear } from "react-icons/fa6";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+} from "@chakra-ui/react";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const path: string[] = pathname ? pathname.split('/') : [];
+  const path: string[] = pathname ? pathname.split("/") : [];
   const lastPath = path[path.length - 1];
-
-  console.log(path);
-
+  const popoverBody = [
+    {
+      button: (
+        <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+          Edit Profile
+        </Button>
+      ),
+    },
+    {
+      button: (
+        <Button variant={"ghost"} width={"100%"} bg={'red.500'} color={'white'} justifyContent="flex-start" _hover={{bg: 'red.600'}}>
+          Logout
+        </Button>
+      ),
+    },
+  ];
   return (
     <div className="w-full flex items-center justify-between mb-[20px]">
       <div className="flex flex-col">
         <Breadcrumb>
           <BreadcrumbItem>
-            <BreadcrumbLink href={'admin'}>{'admin'}</BreadcrumbLink>
+            <BreadcrumbLink href={"admin"}>{"admin"}</BreadcrumbLink>
           </BreadcrumbItem>
           {path?.slice(2).map((_, i) => {
             return (
@@ -48,9 +72,27 @@ const CustomHeader = ({}) => {
             <p className="text-white">Role</p>
           </div>
         </div>
-        <div className="bg-white rounded-[10px] p-3 cursor-pointer">
-          <FaGear color='#262a56'/>
-        </div>
+
+        <Popover placement="left-start" closeOnBlur={true}>
+          <PopoverTrigger>
+            <Button>
+              {" "}
+              <FaGear color="#262a56" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>User Setting</PopoverHeader>
+            <PopoverBody>
+              <div className="flex flex-col items-start w-full space-y-3">
+                {popoverBody.map((_, i) => {
+                  return <>{_.button}</>;
+                })}
+              </div>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );

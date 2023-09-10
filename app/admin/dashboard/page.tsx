@@ -1,35 +1,26 @@
-'use client';
-import { CustomHeader } from '@/component';
-// Import react-calendar CSS
-// import 'react-calendar/dist/Calendar.css';
-
-import { NextPage } from 'next';
-import { useState } from 'react';
-import kabah from '../../../assets/images/kaabah.jpeg';
-import Image from 'next/image';
+import { CustomHeader } from "@/component";
+import { NextPage } from "next";
+import { useState } from "react";
+import kabah from "../../../assets/images/kaabah.jpeg";
+import Image from "next/image";
 import {
   FaHouseChimney,
-  FaUser,
   FaSliders,
-  FaPlaneDeparture,
-  FaMapLocationDot,
   FaFilePen,
   FaHandsHolding,
-} from 'react-icons/fa6';
-import Calendar from 'react-calendar';
-import dynamic from 'next/dynamic';
-import ReactApexChart from 'react-apexcharts';
+  FaCalendar,
+  FaEye,
+} from "react-icons/fa6";
+
+import ReactApexChart from "react-apexcharts";
+import { AreaChart, Calendar } from "./component";
 
 interface Props {}
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const Dashboard: NextPage<Props> = ({}) => {
-  const [value, onChange] = useState<Value>(new Date());
-
   const options = {
     chart: {
-      foreColor: '#ffffff',
+      foreColor: "#ffffff",
       height: 80,
     },
     dataLabels: {
@@ -37,65 +28,65 @@ const Dashboard: NextPage<Props> = ({}) => {
     },
     xaxis: {
       categories: [
-        'jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'Mei',
-        'Jun',
-        'Jul',
-        'Agu',
-        'Sep',
-        'Okt',
-        'Nov',
-        'Des',
+        "jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agu",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
       ],
     },
     tooltip: {
       x: {
-        format: 'dd/MM/yy HH:mm',
+        format: "dd/MM/yy HH:mm",
       },
     },
   };
 
   const series = [
     {
-      name: 'Pengunjung Mobile',
+      name: "Pengunjung Mobile",
       data: [31, 40, 28, 51, 42, 109, 102, 25, 10, 30, 55, 75],
     },
     {
-      name: 'Pengunjung Website',
+      name: "Pengunjung Website",
       data: [11, 32, 45, 32, 34, 52, 41, 20, 39, 33, 45, 100],
     },
   ];
 
   const totalItem = [
     {
-      item: 'Total User',
-      total: '122',
-      icon: <FaHouseChimney color="#262a56" size={22} />,
+      item: "Total User",
+      total: "122",
+      icon: <FaHouseChimney color="#262a56" size={20} />,
     },
     {
-      item: 'Total Slider',
-      total: '3',
-      icon: <FaSliders color="#262a56" size={22} />,
+      item: "Total Slider",
+      total: "3",
+      icon: <FaSliders color="#262a56" size={20} />,
     },
     {
-      item: 'Total Doa',
-      total: '50',
-      icon: <FaHandsHolding color="#262a56" size={22} />,
+      item: "Total Doa",
+      total: "50",
+      icon: <FaHandsHolding color="#262a56" size={20} />,
     },
     {
-      item: 'Total Artikel',
-      total: '25',
-      icon: <FaFilePen color="#262a56" size={22} />,
+      item: "Total Artikel",
+      total: "25",
+      icon: <FaFilePen color="#262a56" size={20} />,
     },
   ];
   return (
-    <div className="w-full h-[2000px] bg-white">
+    <div className="w-full h-full bg-white">
       <CustomHeader />
 
-      <section className="w-full bg-primary rounded-[10px] relative h-64 overflow-hidden mb-[20px]">
+      <section className="w-full bg-primary rounded-[10px] relative h-60 overflow-hidden mb-[20px]">
         <Image
           src={kabah}
           alt="Background Image"
@@ -136,25 +127,24 @@ const Dashboard: NextPage<Props> = ({}) => {
 
       <section className="grid grid-cols-3 gap-x-5 mb-[20px]">
         <div className="bg-primary rounded-[10px] w-full col-span-2 p-5 flex flex-col overflow-hidden">
-          <div>
-            <p className="text-white text-[25px] font-bold mb-[10px]">
+          <div className="flex items-center  mb-[10px] space-x-3">
+            <div className="bg-white rounded-[10px] p-3">
+              <FaEye color="#262a56" size={20} />
+            </div>
+            <p className="text-white text-[24px] font-bold">
               Statistik Pengunjung
             </p>
           </div>
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="area"
-            height={350}
-          />
+          <AreaChart />
         </div>
         <div className="bg-primary rounded-[10px] w-full p-5 overflow-hidden">
-          <p className="text-white text-[25px] font-bold mb-[10px]">Kalender</p>
-          <Calendar
-            onChange={onChange}
-            value={value}
-            className="react-calendar rounded-[10px] w-full h-full"
-          />
+          <div className="flex items-center  mb-[10px] space-x-3">
+            <div className="bg-white rounded-[10px] p-3">
+              <FaCalendar color="#262a56" size={20} />
+            </div>
+            <p className="text-white text-[24px] font-bold ">Kalender</p>
+          </div>
+          <Calendar />
         </div>
       </section>
     </div>
