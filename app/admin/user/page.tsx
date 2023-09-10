@@ -24,7 +24,6 @@ const User: NextPage = () => {
         <div>
           <CustomButton
             title="Tambah User"
-            variant={"ghost"}
             width={"100%"}
             bg={"blue.500"}
             color={"white"}
