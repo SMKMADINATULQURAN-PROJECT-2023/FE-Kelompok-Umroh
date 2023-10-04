@@ -19,7 +19,7 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-p, h1 {
+p, h1, h2, h3, h4, a {
   color: #262a56;
 }
 * {
@@ -31,6 +31,17 @@ p, h1 {
   /* outline: red dashed 1px; */
   font-family: 'Poppins', sans-serif;
 }
+
+.putih * {
+  color: white;
+}
+/* custom-table.module.css or global CSS */
+/* Add custom CSS classes for narrow columns */
+.narrow-column {
+  width: 200px;
+  white-space: normal
+}
+
 
 body {
   color: rgb(var(--foreground-rgb));

@@ -1,8 +1,9 @@
+"use client";
 import { CustomHeader } from "@/component";
 import { NextPage } from "next";
-import { useState } from "react";
-import kabah from "../../../assets/images/kaabah.jpeg";
 import Image from "next/image";
+// import kabah from "/assets/images/kaabah.jpeg";
+// import kabah from "../../../public/assets/images/kaabah.jpeg";
 import {
   FaHouseChimney,
   FaSliders,
@@ -12,12 +13,13 @@ import {
   FaEye,
 } from "react-icons/fa6";
 
-import ReactApexChart from "react-apexcharts";
-import { AreaChart, Calendar } from "./component";
+import { Calendar } from "./component";
+import { useProfileService } from "@/app/auth/service";
 
 interface Props {}
-
 const Dashboard: NextPage<Props> = ({}) => {
+  const { data } = useProfileService();
+
   const options = {
     chart: {
       foreColor: "#ffffff",
@@ -41,11 +43,6 @@ const Dashboard: NextPage<Props> = ({}) => {
         "Nov",
         "Des",
       ],
-    },
-    tooltip: {
-      x: {
-        format: "dd/MM/yy HH:mm",
-      },
     },
   };
 
@@ -82,24 +79,34 @@ const Dashboard: NextPage<Props> = ({}) => {
       icon: <FaFilePen color="#262a56" size={20} />,
     },
   ];
+
   return (
-    <div className="w-full h-full bg-white">
+    <div className="h-full w-full bg-white">
       <CustomHeader />
 
-      <section className="w-full bg-primary rounded-[10px] relative h-60 overflow-hidden mb-[20px]">
+      <section className="relative mb-[20px] h-60 w-full overflow-hidden rounded-[10px] bg-primary">
         <Image
-          src={kabah}
+          src={"/assets/images/kaabah.jpeg"}
           alt="Background Image"
-          layout="fill"
-          objectFit="cover"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center 80%",
+            overflow: "hidden",
+          }}
           quality={100}
           loading="eager"
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="h-full w-full bg-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-transparent"></div>
-        <div className="absolute p-5 h-full w-full inset-0 flex flex-col justify-between text-white">
+        <div className="absolute inset-0 flex h-full w-full flex-col justify-between p-5 text-white">
           <div className="flex flex-col items-start">
-            <p className="text-abu font-semibold">Selamat Datang,</p>
-            <p className="text-white font-bold text-[30px]">Username</p>
+            <p className="font-semibold text-abu">Selamat Datang,</p>
+            <p className="text-[30px] font-bold text-white">
+              {data?.data.username}
+            </p>
           </div>
           <div className="flex flex-col items-start">
             <p className="text-abu">Senang bertemu denganmu kembali!</p>
@@ -108,41 +115,41 @@ const Dashboard: NextPage<Props> = ({}) => {
         </div>
       </section>
 
-      <section className="grid grid-cols-4 gap-x-5 mb-[20px]">
+      <section className="mb-[20px] grid grid-cols-4 gap-x-5">
         {totalItem.map((_, i) => {
           return (
             <div
               key={i}
-              className="flex items-center p-5 justify-between bg-primary rounded-[10px] w-full"
+              className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5"
             >
               <div className="flex flex-col items-start">
-                <p className="text-abu font-semibold">{_.item}</p>
-                <p className="text-white text-[25px] font-bold">{_.total}</p>
+                <p className="font-semibold text-abu">{_.item}</p>
+                <p className="text-[25px] font-bold text-white">{_.total}</p>
               </div>
-              <div className="bg-white rounded-[10px] p-3">{_.icon}</div>
+              <div className="rounded-[10px] bg-white p-3">{_.icon}</div>
             </div>
           );
         })}
       </section>
 
-      <section className="grid grid-cols-3 gap-x-5 mb-[20px]">
-        <div className="bg-primary rounded-[10px] w-full col-span-2 p-5 flex flex-col overflow-hidden">
-          <div className="flex items-center  mb-[10px] space-x-3">
-            <div className="bg-white rounded-[10px] p-3">
+      <section className="mb-[20px] grid grid-cols-3 gap-x-5">
+        <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-primary p-5">
+          <div className="mb-[10px] flex  items-center space-x-3">
+            <div className="rounded-[10px] bg-white p-3">
               <FaEye color="#262a56" size={20} />
             </div>
-            <p className="text-white text-[24px] font-bold">
+            <p className="text-[24px] font-bold text-white">
               Statistik Pengunjung
             </p>
           </div>
-          <AreaChart />
+          {/* <AreaChart options={options} series={series} /> */}
         </div>
-        <div className="bg-primary rounded-[10px] w-full p-5 overflow-hidden">
-          <div className="flex items-center  mb-[10px] space-x-3">
-            <div className="bg-white rounded-[10px] p-3">
+        <div className="w-full overflow-hidden rounded-[10px] bg-primary p-5">
+          <div className="mb-[10px] flex  items-center space-x-3">
+            <div className="rounded-[10px] bg-white p-3">
               <FaCalendar color="#262a56" size={20} />
             </div>
-            <p className="text-white text-[24px] font-bold ">Kalender</p>
+            <p className="text-[24px] font-bold text-white ">Kalender</p>
           </div>
           <Calendar />
         </div>

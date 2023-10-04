@@ -1,6 +1,6 @@
-"use client";
-import { Button, ButtonProps } from "@chakra-ui/react";
-import React from "react";
+'use client';
+import { Button, ButtonProps } from '@chakra-ui/react';
+import React from 'react';
 
 interface CustomButtonProps extends ButtonProps {
   title: string; // Specify the type of the 'title' prop as string

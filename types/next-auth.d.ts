@@ -1,10 +1,6 @@
-import { Session } from "next-auth";
+import { Session } from 'next-auth';
 
-
-
-
-
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
       id: number | undefined | null;
@@ -12,6 +8,8 @@ declare module "next-auth" {
       name: string | undefined | null;
       accessToken: any;
       refreshToken: any;
+      role: any;
+      roleId: any;
 
       // Add any other properties from your user object
     };

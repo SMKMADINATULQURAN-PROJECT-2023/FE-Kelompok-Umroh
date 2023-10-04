@@ -27,7 +27,7 @@ const Page = () => {
       {/* <div>{JSON.stringify(data)}</div> */}
       <Button
         onClick={() => {
-          router.push("tambah");
+          router.push("catatan/tambah");
         }}
         colorScheme="teal"
         variant="outline"

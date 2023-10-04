@@ -31,6 +31,8 @@ const authOptions: NextAuthOptions = {
     },
     async session({ session, user, token }) {
       session.user.id = Number(token.id);
+      session.user.roleId = token.roleId;
+      session.user.role = token.role;
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.accessToken = token.accessToken;
@@ -41,8 +43,8 @@ const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/auth/login",
-    signOut: "/auth/login",
+    signIn: "/",
+    signOut: "/",
     error: "/auth/error",
   },
 };

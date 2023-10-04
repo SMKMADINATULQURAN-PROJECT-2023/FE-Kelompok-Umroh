@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useLoginService } from './auth/service';
+import Cookies from 'js-cookie';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -29,7 +30,6 @@ const loginSchema = yup.object().shape({
 type LoginValues = yup.Asserts<typeof loginSchema>;
 
 export default function Home() {
-  const handleClick = () => setShow(!show);
   const [show, setShow] = useState<boolean>(false);
   const { mutate, isLoading } = useLoginService();
   const { data: session, status } = useSession();
@@ -41,6 +41,7 @@ export default function Home() {
       ...loginSchema.getDefault(),
     },
     onSubmit: async (values: LoginValues) => {
+      console.log('onsumbit', values);
       return mutate(values);
     },
     validationSchema: loginSchema,
@@ -49,7 +50,7 @@ export default function Home() {
   let { values, errors, handleChange, handleBlur, handleSubmit } = formik;
   useEffect(() => {
     if (session) {
-      router.push('/admin/catatan');
+      router.push('/admin/dashboard');
     }
   }, [session]);
 
@@ -60,6 +61,7 @@ export default function Home() {
       </section>
     );
   }
+
   return (
     <div className="h-screen w-screen bg-white flex">
       {JSON.stringify(session)}
@@ -72,7 +74,7 @@ export default function Home() {
               Masukkan email dan password untuk masuk!
             </p>
           </div>
-          <div className="space-y-[15px]"> 
+          <div className="space-y-[15px]">
             <FormikProvider value={formik}>
               <Form onSubmit={handleSubmit}>
                 <Stack spacing={5} className="mb-10">

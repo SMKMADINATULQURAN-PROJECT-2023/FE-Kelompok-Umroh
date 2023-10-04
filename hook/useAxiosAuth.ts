@@ -2,6 +2,8 @@ import { axiosClient } from "@/service/axios";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRefreshToken } from "./useRefreshToken";
+import Cookies from "js-cookie";
+import axios, { AxiosInstance } from "axios";
 
 const useAxiosAuth = () => {
   const { data: session } = useSession();
@@ -16,12 +18,15 @@ const useAxiosAuth = () => {
 
         return config;
       },
-      (error: any) => Promise.reject(error)
+      (error: any) => Promise.reject(error),
     );
 
     const responseIntercept = axiosClient.interceptors.response.use(
       async (response: any) => response,
       async (error: any) => {
+        // if (error.message === 'Network Error' && !error.response) {
+        //   alert('gak ada jaringan');
+        // }
         const prevRequest = error?.config;
 
         if (401 === error?.response?.status && !prevRequest?.sent) {
@@ -46,7 +51,7 @@ const useAxiosAuth = () => {
         } else {
           return Promise.reject(error);
         }
-      }
+      },
     );
 
     return () => {
