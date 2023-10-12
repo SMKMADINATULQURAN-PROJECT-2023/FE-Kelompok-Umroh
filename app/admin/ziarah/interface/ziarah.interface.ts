@@ -7,6 +7,7 @@ interface Ziarah {
   thumbnail: any;
   slug: string;
   file_create: any;
+  file_update: any;
   location: string;
   latitude: string | undefined;
   longitude: string | undefined;
@@ -41,6 +42,17 @@ export interface TambahZiarahPayload
     | "name"
     | "description"
     | "file_create"
+    | "location"
+    | "latitude"
+    | "longitude"
+  > {}
+
+export interface UpdateZiarahPayload
+  extends Pick<
+    Ziarah,
+    | "name"
+    | "description"
+    | "file_update"
     | "location"
     | "latitude"
     | "longitude"

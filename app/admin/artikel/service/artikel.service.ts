@@ -5,6 +5,7 @@ import {
   ArtikelPaginationResponse,
   ArtikelResponse,
   TambahArtikelPayload,
+  UpdateArtikelPayload,
 } from "../interface/artikel.interface";
 import { AxiosResponse } from "axios";
 
@@ -17,25 +18,25 @@ const useArtikelModule = () => {
       return axiosClient.get("/artikel").then((res) => res.data);
     };
 
-    const { data, isFetching, isLoading } = useQuery({
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
       queryKey: ["/artikel"],
       queryFn: () => getArtikel(),
     });
 
-    return { data, isFetching, isLoading };
+    return { data, isFetching, isLoading, isError, refetch };
   };
 
-  const useGetDetailArtikel = (slug: string) => {
-    const getDetailArtikel = (slug: string): Promise<ArtikelResponse> => {
-      return axiosClient.get(`/artikel/${slug}`).then((res) => res.data);
+  const useGetDetailArtikel = (id: any) => {
+    const getDetailArtikel = (id: any): Promise<ArtikelResponse> => {
+      return axiosClient.get(`/artikel/${id}`).then((res) => res.data);
     };
 
-    const { data, isFetching, isLoading } = useQuery({
-      queryKey: ["/artikel/:slug"],
-      queryFn: () => getDetailArtikel(slug),
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
+      queryKey: ["/artikel/:id"],
+      queryFn: () => getDetailArtikel(id),
     });
 
-    return { data, isFetching, isLoading };
+    return { data, isFetching, isLoading, isError, refetch };
   };
 
   const useTambahArtikel = () => {
@@ -69,7 +70,78 @@ const useArtikelModule = () => {
     return { mutate, isLoading };
   };
 
-  return { useGetArtikel, useGetDetailArtikel, useTambahArtikel };
+  const useUpdateArtikel = () => {
+    const { mutate, isLoading } = useMutation(
+      async ({
+        id,
+        payload,
+      }: {
+        id: any;
+        payload: UpdateArtikelPayload;
+      }): Promise<AxiosResponse> => {
+        try {
+          const response = await axiosClient.put(
+            `/artikel/update/${id}`,
+            payload,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            },
+          );
+          return response;
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      },
+      {
+        onSuccess: (response) => {
+          toastSuccess(response.data.message);
+        },
+        onError: (error) => {
+          console.error("error", error);
+          toastError();
+        },
+      },
+    );
+
+    return { mutate, isLoading };
+  };
+
+  const useDeleteArtikel = () => {
+    const { mutate, isLoading } = useMutation(
+      async (id: any): Promise<AxiosResponse> => {
+        try {
+          const response = await axiosClient.delete(`/artikel/delete/${id}`);
+          console.log("res", response);
+          return response;
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      },
+      {
+        onSuccess: (response) => {
+          toastSuccess(response.data.message);
+        },
+        onError: (error) => {
+          console.error("error", error);
+          toastError();
+        },
+      },
+    );
+
+    return { mutate, isLoading };
+  };
+
+  return {
+    useGetArtikel,
+    useGetDetailArtikel,
+    useTambahArtikel,
+    useDeleteArtikel,
+    useUpdateArtikel,
+  };
 };
 
 export default useArtikelModule;

@@ -1,38 +1,44 @@
 "use client";
 import { CustomHeader } from "@/component";
-import type { NextPage } from "next";
-import * as yup from "yup";
-import { useFormik, Form, FormikProvider } from "formik";
 import CustomInput from "@/component/CustomInput";
 import {
   Avatar,
   Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import CustomSelect from "@/component/CustomSelect";
-import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import {
-  TambahDoaPayload,
-  TambahKategoriDoaPayload,
-} from "../interface/doa.interface";
-import useDoaModule from "../service/doa.service";
+import { Form, FormikProvider, useFormik } from "formik";
+import { NextPage } from "next";
 import { useRouter } from "next/navigation";
+import { FaSquarePlus, FaTrash } from "react-icons/fa6";
+import useDoaModule from "../../service/doa.service";
+import * as yup from "yup";
 import { useEffect } from "react";
+import CustomSelect from "@/component/CustomSelect";
+import {
+  TambahKategoriDoaPayload,
+  UpdateDoaPayload,
+} from "../../interface/doa.interface";
 
-interface Props {}
+interface Props {
+  params: any;
+}
 
-const TambahDoa: NextPage<Props> = ({}) => {
+const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { useGetKategoriDoa, useTambahDoa, useTambahKategoriDoa } =
-    useDoaModule();
+  const {
+    useGetKategoriDoa,
+    useTambahKategoriDoa,
+    useUpdateDoa,
+    useGetDetailDoa,
+  } = useDoaModule();
 
   const {
     data: dataKategori,
@@ -41,17 +47,39 @@ const TambahDoa: NextPage<Props> = ({}) => {
     isLoading: isLoadingKategori,
     refetch: refetchKategori,
   } = useGetKategoriDoa();
-  const { isLoading: isLoadingTambahDoa, mutate: mutateTambahDoa } =
-    useTambahDoa();
+  const {
+    data: dataDetailDoa,
+    isError: isErroDetailDoa,
+    isFetching: isFetchingDetailDoa,
+    isLoading: isLoadingDetailDoa,
+    refetch: refetchDetailDoa,
+  } = useGetDetailDoa(params.id);
+  const { isLoading: isLoadingUpdateDoa, mutate: mutateUpdateDoa } =
+    useUpdateDoa();
   const { isLoading: isLoadingTambahKategori, mutate: mutateTambahKategori } =
     useTambahKategoriDoa();
 
-  const createDoaSchema = yup.object().shape({
-    name: yup.string().default("").required("Wajib isi"),
-    arab: yup.string().default("").required("Wajib isi"),
-    latin: yup.string().default("").required("Wajib isi"),
-    arti: yup.string().default("").required("Wajib isi"),
-    kategori_id: yup.mixed().default(0).required("Wajib isi"),
+  const updateDoaSchema = yup.object().shape({
+    name: yup
+      .string()
+      .default(dataDetailDoa?.data.name ?? "")
+      .required("Wajib isi"),
+    arab: yup
+      .string()
+      .default(dataDetailDoa?.data.arab ?? "")
+      .required("Wajib isi"),
+    latin: yup
+      .string()
+      .default(dataDetailDoa?.data.latin ?? "")
+      .required("Wajib isi"),
+    arti: yup
+      .string()
+      .default(dataDetailDoa?.data.arti ?? "")
+      .required("Wajib isi"),
+    kategori_id: yup
+      .mixed()
+      .default((dataDetailDoa?.data.kategori_id as { id: number })?.id ?? 0)
+      .required("Wajib isi"),
   });
   const createKategoriDoaSchema = yup.object().shape({
     kategori_name: yup.string().default("").required("Wajib isi"),
@@ -62,15 +90,21 @@ const TambahDoa: NextPage<Props> = ({}) => {
       .required("Wajib isi"),
   });
 
-  const onSubmit = async (values: TambahDoaPayload) => {
+  const onSubmit = async (values: UpdateDoaPayload) => {
     console.log(values);
-    mutateTambahDoa(values, {
-      onSuccess: () => {
-        resetForm();
-        setValues(createDoaSchema.getDefault());
-        return router.replace("/admin/doa");
+    mutateUpdateDoa(
+      {
+        id: params.id, // Pass slug property
+        payload: values, // Pass payload property
       },
-    });
+      {
+        onSuccess: () => {
+          resetForm();
+          setValues(updateDoaSchema.getDefault());
+          return router.replace("/admin/doa");
+        },
+      },
+    );
   };
   const onSubmitKategori = async (values: TambahKategoriDoaPayload) => {
     console.log(values);
@@ -85,9 +119,9 @@ const TambahDoa: NextPage<Props> = ({}) => {
     });
   };
 
-  const formik = useFormik<TambahDoaPayload>({
-    initialValues: createDoaSchema.getDefault(),
-    validationSchema: createDoaSchema,
+  const formik = useFormik<UpdateDoaPayload>({
+    initialValues: updateDoaSchema.getDefault(),
+    validationSchema: updateDoaSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -152,19 +186,22 @@ const TambahDoa: NextPage<Props> = ({}) => {
                         {valuesKategori.file_create ? (
                           <div className="overflow-hidden rounded-[10px]">
                             {/* <img
-                              key={valuesKategori.file_create} // Add a unique key when src changes
-                              width={200}
-                              height={200}
-                              style={{ objectFit: "cover" }}
+                          key={valuesKategori.file_create} // Add a unique key when src changes
+                          width={200}
+                          height={200}
+                          style={{ objectFit: "cover" }}
+                          src={URL.createObjectURL(
+                            valuesKategori.file_create,
+                          )}
+                          alt=""
+                        /> */}
+                            <Avatar
+                              size="xl"
+                              name=""
                               src={URL.createObjectURL(
                                 valuesKategori.file_create,
                               )}
-                              alt=""
-                            /> */}
-                            <Avatar size="xl" name="" src={URL.createObjectURL(
-                                valuesKategori.file_create,
-                              )} />
-
+                            />
                           </div>
                         ) : (
                           <div className="rounded-[10px] border border-primary p-5">
@@ -343,8 +380,8 @@ const TambahDoa: NextPage<Props> = ({}) => {
                   type="reset"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoadingTambahDoa}
-                  isDisabled={isLoadingTambahDoa}
+                  isLoading={isLoadingTambahKategori || isLoadingUpdateDoa}
+                  isDisabled={isLoadingTambahKategori || isLoadingUpdateDoa}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -358,15 +395,15 @@ const TambahDoa: NextPage<Props> = ({}) => {
                   width={"full"}
                   fontWeight="normal"
                   type="submit"
-                  isLoading={isLoadingTambahDoa}
-                  isDisabled={isLoadingTambahDoa}
+                  isLoading={isLoadingTambahKategori || isLoadingUpdateDoa}
+                  isDisabled={isLoadingTambahKategori || isLoadingUpdateDoa}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}
                   leftIcon={<FaSquarePlus color="#ffffff" />}
                   _hover={{ bgColor: "blue.600" }}
                 >
-                  Buat Akun
+                  Update Do'a
                 </Button>
               </div>
             </div>
@@ -377,4 +414,4 @@ const TambahDoa: NextPage<Props> = ({}) => {
   );
 };
 
-export default TambahDoa;
+export default UpdateDoa;

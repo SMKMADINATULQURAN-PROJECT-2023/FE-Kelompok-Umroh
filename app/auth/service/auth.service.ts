@@ -3,7 +3,6 @@ import useNotification from "@/hook/useNotification";
 import useAxiosAuth from "@/hook/useAxiosAuth";
 import { signIn, useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { GetProfileResponse } from "../interface";
 
 export interface loginPayload {
@@ -24,7 +23,7 @@ export const useLoginService = () => {
     {
       onSuccess: async (response) => {
         toastSuccess(response.data.message);
-        console.log("ini dia", response);
+      console.log("ini dia", response);
         await signIn("credentials", {
           id: response.data.data.id,
           name: response.data.data.username,

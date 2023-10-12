@@ -1,17 +1,18 @@
 "use client";
+
+import { NextPage } from "next";
+import { useRouter } from "next/navigation";
+import useArtikelModule from "../service/artikel.service";
+import { useState } from "react";
+import { TambahArtikelPayload } from "../interface/artikel.interface";
+import { Form, FormikProvider, useFormik } from "formik";
 import { CustomHeader } from "@/component";
 import CustomInput from "@/component/CustomInput";
-import CustomTextArea from "@/component/CustomTextarea";
-import { Avatar, Button } from "@chakra-ui/react";
-import { Form, FormikProvider, useFormik } from "formik";
-import { NextPage } from "next";
 import Image from "next/image";
-import { useState } from "react";
+import { Avatar, Button } from "@chakra-ui/react";
+import CustomTextArea from "@/component/CustomTextarea";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import * as yup from "yup";
-import { TambahArtikelPayload } from "../interface/artikel.interface";
-import useArtikelModule from "../service/artikel.service";
-import { useRouter } from "next/navigation";
 
 interface Props {}
 
@@ -136,7 +137,7 @@ const TambahArtikel: NextPage<Props> = ({}) => {
                   className="overflow-hidden rounded-[10px] border-none bg-white"
                   id="description"
                   title="Deskripsi Artikel"
-                  values={quill}
+                  values={values.description}
                   handleChange={(value: any) => {
                     handleChange(value);
                     setQuill(value);

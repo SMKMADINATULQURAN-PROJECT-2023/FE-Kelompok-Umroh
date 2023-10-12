@@ -9,22 +9,51 @@ import React, { useMemo } from "react";
 import { FaRegPenToSquare, FaSquarePlus, FaTrash } from "react-icons/fa6";
 import useDoaModule from "./service/doa.service";
 import dayjs from "dayjs";
-import "dayjs/locale/id"; 
+import "dayjs/locale/id";
 
 const Doa: NextPage = () => {
-  const { useGetDoa } = useDoaModule();
+  const { useGetDoa, useGetKategoriDoa, useDeleteDoa, useDeleteKategoriDoa } =
+    useDoaModule();
   const {
     data: dataDoa,
     isError: isErrorDoa,
     isFetching: isFetchingDoa,
     isLoading: isLoadingDoa,
+    refetch: refetchDoa,
   } = useGetDoa();
-  console.log("doa", dataDoa);
+  const {
+    data: dataKategori,
+    isError: isErrorKategori,
+    isFetching: isFetchingKategori,
+    isLoading: isLoadingKategori,
+    refetch: refetchKategori,
+  } = useGetKategoriDoa();
+  const { isLoading: isLoadingDeleteDoa, mutate: mutateDeleteDoa } =
+    useDeleteDoa();
+  const { isLoading: isLoadingDeleteKategori, mutate: mutateDeleteKategori } =
+    useDeleteKategoriDoa();
+
+  const onDeleteDoa = async (id: any) => {
+    console.log(id);
+    mutateDeleteDoa(id, {
+      onSuccess: () => {
+        return refetchDoa();
+      },
+    });
+  };
+  const onDeleteKategori = async (id: any) => {
+    console.log(id);
+    mutateDeleteDoa(id, {
+      onSuccess: () => {
+        return refetchDoa();
+      },
+    });
+  };
 
   const narrowColumn = (value: string) => (
     <div className="narrow-column line-clamp-2">{value}</div>
   );
-  
+
   const columns = [
     {
       Header: "ID",
@@ -40,7 +69,7 @@ const Doa: NextPage = () => {
     },
     {
       Header: "Dibuat Oleh",
-      accessor: "created_by",
+      accessor: "created_by.username",
     },
     {
       Header: "Status",
@@ -78,7 +107,7 @@ const Doa: NextPage = () => {
       },
     },
   ];
-  
+
   const data = useMemo(() => dataDoa?.data || [], [dataDoa]);
 
   return (
@@ -113,34 +142,11 @@ const Doa: NextPage = () => {
         <CustomTable
           columns={columns}
           data={data}
-          actionColumn
-          actionData={
-            <div className="flex w-full flex-col space-y-2">
-              <RouteButton
-                to={"doa/edit-doa"}
-                title={<FaRegPenToSquare color="#ffffff" />}
-                h="35px"
-                width={"full"}
-                bg={"yellow.500"}
-                color={"white"}
-                _hover={{ bg: "yellow.600" }}
-                fontSize={12}
-              />
-              <Button
-                width={"full"}
-                type="button"
-                isLoading={isLoadingDoa}
-                isDisabled={isLoadingDoa}
-                h="35px"
-                backgroundColor={"red.500"}
-                color={"#ffffff"}
-                _hover={{ bgColor: "red.600" }}
-                fontSize={12}
-              >
-                <FaTrash color="#ffffff" />
-              </Button>
-            </div>
-          }
+          isDisableInTable={isLoadingDoa || isLoadingDeleteDoa}
+          isLoadingInTable={isLoadingDoa || isLoadingDeleteDoa}
+          actionColumnInTable
+          updateRoute={"doa/update-doa/"}
+          onDeleteInTable={(id: number) => onDeleteDoa(id)}
         />
       </section>
     </div>

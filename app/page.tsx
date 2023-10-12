@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Button,
   FormControl,
@@ -9,22 +9,22 @@ import {
   InputRightElement,
   Spinner,
   Stack,
-} from '@chakra-ui/react';
-import * as yup from 'yup';
-import { Form, Formik, FormikProvider, useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useLoginService } from './auth/service';
-import Cookies from 'js-cookie';
+} from "@chakra-ui/react";
+import * as yup from "yup";
+import { Form, Formik, FormikProvider, useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useLoginService } from "./auth/service/auth.service";
+import Cookies from "js-cookie";
 
 const loginSchema = yup.object().shape({
   email: yup
     .string()
-    .default('')
-    .required('Email tidak boleh kosong')
-    .email('Gunakan Format Email'),
-  password: yup.string().default('').required('Passowrd tidak boleh kosong'),
+    .default("")
+    .required("Email tidak boleh kosong")
+    .email("Gunakan Format Email"),
+  password: yup.string().default("").required("Passowrd tidak boleh kosong"),
 });
 
 type LoginValues = yup.Asserts<typeof loginSchema>;
@@ -41,7 +41,7 @@ export default function Home() {
       ...loginSchema.getDefault(),
     },
     onSubmit: async (values: LoginValues) => {
-      console.log('onsumbit', values);
+      console.log("onsumbit", values);
       return mutate(values);
     },
     validationSchema: loginSchema,
@@ -50,7 +50,7 @@ export default function Home() {
   let { values, errors, handleChange, handleBlur, handleSubmit } = formik;
   useEffect(() => {
     if (session) {
-      router.push('/admin/dashboard');
+      router.push("/admin/dashboard");
     }
   }, [session]);
 
@@ -63,13 +63,13 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen w-screen bg-white flex">
+    <div className="flex h-screen w-screen bg-white">
       {JSON.stringify(session)}
 
-      <section className="w-[60%] h-full flex justify-center items-center">
+      <section className="flex h-full w-[60%] items-center justify-center">
         <div className="w-[50%]">
           <div className="mb-[50px]">
-            <p className="text-black font-bold text-[35px]">LOGIN</p>
+            <p className="text-[35px] font-bold text-black">LOGIN</p>
             <p className="text-black">
               Masukkan email dan password untuk masuk!
             </p>
@@ -92,17 +92,17 @@ export default function Home() {
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      color={'black'}
-                      backgroundColor={'gray.100'}
-                      _hover={{ bgColor: 'violet.100' }}
-                      _placeholder={{ opacity: 1, color: 'gray.500' }}
+                      color={"black"}
+                      backgroundColor={"gray.100"}
+                      _hover={{ bgColor: "violet.100" }}
+                      _placeholder={{ opacity: 1, color: "gray.500" }}
                       // borderColor={'gray'}
                       variant="filled"
                       placeholder="Masukkan Email"
                       size="lg"
                     />
 
-                    <FormErrorMessage color={'red'} fontWeight="bold">
+                    <FormErrorMessage color={"red"} fontWeight="bold">
                       {errors?.email}
                     </FormErrorMessage>
                   </FormControl>
@@ -121,14 +121,14 @@ export default function Home() {
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        color={'black'}
-                        backgroundColor={'gray.100'}
-                        _hover={{ bgColor: 'violet.100' }}
-                        _placeholder={{ opacity: 1, color: 'gray.500' }}
+                        color={"black"}
+                        backgroundColor={"gray.100"}
+                        _hover={{ bgColor: "violet.100" }}
+                        _placeholder={{ opacity: 1, color: "gray.500" }}
                         // borderColor={'gray'}
                         variant="filled"
                         pr="4.5rem"
-                        type={show ? 'text' : 'password'}
+                        type={show ? "text" : "password"}
                         placeholder="Masukkan password"
                       />
                       <InputRightElement width="4.5rem">
@@ -136,24 +136,24 @@ export default function Home() {
                           type="button"
                           h="1.75rem"
                           size="sm"
-                          color={'black'}
+                          color={"black"}
                           onClick={() => {
                             setShow(!show);
                           }}
                         >
-                          {show ? 'Hide' : 'Show'}
+                          {show ? "Hide" : "Show"}
                         </Button>
                       </InputRightElement>
                     </InputGroup>
-                    <div className="flex justify-between items-center">
+                    <div className="flex items-center justify-between">
                       <FormErrorMessage
-                        size={'xs'}
-                        color={'red'}
+                        size={"xs"}
+                        color={"red"}
                         fontWeight="bold"
                       >
                         {errors?.password}
                       </FormErrorMessage>
-                      <p className="text-right biru cursor-pointer hover:text-[#1c1e3b] hover:pr-2">
+                      <p className="biru cursor-pointer text-right hover:pr-2 hover:text-[#1c1e3b]">
                         Lupa password
                       </p>
                     </div>
@@ -161,13 +161,13 @@ export default function Home() {
                 </Stack>
 
                 <Button
-                  width={'full'}
+                  width={"full"}
                   type="submit"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                   h="50px"
-                  backgroundColor={'#262A56'}
-                  _hover={{ bgColor: '#1c1e3b' }}
+                  backgroundColor={"#262A56"}
+                  _hover={{ bgColor: "#1c1e3b" }}
                 >
                   LOGIN
                 </Button>
@@ -176,7 +176,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-[40%] h-full bg-[#262A56] rounded-tl-[70px]"></section>
+      <section className="h-full w-[40%] rounded-tl-[70px] bg-[#262A56]"></section>
     </div>
   );
 }

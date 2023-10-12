@@ -1,54 +1,90 @@
 "use client";
 import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
-import { Avatar, Button } from "@chakra-ui/react";
-import { Form, FormikProvider, useFormik } from "formik";
 import { NextPage } from "next";
-import * as yup from "yup";
-import Image from "next/image";
-import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/component/CustomTextarea";
+import useZiarahModule from "../../service/ziarah.service";
 import { useState } from "react";
-import { TambahZiarahPayload } from "../interface/ziarah.interface";
-import useZiarahModule from "../service/ziarah.service";
+import { Form, FormikProvider, useFormik } from "formik";
+import * as yup from "yup";
+import {
+  UpdateZiarahPayload,
+} from "../../interface/ziarah.interface";
 import { useRouter } from "next/navigation";
+import { FaSquarePlus, FaTrash } from "react-icons/fa6";
+import { Avatar, Button } from "@chakra-ui/react";
+import CustomTextArea from "@/component/CustomTextarea";
+import Image from "next/image";
+import CustomInput from "@/component/CustomInput";
 
-interface Props {}
+interface Props {
+  params: any;
+}
 
-const TambahZiarah: NextPage<Props> = ({}) => {
-  const router = useRouter();
-  const { useTambahZiarah } = useZiarahModule();
-  const { isLoading, mutate } = useTambahZiarah();
+const UpdateZiarah: NextPage<Props> = ({
+  params,
+}: {
+  params: { id: number };
+}) => {
+  const route = useRouter();
+  const { useUpdateZiarah, useGetDetailZiarah } = useZiarahModule();
+  const {
+    data: dataZiarah,
+    isError,
+    isFetching,
+    isLoading: isLoadingZiarah,
+    refetch,
+  } = useGetDetailZiarah(params.id);
+  const { isLoading: isLoadingMutate, mutate } = useUpdateZiarah();
   const [quill, setQuill] = useState("");
 
+  console.log("data", dataZiarah);
+  console.log("params", params);
 
-  const createUserSchema = yup.object().shape({
-    name: yup.string().default("").required("Wajib isi"),
-    location: yup.string().default("").required("Wajib isi"),
-    description: yup.string().nullable().default("").required("Wajib isi"),
-    file_create: yup
+  const updateZiarahSchema = yup.object().shape({
+    name: yup
+      .string()
+      .default(dataZiarah?.data.name ?? "")
+      .required("Wajib isi"),
+    location: yup
+      .string()
+      .default(dataZiarah?.data.location ?? "")
+      .required("Wajib isi"),
+    description: yup
+      .string()
+      .nullable()
+      .default(dataZiarah?.data.description ?? "")
+      .required("Wajib isi"),
+    file_update: yup
       .mixed()
       .nullable()
-      .default(undefined)
+      .default(dataZiarah?.data.thumbnail ?? undefined)
       .required("Wajib isi"),
-    latitude: yup.string().nullable().default("21.422510"),
-    longitude: yup.string().nullable().default("39.826168"),
+    latitude: yup
+      .string()
+      .nullable()
+      .default(dataZiarah?.data.latitude ?? ""),
+    longitude: yup
+      .string()
+      .nullable()
+      .default(dataZiarah?.data.longitude ?? ""),
   });
 
-  const onSubmit = async (values: TambahZiarahPayload) => {
-    console.log(values);
-    mutate(values, {
-      onSuccess: () => {
-        resetForm();
-        setValues(createUserSchema.getDefault());
-        return router.replace("/admin/ziarah");
+  const onSubmit = async (payload: UpdateZiarahPayload) => {
+    console.log(payload);
+    mutate(
+      { id: params.id, payload: payload },
+      {
+        onSuccess: () => {
+          resetForm();
+          setValues(updateZiarahSchema.getDefault());
+          return route.replace("/admin/ziarah");
+        },
       },
-    });
+    );
   };
 
-  const formik = useFormik<TambahZiarahPayload>({
-    initialValues: createUserSchema.getDefault(),
-    validationSchema: createUserSchema,
+  const formik = useFormik<UpdateZiarahPayload>({
+    initialValues: updateZiarahSchema.getDefault(),
+    validationSchema: updateZiarahSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -64,7 +100,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full">
       <CustomHeader />
 
       <section className="w-full rounded-[10px] bg-primary p-5">
@@ -102,13 +138,18 @@ const TambahZiarah: NextPage<Props> = ({}) => {
               <div className="flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-white p-5">
                   <div className="flex items-center">
-                    {values.file_create ? (
+                    {values.file_update ? (
                       <div className="overflow-hidden rounded-[10px] border border-primary">
                         <Image
                           width={200}
                           height={200}
                           style={{ objectFit: "cover" }}
-                          src={URL.createObjectURL(values.file_create)}
+                          src={
+                            typeof values.file_update === "string"
+                              ? values.file_update
+                              : URL.createObjectURL(values.file_update)
+                          }
+                          // src={values.file_update || URL.createObjectURL(values.file_update)}
                           alt=""
                         />
                       </div>
@@ -132,13 +173,13 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                             alert("File size exceeds 10 MB.");
                             return;
                           }
-                          setFieldValue("file_create", file);
+                          setFieldValue("file_update", file);
                         }
                       }}
                     />
-                    {values.file_create && (
+                    {values.file_update && (
                       <span className="text-primary">
-                        {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
+                        {(values.file_update.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
                     )}
@@ -172,8 +213,8 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   fontWeight="normal"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  isLoading={isLoadingMutate || isLoadingZiarah}
+                  isDisabled={isLoadingMutate || isLoadingZiarah}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -187,15 +228,15 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   width={"full"}
                   type="submit"
                   fontWeight="normal"
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  isLoading={isLoadingMutate || isLoadingZiarah}
+                  isDisabled={isLoadingMutate || isLoadingZiarah}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}
                   leftIcon={<FaSquarePlus color="#ffffff" />}
                   _hover={{ bgColor: "blue.600" }}
                 >
-                  Tambah Ziarah
+                  Update Ziarah
                 </Button>
               </div>
             </div>
@@ -206,4 +247,4 @@ const TambahZiarah: NextPage<Props> = ({}) => {
   );
 };
 
-export default TambahZiarah;
+export default UpdateZiarah;

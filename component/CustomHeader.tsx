@@ -1,16 +1,16 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Avatar,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   Button,
-} from '@chakra-ui/react';
-import Link from 'next/link';
-import { FaArrowLeft, FaGear } from 'react-icons/fa6';
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { FaArrowLeft, FaGear } from "react-icons/fa6";
 import {
   Popover,
   PopoverTrigger,
@@ -19,43 +19,48 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
-} from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import Cookies from 'js-cookie';
-import { useProfileService } from '@/app/auth/service';
-import { signOut } from 'next-auth/react';
+} from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import Cookies from "js-cookie";
+import { useProfileService } from "@/app/auth/service/auth.service";
+import { signOut } from "next-auth/react";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
   const router = useRouter();
   const { data } = useProfileService();
 
-  const path: string[] = pathname ? pathname.split('/') : [];
+  const path: string[] = pathname ? pathname.split("/") : [];
   const lastPath = path[path.length - 1];
   const popoverBody = [
     {
       button: (
-        <Button variant={'ghost'} width={'100%'} justifyContent="flex-start">
-          Profil
-        </Button>
+        <Link href={"/admin/profile"}>
+          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+            Profil
+          </Button>
+        </Link>
       ),
     },
     {
       button: (
-        <Button variant={'ghost'} width={'100%'} justifyContent="flex-start">
-          Ubah Password
-        </Button>
+        <Link href={"/admin/notifikasi"}>
+          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+            Notifikasi
+          </Button>
+        </Link>
       ),
     },
+
     {
       button: (
         <Button
-          variant={'ghost'}
-          width={'100%'}
-          bg={'red.500'}
-          color={'white'}
+          variant={"ghost"}
+          width={"100%"}
+          bg={"red.500"}
+          color={"white"}
           justifyContent="flex-start"
-          _hover={{ bg: 'red.600' }}
+          _hover={{ bg: "red.600" }}
           onClick={() => signOut()}
         >
           Keluar
@@ -64,20 +69,20 @@ const CustomHeader = ({}) => {
     },
   ];
   return (
-    <div className="w-full flex items-center justify-between mb-[20px]">
-      <div className="flex flex-col w-[75%]">
-        <div className="bg-primary w-fit py-1 px-5 rounded-[5px]">
+    <div className="mb-[20px] flex w-full items-center justify-between">
+      <div className="flex w-[75%] flex-col">
+        <div className="w-fit rounded-[5px] bg-primary px-5 py-1">
           <Breadcrumb
             spacing="8px"
             separator={<ChevronRightIcon color="gray.500" />}
           >
             {path?.slice(2).map((_, i) => {
               return (
-                <BreadcrumbItem key={i} color={'#ffffff'} isCurrentPage>
+                <BreadcrumbItem key={i} color={"#ffffff"} isCurrentPage>
                   <BreadcrumbLink
-                    href={''}
+                    href={""}
                     className="text-primary"
-                    color={'#ffffff'}
+                    color={"#ffffff"}
                   >
                     {_}
                   </BreadcrumbLink>
@@ -86,31 +91,31 @@ const CustomHeader = ({}) => {
             })}
           </Breadcrumb>
         </div>
-        <div className="flex items-center space-x-3 h-fit w-full">
+        <div className="flex h-fit w-full items-center space-x-3">
           <div
             className={`${
-              path.length > 3 ? '' : 'w-[7px]'
-            } h-[30px]  bg-primary rounded-[5px]`}
+              path.length > 3 ? "" : "w-[7px]"
+            } h-[30px]  rounded-[5px] bg-primary`}
           >
             {path.length > 3 ? (
               <div
                 onClick={() => router.back()}
-                className="flex px-4 cursor-pointer items-center justify-center h-full w-full"
+                className="flex h-full w-full cursor-pointer items-center justify-center px-4"
               >
-                <FaArrowLeft />
+                <FaArrowLeft color="white"/>
               </div>
             ) : (
               <div></div>
             )}
           </div>
-          <h1 className="font-semibold text-[25px] items-center capitalize">
-            {lastPath?.replace(/-/g, ' ')}
+          <h1 className="items-center text-[25px] font-semibold capitalize text-primary truncate">
+            {lastPath?.replace(/-/g, " ")}
           </h1>
         </div>
       </div>
 
-      <div className="rounded-[10px] py-3 bg-primary  w-[25%] px-5 flex justify-between items-center space-x-3">
-        <div className="flex justify-start items-center space-x-3">
+      <div className="flex w-[25%] items-center  justify-between space-x-3 rounded-[10px] bg-primary px-5 py-3">
+        <div className="flex items-center justify-start space-x-3">
           <div>
             <Avatar name={data?.data.username} src={data?.data.avatar} />
           </div>
@@ -123,7 +128,7 @@ const CustomHeader = ({}) => {
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
             <Button bg="#ffffff">
-              {' '}
+              {" "}
               <FaGear color="#262a56" />
             </Button>
           </PopoverTrigger>
@@ -131,8 +136,8 @@ const CustomHeader = ({}) => {
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverHeader>Pengaturan</PopoverHeader>
-            <PopoverBody width={'100%'}>
-              <div className="flex flex-col items-start w-full space-y-3">
+            <PopoverBody width={"100%"}>
+              <div className="flex w-full flex-col items-start space-y-3">
                 {popoverBody.map((_, i) => {
                   return (
                     <div className="w-full" key={i}>

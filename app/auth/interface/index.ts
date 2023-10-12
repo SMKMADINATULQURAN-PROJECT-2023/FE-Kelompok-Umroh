@@ -3,6 +3,7 @@ export interface Profile {
   avatar: string;
   username: string;
   email: string;
+  file_create: any;
   role_id: {
     id: number;
     role_name: string;
@@ -13,4 +14,11 @@ export interface Profile {
 
 export interface GetProfileResponse {
   data: Profile;
+}
+
+export interface EditProfilePayload
+  extends Pick<Profile, "username" | "email" | "file_create"> {}
+
+export interface ChangePasswordPayload {
+  password: string;
 }

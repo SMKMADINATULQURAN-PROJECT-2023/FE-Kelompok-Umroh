@@ -25,9 +25,9 @@ const Ziarah: NextPage = () => {
   const { isLoading: isLoadingDelete, mutate } = useDeleteZiarah();
   console.log("ziarah", dataZiarah);
 
-  const onDelete = async (slug: string) => {
-    console.log(slug);
-    mutate(slug, {
+  const onDelete = async (id: any) => {
+    console.log(id);
+    mutate(id, {
       onSuccess: () => {
         return refetchZiarah();
       },
@@ -151,14 +151,14 @@ const Ziarah: NextPage = () => {
                           color={"#ffffff"}
                           _hover={{ bgColor: "red.600" }}
                           fontSize={12}
-                          onClick={() => onDelete(item.slug)}
+                          onClick={() => onDelete(item.id)}
                         >
                           <FaTrash color="#ffffff" />
                         </Button>
                       </div>
                       <div>
                         <RouteButton
-                          to={`ziarah/update-ziarah/${item.slug}`}
+                          to={`ziarah/update-ziarah/${item.id}`}
                           title={<FaRegPenToSquare color="#ffffff" />}
                           h="35px"
                           width={"full"}

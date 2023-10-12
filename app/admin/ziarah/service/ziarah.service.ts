@@ -1,6 +1,7 @@
 import useNotification from "@/hook/useNotification";
 import {
   TambahZiarahPayload,
+  UpdateZiarahPayload,
   ZiarahPaginationResponse,
   ZiarahResponse,
 } from "../interface/ziarah.interface";
@@ -24,16 +25,16 @@ const useZiarahModule = () => {
     return { data, isError, isFetching, isLoading, refetch };
   };
 
-  const useGetDetailZiarah = (slug: any) => {
+  const useGetDetailZiarah = (id: any) => {
     const getZiarah = async (): Promise<ZiarahResponse> => {
-      return axiosClient.get(`/lokasi_ziarah/${slug}`).then((res) => res.data);
+      return axiosClient.get(`/lokasi_ziarah/${id}`).then((res) => res.data);
     };
 
     const { data, isError, isFetching, isLoading, refetch } = useQuery(
-      ["lokasi_ziarah", slug], // Pass the slug as part of the query key
+      ["lokasi_ziarah", id], // Pass the slug as part of the query key
       () => getZiarah(),
       {
-        enabled: !!slug, // Enable the query when slug is truthy (i.e., not empty)
+        enabled: !!id, // Enable the query when slug is truthy (i.e., not empty)
       },
     );
 
@@ -75,15 +76,15 @@ const useZiarahModule = () => {
   const useUpdateZiarah = () => {
     const { mutate, isLoading } = useMutation(
       async ({
-        slug,
+        id,
         payload,
       }: {
-        slug: any;
-        payload: TambahZiarahPayload;
+        id: any;
+        payload: UpdateZiarahPayload;
       }): Promise<AxiosResponse> => {
         try {
           const response = await axiosClient.put(
-            `/lokasi_ziarah/update/${slug}`,
+            `/lokasi_ziarah/update/${id}`,
             payload,
             {
               headers: {
@@ -113,10 +114,10 @@ const useZiarahModule = () => {
 
   const useDeleteZiarah = () => {
     const { mutate, isLoading } = useMutation(
-      async (slug: string): Promise<AxiosResponse> => {
+      async (id: any): Promise<AxiosResponse> => {
         try {
           const response = await axiosClient.delete(
-            `/lokasi_ziarah/delete/${slug}`,
+            `/lokasi_ziarah/delete/${id}`,
           );
           console.log("res", response);
           return response;

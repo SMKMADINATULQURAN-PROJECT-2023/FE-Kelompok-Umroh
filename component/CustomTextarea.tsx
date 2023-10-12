@@ -1,23 +1,14 @@
-"use client";
-import React, {
-  CSSProperties,
-  ChangeEventHandler,
-  FocusEventHandler,
-  HTMLInputTypeAttribute,
-} from "react";
+import React, { CSSProperties } from "react";
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-  Textarea,
-  InputGroup,
-  InputProps,
-  InputRightElement,
-  TextareaProps,
 } from "@chakra-ui/react";
-// ...
-import ReactQuill, { ReactQuillProps, Value } from "react-quill"; // Import Value type
+import dynamic from "next/dynamic"; // Import dynamic from Next.js
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+import { ReactQuillProps } from "react-quill"; // Import Value type
 import "react-quill/dist/quill.snow.css";
 
 interface Props extends ReactQuillProps {
@@ -47,22 +38,22 @@ const CustomTextArea: React.FC<Props> = ({
   ...props
 }) => {
   let toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    ['link', 'image'],
-    [{ 'header': 1 }, { 'header': 2 }],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'script': 'sub'}, { 'script': 'super' }],
-    [{ 'indent': '-1'}, { 'indent': '+1' }],
-    [{ 'direction': 'rtl' }],
-    [{ 'size': ['small', false, 'large', 'huge'] }],
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    [{ 'color': [] }, { 'background': [] }],
-    [{ 'font': [] }],
-    [{ 'align': [] }],
-    ['clean']
+    ["bold", "italic", "underline", "strike"],
+    ["blockquote", "code-block"],
+    ["link", "image"],
+    [{ header: 1 }, { header: 2 }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ direction: "rtl" }],
+    [{ size: ["small", false, "large", "huge"] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ color: [] }, { background: [] }],
+    [{ font: [] }],
+    [{ align: [] }],
+    ["clean"],
   ];
-  
+
   return (
     <>
       <FormControl isInvalid={isInvalid} onBlur={handleBlur}>
@@ -80,7 +71,6 @@ const CustomTextArea: React.FC<Props> = ({
           modules={{ toolbar: toolbarOptions }}
           value={values}
           onChange={handleChange}
-          // onBlur={handleBlur}
           style={style}
           placeholder={`Masukkan ${title}`}
           id={id}

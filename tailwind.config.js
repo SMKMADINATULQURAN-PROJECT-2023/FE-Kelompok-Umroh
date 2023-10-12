@@ -16,11 +16,13 @@ module.exports = {
         primary: '#262A56',
         secondary: '#1c1e3b',
         abu: '#9FA1B5',
+        sectionBg: '#f8f9fe',
       },
       backgroundColor: {
         primary: '#262A56',
         secondary: '#1c1e3b',
         abu: '#9FA1B5',
+        sectionBg: '#f8f9fe',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

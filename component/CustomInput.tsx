@@ -53,7 +53,7 @@ const CustomInput: React.FC<Props> = ({
           htmlFor={id}
           fontWeight=""
         >
-          {title}
+          {title}<span className='text-red-500'>*</span>
         </FormLabel>
         <InputGroup size="lg">
           <Input

@@ -5,6 +5,7 @@ interface Artikel {
   title: string;
   description: string;
   file_create: any;
+  file_update: any;
   slug: string;
   thumbnail: any;
   created_at: string;
@@ -18,7 +19,7 @@ interface Artikel {
 }
 
 export interface ArtikelResponse {
-  data: Artikel[];
+  data: Artikel;
 }
 
 export interface ArtikelPaginationResponse extends BaseResponsePagination {
@@ -34,3 +35,6 @@ export interface ArtikelPaginationResponse extends BaseResponsePagination {
 
 export interface TambahArtikelPayload
   extends Pick<Artikel, "title" | "description" | "file_create"> {}
+
+export interface UpdateArtikelPayload
+  extends Pick<Artikel, "title" | "description" | "file_update"> {}

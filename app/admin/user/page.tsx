@@ -22,7 +22,7 @@ const User: NextPage = () => {
   const columns = [
     {
       Header: "ID",
-      accessor: 'id',
+      accessor: "id",
     },
     {
       Header: "Username",
@@ -36,7 +36,7 @@ const User: NextPage = () => {
       Header: "Avatar",
       accessor: "avatar",
       Cell: ({ value }: { value: string }) => {
-        return <Avatar src={value} name={value}/>;
+        return <Avatar src={value} name={value} />;
       },
     },
     {
@@ -78,34 +78,34 @@ const User: NextPage = () => {
         <CustomTable
           columns={columns}
           data={data}
-          actionColumn
-          actionData={
-            <div className="flex w-full flex-col space-y-2">
-              <RouteButton
-                to={"ziarah/edit-ziarah"}
-                title={<FaRegPenToSquare color="#ffffff" />}
-                h="35px"
-                width={"full"}
-                bg={"yellow.500"}
-                color={"white"}
-                _hover={{ bg: "yellow.600" }}
-                fontSize={12}
-              />
-              <Button
-                width={"full"}
-                type="button"
-                isLoading={isLoadingUser}
-                isDisabled={isLoadingUser}
-                h="35px"
-                backgroundColor={"red.500"}
-                color={"#ffffff"}
-                _hover={{ bgColor: "red.600" }}
-                fontSize={12}
-              >
-                <FaTrash color="#ffffff" />
-              </Button>
-            </div>
-          }
+          // actionColumn
+          // actionData={
+          //   <div className="flex w-full flex-col space-y-2">
+          //     <RouteButton
+          //       to={"ziarah/edit-ziarah"}
+          //       title={<FaRegPenToSquare color="#ffffff" />}
+          //       h="35px"
+          //       width={"full"}
+          //       bg={"yellow.500"}
+          //       color={"white"}
+          //       _hover={{ bg: "yellow.600" }}
+          //       fontSize={12}
+          //     />
+          //     <Button
+          //       width={"full"}
+          //       type="button"
+          //       isLoading={isLoadingUser}
+          //       isDisabled={isLoadingUser}
+          //       h="35px"
+          //       backgroundColor={"red.500"}
+          //       color={"#ffffff"}
+          //       _hover={{ bgColor: "red.600" }}
+          //       fontSize={12}
+          //     >
+          //       <FaTrash color="#ffffff" />
+          //     </Button>
+          //   </div>
+          // }
         />
       </section>
     </div>

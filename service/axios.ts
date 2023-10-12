@@ -5,8 +5,8 @@ import { useSession } from 'next-auth/react';
 import { parse, stringify } from 'qs';
 
 export const axiosClient: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5002',
-  // baseURL: 'http://172.16.80.13:5002',
+  // baseURL: 'http://localhost:5002',
+  baseURL: 'http://172.16.80.183:5002',
   headers: {
     'Content-Type': 'application/json',
     // 'Content-Type': 'multipart/form-data',

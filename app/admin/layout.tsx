@@ -80,11 +80,11 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                     transition="height 200ms ease-in-out"
                     textTransform="capitalize"
                     color={isSelected ? "#262a56" : "#ffffff"}
-                    variant={isSelected ? "solid" : "outline"}
+                    variant={isSelected ? "solid" : "ghost"}
                     backgroundColor={isSelected ? "#ffffff" : "#262a56"}
                     _hover={{
-                      borderLeft: isSelected ? "" : "5px solid #ffffff",
-                      height: "70px",
+                      backgroundColor: '#ffffff66',
+                      height: "55px",
                       transition: "height 200ms ease-in-out",
                     }}
                   >
@@ -95,7 +95,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             })}
           </div>
         </section>
-        <section className="col-span-6 p-5">{children}</section>
+        <section className="bg-sectionBg col-span-6 p-5">{children}</section>
       </section>
     </>
   );

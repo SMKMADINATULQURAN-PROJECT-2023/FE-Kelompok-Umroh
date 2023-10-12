@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa6";
 
 import { Calendar } from "./component";
-import { useProfileService } from "@/app/auth/service";
+import { useProfileService } from "@/app/auth/service/auth.service";
 
 interface Props {}
 const Dashboard: NextPage<Props> = ({}) => {

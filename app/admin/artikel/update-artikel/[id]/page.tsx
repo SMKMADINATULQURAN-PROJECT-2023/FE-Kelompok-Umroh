@@ -1,54 +1,76 @@
 "use client";
 import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
-import { Avatar, Button } from "@chakra-ui/react";
-import { Form, FormikProvider, useFormik } from "formik";
 import { NextPage } from "next";
-import * as yup from "yup";
-import Image from "next/image";
-import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/component/CustomTextarea";
-import { useState } from "react";
-import { TambahZiarahPayload } from "../interface/ziarah.interface";
-import useZiarahModule from "../service/ziarah.service";
+import useArtikelModule from "../../service/artikel.service";
 import { useRouter } from "next/navigation";
+import * as yup from "yup";
+import { Form, FormikProvider, useFormik } from "formik";
+import { UpdateArtikelPayload } from "../../interface/artikel.interface";
+import { Avatar, Button } from "@chakra-ui/react";
+import CustomTextArea from "@/component/CustomTextarea";
+import Image from "next/image";
+import CustomInput from "@/component/CustomInput";
+import { FaSquarePlus, FaTrash } from "react-icons/fa6";
+import { useState } from "react";
 
-interface Props {}
+interface Props {
+  params: any;
+}
 
-const TambahZiarah: NextPage<Props> = ({}) => {
-  const router = useRouter();
-  const { useTambahZiarah } = useZiarahModule();
-  const { isLoading, mutate } = useTambahZiarah();
+const UpdateArtikel: NextPage<Props> = ({
+  params,
+}: {
+  params: { id: number };
+}) => {
+  const route = useRouter();
+  const { useGetDetailArtikel, useUpdateArtikel } = useArtikelModule();
+  const {
+    data: dataArtikel,
+    isError: isErrorArtikel,
+    isFetching: isFetchingArtikel,
+    isLoading: isLoadingArtikel,
+    refetch: refetchArtikel,
+  } = useGetDetailArtikel(params.id);
+  const { isLoading: isLoadingUpdate, mutate } = useUpdateArtikel();
   const [quill, setQuill] = useState("");
 
-
-  const createUserSchema = yup.object().shape({
-    name: yup.string().default("").required("Wajib isi"),
-    location: yup.string().default("").required("Wajib isi"),
-    description: yup.string().nullable().default("").required("Wajib isi"),
-    file_create: yup
+  const updateArtikelSchema = yup.object().shape({
+    title: yup
+      .string()
+      .default(dataArtikel?.data.title ?? "")
+      .required("Wajib isi"),
+    description: yup
+      .string()
+      .nullable()
+      .default(dataArtikel?.data.description ?? "")
+      .required("Wajib isi"),
+    file_update: yup
       .mixed()
       .nullable()
-      .default(undefined)
+      .default(dataArtikel?.data.thumbnail ?? undefined)
       .required("Wajib isi"),
-    latitude: yup.string().nullable().default("21.422510"),
-    longitude: yup.string().nullable().default("39.826168"),
   });
 
-  const onSubmit = async (values: TambahZiarahPayload) => {
-    console.log(values);
-    mutate(values, {
-      onSuccess: () => {
-        resetForm();
-        setValues(createUserSchema.getDefault());
-        return router.replace("/admin/ziarah");
+  const onSubmit = async (payload: UpdateArtikelPayload) => {
+    console.log(payload);
+    mutate(
+      {
+        id: params.id, // Pass slug property
+        payload: payload, // Pass payload property
       },
-    });
+      {
+        onSuccess: () => {
+          resetForm();
+          setValues(updateArtikelSchema.getDefault());
+          return route.replace("/admin/artikel");
+        },
+      },
+    );
   };
 
-  const formik = useFormik<TambahZiarahPayload>({
-    initialValues: createUserSchema.getDefault(),
-    validationSchema: createUserSchema,
+  const formik = useFormik<UpdateArtikelPayload>({
+    initialValues: updateArtikelSchema.getDefault(),
+    validationSchema: updateArtikelSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -63,8 +85,11 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     resetForm,
     setValues,
   } = formik;
+
+  console.log("data", dataArtikel);
+  console.log("id", params);
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full">
       <CustomHeader />
 
       <section className="w-full rounded-[10px] bg-primary p-5">
@@ -73,28 +98,17 @@ const TambahZiarah: NextPage<Props> = ({}) => {
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-3">
+            <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-3">
               <div className="flex w-full flex-col items-start space-y-3">
                 <CustomInput
-                  id="name"
-                  title="Tempat Ziarah"
+                  id="title"
+                  title="Judul Artikel"
                   type="text"
-                  values={values.name}
+                  values={values.title}
                   handleChange={handleChange}
                   handleBlur={handleBlur}
-                  isInvalid={!!errors?.name}
-                  errorMessage={errors?.name}
-                  backgroundColor="#ffffff"
-                />
-                <CustomInput
-                  id="location"
-                  title="Lokasi"
-                  type="text"
-                  values={values.location}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.location}
-                  errorMessage={errors?.location}
+                  isInvalid={!!errors?.title}
+                  errorMessage={errors?.title}
                   backgroundColor="#ffffff"
                 />
               </div>
@@ -102,13 +116,14 @@ const TambahZiarah: NextPage<Props> = ({}) => {
               <div className="flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-white p-5">
                   <div className="flex items-center">
-                    {values.file_create ? (
+                    {values.file_update ? (
                       <div className="overflow-hidden rounded-[10px] border border-primary">
                         <Image
                           width={200}
                           height={200}
                           style={{ objectFit: "cover" }}
-                          src={URL.createObjectURL(values.file_create)}
+                          src={typeof values.file_update === 'string' ? values.file_update : URL.createObjectURL(values.file_update)}
+                          // src={values.file_update || URL.createObjectURL(values.file_update)}
                           alt=""
                         />
                       </div>
@@ -132,13 +147,13 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                             alert("File size exceeds 10 MB.");
                             return;
                           }
-                          setFieldValue("file_create", file);
+                          setFieldValue("file_update", file);
                         }
                       }}
                     />
-                    {values.file_create && (
+                    {values.file_update && (
                       <span className="text-primary">
-                        {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
+                        {(values.file_update.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
                     )}
@@ -146,16 +161,17 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                 </div>
               </div>
 
-              <div className="col-span-2 w-[100%]" onBlur={handleBlur}>
+              <div className="w-[100%]" onBlur={handleBlur}>
                 <CustomTextArea
-                  className="h-[300px] overflow-hidden rounded-[10px] border-none bg-white"
+                  className="overflow-hidden rounded-[10px] border-none bg-white"
                   id="description"
-                  title="Deskripsi Ziarah"
+                  title="Deskripsi Artikel"
                   values={values.description}
+                  // values={quill}
                   handleChange={(value: any) => {
                     handleChange(value);
                     setQuill(value);
-                    setFieldValue("description", value); // Update the description field in Formik
+                    setFieldValue("description", value);
                   }}
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.description}
@@ -172,8 +188,8 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   fontWeight="normal"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  isLoading={isLoadingUpdate || isLoadingUpdate}
+                  isDisabled={isLoadingUpdate || isLoadingUpdate}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -187,15 +203,15 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   width={"full"}
                   type="submit"
                   fontWeight="normal"
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  isLoading={isLoadingUpdate || isLoadingUpdate}
+                  isDisabled={isLoadingUpdate || isLoadingUpdate}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}
                   leftIcon={<FaSquarePlus color="#ffffff" />}
                   _hover={{ bgColor: "blue.600" }}
                 >
-                  Tambah Ziarah
+                  Update Artikel
                 </Button>
               </div>
             </div>
@@ -206,4 +222,4 @@ const TambahZiarah: NextPage<Props> = ({}) => {
   );
 };
 
-export default TambahZiarah;
+export default UpdateArtikel;
