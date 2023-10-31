@@ -1,23 +1,27 @@
-'use client';
-import { Button, ButtonProps } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+"use client";
+import { Button, ButtonProps } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 interface RouteButtonProps extends ButtonProps {
   title: any;
-  to: string; // Make 'to' prop optional by adding the '?'
+  to: string;
 }
 
 const RouteButton: React.FC<RouteButtonProps> = ({ title, to, ...props }) => {
   const route = useRouter();
-
-  // Use a default value if 'to' is undefined
-  const target = to || '/'; // You can change '/' to a default route
+  const target = to || "/";
 
   return (
-    <Button {...props} onClick={() => route.push(target)}>
-      {title}
-    </Button>
+    <Link href={target}>
+      <Button
+        {...props}
+        // onClick={() => route.push(target)}
+      >
+        {title}
+      </Button>
+    </Link>
   );
 };
 

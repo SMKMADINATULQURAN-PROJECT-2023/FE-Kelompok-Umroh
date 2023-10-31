@@ -21,8 +21,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
   const { isLoading, mutate } = useTambahZiarah();
   const [quill, setQuill] = useState("");
 
-
-  const createUserSchema = yup.object().shape({
+  const createZiarahSchema = yup.object().shape({
     name: yup.string().default("").required("Wajib isi"),
     location: yup.string().default("").required("Wajib isi"),
     description: yup.string().nullable().default("").required("Wajib isi"),
@@ -40,15 +39,15 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     mutate(values, {
       onSuccess: () => {
         resetForm();
-        setValues(createUserSchema.getDefault());
+        setValues(createZiarahSchema.getDefault());
         return router.replace("/admin/ziarah");
       },
     });
   };
 
   const formik = useFormik<TambahZiarahPayload>({
-    initialValues: createUserSchema.getDefault(),
-    validationSchema: createUserSchema,
+    initialValues: createZiarahSchema.getDefault(),
+    validationSchema: createZiarahSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -67,43 +66,39 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     <div className="h-full w-full ">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] bg-primary p-5">
+      <section className="w-full rounded-[10px] p-5">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-3">
-              <div className="flex w-full flex-col items-start space-y-3">
-                <CustomInput
-                  id="name"
-                  title="Tempat Ziarah"
-                  type="text"
-                  values={values.name}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.name}
-                  errorMessage={errors?.name}
-                  backgroundColor="#ffffff"
-                />
-                <CustomInput
-                  id="location"
-                  title="Lokasi"
-                  type="text"
-                  values={values.location}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.location}
-                  errorMessage={errors?.location}
-                  backgroundColor="#ffffff"
-                />
-              </div>
+            <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-10">
+              <CustomInput
+                id="name"
+                title="Tempat Ziarah"
+                type="text"
+                values={values.name}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.name}
+                errorMessage={errors?.name}
+              />
+              <CustomInput
+                id="location"
+                title="Lokasi"
+                type="text"
+                values={values.location}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.location}
+                errorMessage={errors?.location}
+              />
 
-              <div className="flex h-full w-full flex-col justify-between">
-                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-white p-5">
+              <div className="col-span-2 flex h-full w-full flex-col justify-between">
+                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
                     {values.file_create ? (
-                      <div className="overflow-hidden rounded-[10px] border border-primary">
+                      <div className="overflow-hidden rounded-[10px] border border-white">
                         <Image
                           width={200}
                           height={200}
@@ -113,21 +108,20 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                         />
                       </div>
                     ) : (
-                      <div className="rounded-[10px] border border-primary p-5">
-                        <Avatar size="xl" name="" src="" />
+                      <div className="rounded-[10px] border border-white p-5">
+                        <Avatar size="xl" name="-" src="" />
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col items-start">
                     <input
-                      className="w-fit cursor-pointer text-primary"
+                      className="w-fit cursor-pointer text-white"
                       type="file"
                       onBlur={handleBlur}
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0]; // Use optional chaining to handle null
+                        const file = e.target.files?.[0];
                         if (file) {
-                          // Check file size
                           if (file.size > 10 * 1024 * 1024) {
                             alert("File size exceeds 10 MB.");
                             return;
@@ -137,7 +131,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                       }}
                     />
                     {values.file_create && (
-                      <span className="text-primary">
+                      <span className="text-white">
                         {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
@@ -146,21 +140,20 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                 </div>
               </div>
 
-              <div className="col-span-2 w-[100%]" onBlur={handleBlur}>
+              <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
-                  className="h-[300px] overflow-hidden rounded-[10px] border-none bg-white"
+                  className="h-[600px]"
                   id="description"
                   title="Deskripsi Ziarah"
                   values={values.description}
                   handleChange={(value: any) => {
                     handleChange(value);
                     setQuill(value);
-                    setFieldValue("description", value); // Update the description field in Formik
+                    setFieldValue("description", value);
                   }}
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.description}
                   errorMessage={errors?.description}
-                  backgroundColor="#ffffff"
                 />
               </div>
             </div>

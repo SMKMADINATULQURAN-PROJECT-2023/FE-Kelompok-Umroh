@@ -1,35 +1,39 @@
-import './globals.css';
+import "./globals.css";
 
-import React, { ReactNode } from 'react';
-import { Inter } from 'next/font/google';
-import ReactQuery from '@/component/ReactQuery';
-import CustomChakra from '@/component/CustomChakra';
-import NextAuthProvider from '@/component/NextAuthProvider';
-import { Session } from 'next-auth';
-import Nav from './nav';
+import React, { ReactNode } from "react";
+import ReactQuery from "@/component/ReactQuery";
+import CustomChakra from "@/component/CustomChakra";
+import NextAuthProvider from "@/component/NextAuthProvider";
+import { Session } from "next-auth";
+import ProgressBarClient from "@/component/ProgressBar";
 
 interface NextAuthProps {
   children: ReactNode;
   session: Session | null | undefined;
 }
 export const metadata = {
-  title: 'Al - Hilal',
-  description: 'website umroh',
+  title: "Al - Hilal",
+  description: "website umroh",
 };
 
 const RootLayout: React.FC<NextAuthProps> = ({ children, session }) => {
   return (
-    <html lang="en">
-      <body>
-        <NextAuthProvider session={session}>
-          <ReactQuery>
-            <CustomChakra>
-              <section className="w-full h-full">{children}</section>
-            </CustomChakra>
-          </ReactQuery>
-        </NextAuthProvider>
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <body>
+          <NextAuthProvider session={session}>
+            <ReactQuery>
+              <CustomChakra>
+                <section className="h-full w-full">
+                  <ProgressBarClient />
+                  {children}
+                </section>
+              </CustomChakra>
+            </ReactQuery>
+          </NextAuthProvider>
+        </body>
+      </html>
+    </>
   );
 };
 

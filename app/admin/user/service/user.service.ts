@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AdminListPaginationResponse, AdminListResponse, TambahUserPayload } from "../interface/user.interface";
+import {
+  AdminListPaginationResponse,
+  TambahUserPayload,
+  UserListPaginationResponse,
+  UserResponse,
+} from "../interface/user.interface";
 import useNotification from "@/hook/useNotification";
 import useAxiosAuth from "@/hook/useAxiosAuth";
 import { AxiosResponse } from "axios";
@@ -9,16 +14,41 @@ const useUserModule = () => {
   const axiosClient = useAxiosAuth();
 
   const useGetUserAdmin = () => {
-    const getUser = async (): Promise<AdminListPaginationResponse> => {
+    const getUserAdmin = async (): Promise<AdminListPaginationResponse> => {
       return axiosClient.get("/admin").then((res) => res.data);
     };
 
-    const { data, isFetching, isLoading } = useQuery({
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
       queryKey: ["/admin"],
+      queryFn: () => getUserAdmin(),
+    });
+
+    return { data, isFetching, isLoading, isError, refetch };
+  };
+  const useGetUserMobile = () => {
+    const getUser = async (): Promise<UserListPaginationResponse> => {
+      return axiosClient.get("/user").then((res) => res.data);
+    };
+
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
+      queryKey: ["/user"],
       queryFn: () => getUser(),
     });
 
-    return { data, isFetching, isLoading };
+    return { data, isFetching, isLoading, isError, refetch };
+  };
+
+  const useGetDetailUserMobile = (id: any) => {
+    const getDetail = (id: any): Promise<UserResponse> => {
+      return axiosClient.get(`/user/${id}`).then((res) => res.data);
+    };
+
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
+      queryKey: ["/user/:id"],
+      queryFn: () => getDetail(id),
+    });
+
+    return { data, isFetching, isLoading, isError, refetch };
   };
 
   const useTambahUser = () => {
@@ -26,7 +56,7 @@ const useUserModule = () => {
       (payload: TambahUserPayload): Promise<AxiosResponse> => {
         return axiosClient.post("/admin/create", payload, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
       },
@@ -43,7 +73,12 @@ const useUserModule = () => {
     return { mutate, isLoading };
   };
 
-  return { useTambahUser, useGetUserAdmin };
+  return {
+    useTambahUser,
+    useGetUserAdmin,
+    useGetDetailUserMobile,
+    useGetUserMobile,
+  };
 };
 
 export default useUserModule;

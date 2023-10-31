@@ -20,6 +20,12 @@ interface Doa {
     email: string;
     avatar: any;
   };
+  updated_by: {
+    id: number;
+    username: string;
+    email: string;
+    avatar: any;
+  };
   kategori_id: Kategori | number | string;
 }
 

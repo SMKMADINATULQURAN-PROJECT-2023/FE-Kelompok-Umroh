@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useLoginService } from "./auth/service/auth.service";
 import Cookies from "js-cookie";
+import Loader from "@/component/Loader";
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -56,16 +57,14 @@ export default function Home() {
 
   if (session) {
     return (
-      <section>
-        <Spinner />
+      <section className="w-screen h-screen bg-white flex justify-center items-center">
+        <Loader />
       </section>
     );
   }
 
   return (
     <div className="flex h-screen w-screen bg-white">
-      {JSON.stringify(session)}
-
       <section className="flex h-full w-[60%] items-center justify-center">
         <div className="w-[50%]">
           <div className="mb-[50px]">
@@ -166,6 +165,7 @@ export default function Home() {
                   isLoading={isLoading}
                   isDisabled={isLoading}
                   h="50px"
+                  color={'#ffffff'}
                   backgroundColor={"#262A56"}
                   _hover={{ bgColor: "#1c1e3b" }}
                 >

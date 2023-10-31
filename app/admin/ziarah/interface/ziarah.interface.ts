@@ -1,12 +1,13 @@
 import { BaseResponsePagination } from "@/service/axios";
 
-interface Ziarah {
+export interface Ziarah {
   id: number;
   name: string;
   description: string;
   thumbnail: any;
   slug: string;
   file_create: any;
+  status: string;
   file_update: any;
   location: string;
   latitude: string | undefined;

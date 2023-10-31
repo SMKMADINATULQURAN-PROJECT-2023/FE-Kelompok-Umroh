@@ -5,10 +5,9 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import dynamic from "next/dynamic"; // Import dynamic from Next.js
+import dynamic from "next/dynamic";
+import { ReactQuillProps } from "react-quill";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
-import { ReactQuillProps } from "react-quill"; // Import Value type
 import "react-quill/dist/quill.snow.css";
 
 interface Props extends ReactQuillProps {
@@ -40,7 +39,7 @@ const CustomTextArea: React.FC<Props> = ({
   let toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     ["blockquote", "code-block"],
-    ["link", "image"],
+    ["link"],
     [{ header: 1 }, { header: 2 }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }],
@@ -65,6 +64,7 @@ const CustomTextArea: React.FC<Props> = ({
           fontWeight=""
         >
           {title}
+          <span className="text-red-500">*</span>
         </FormLabel>
         <ReactQuill
           theme="snow"
@@ -74,6 +74,7 @@ const CustomTextArea: React.FC<Props> = ({
           style={style}
           placeholder={`Masukkan ${title}`}
           id={id}
+          className=""
           {...props}
         />
         <Input
@@ -84,7 +85,12 @@ const CustomTextArea: React.FC<Props> = ({
           onBlur={handleBlur}
         />
 
-        <FormErrorMessage size={"xs"} color={"red"} fontWeight="">
+        <FormErrorMessage
+          size={"xs"}
+          color={"red"}
+          fontWeight=""
+          mt={'50px'}
+        >
           {errorMessage}
         </FormErrorMessage>
       </FormControl>

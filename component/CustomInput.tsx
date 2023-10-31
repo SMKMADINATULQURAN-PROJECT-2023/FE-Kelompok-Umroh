@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import React, {
   CSSProperties,
   ChangeEventHandler,
   FocusEventHandler,
   HTMLInputTypeAttribute,
-} from 'react';
+} from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -13,7 +13,7 @@ import {
   InputGroup,
   InputProps,
   InputRightElement,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 interface Props extends InputProps {
   title: string;
@@ -43,37 +43,42 @@ const CustomInput: React.FC<Props> = ({
   type,
   ...props
 }) => {
+  const inputHoverStyles = {
+    backgroundColor:
+      hoverStyles?.backgroundColor || backgroundColor || "#eeeeee",
+  };
   return (
     <>
       <FormControl isInvalid={isInvalid}>
         <FormLabel
-          cursor={'pointer'}
-          style={{ width: 'fit-content' }}
-          color={backgroundColor || '#262A56'}
+          cursor="pointer"
+          style={{ width: "fit-content" }}
+          color={backgroundColor || "#262A56"}
           htmlFor={id}
           fontWeight=""
         >
-          {title}<span className='text-red-500'>*</span>
+          {title}
+          <span className="text-red-500">*</span>
         </FormLabel>
         <InputGroup size="lg">
           <Input
             style={style}
             as="input"
-            type={type || 'text'}
+            type={type || "text"}
             id={id}
             value={values}
             onChange={handleChange}
             onBlur={handleBlur}
-            color={'#000000'}
-            backgroundColor={backgroundColor || '#262A56'} // Use the provided backgroundColor or a default value
-            _hover={hoverStyles || { backgroundColor: '#ffffff' }}
-            variant="filled"
+            color="#262A56"
+            border={"1px solid #262A56"}
+            _hover={inputHoverStyles}
+            variant="outline"
             placeholder={`Masukkan ${title}`}
             {...props}
           />
         </InputGroup>
 
-        <FormErrorMessage size={'xs'} color={'red'} fontWeight="">
+        <FormErrorMessage size="xs" color="red" fontWeight="">
           {errorMessage}
         </FormErrorMessage>
       </FormControl>

@@ -1,15 +1,12 @@
 "use client";
 import { CustomHeader } from "@/component";
 import CustomTable from "@/component/CustomTable";
-import RouteButton from "@/component/RouteButton";
-import { StatusBarApproved } from "@/component/StatusBar";
-import { Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import React, { useMemo } from "react";
-import { FaRegPenToSquare, FaSquarePlus, FaTrash } from "react-icons/fa6";
 import useDoaModule from "./service/doa.service";
-import dayjs from "dayjs";
-import "dayjs/locale/id";
+import { doaColumns, kategoriColumn } from "./doaColumn";
+import CustomSecondheader from "@/component/SecondTopNav";
+import CustomTableTabs from "@/component/CustomTabs";
 
 const Doa: NextPage = () => {
   const { useGetDoa, useGetKategoriDoa, useDeleteDoa, useDeleteKategoriDoa } =
@@ -33,7 +30,7 @@ const Doa: NextPage = () => {
   const { isLoading: isLoadingDeleteKategori, mutate: mutateDeleteKategori } =
     useDeleteKategoriDoa();
 
-  const onDeleteDoa = async (id: any) => {
+  const onDeleteDoa = async (id: number) => {
     console.log(id);
     mutateDeleteDoa(id, {
       onSuccess: () => {
@@ -41,113 +38,64 @@ const Doa: NextPage = () => {
       },
     });
   };
-  const onDeleteKategori = async (id: any) => {
+  const onDeleteKategori = async (id: number) => {
     console.log(id);
-    mutateDeleteDoa(id, {
+    mutateDeleteKategori(id, {
       onSuccess: () => {
-        return refetchDoa();
+        return refetchKategori();
       },
     });
   };
 
-  const narrowColumn = (value: string) => (
-    <div className="narrow-column line-clamp-2">{value}</div>
+  const doaColumnData = useMemo(() => dataDoa?.data || [], [dataDoa]);
+  const kategoriColumnData = useMemo(
+    () => dataKategori?.data || [],
+    [dataKategori],
   );
 
-  const columns = [
-    {
-      Header: "ID",
-      accessor: "id",
-    },
-    {
-      Header: "Nama Do'a",
-      accessor: "name",
-    },
-    {
-      Header: "Kategori Do'a",
-      accessor: "kategori_id.kategori_name",
-    },
-    {
-      Header: "Dibuat Oleh",
-      accessor: "created_by.username",
-    },
-    {
-      Header: "Status",
-      accessor: "status",
-    },
-    {
-      Header: "Arab",
-      accessor: "arab",
-      Cell: ({ value }: { value: string }) => narrowColumn(value),
-    },
-    {
-      Header: "Latin",
-      accessor: "latin",
-      Cell: ({ value }: { value: string }) => narrowColumn(value),
-    },
-    {
-      Header: "Arti",
-      accessor: "arti",
-      Cell: ({ value }: { value: string }) => narrowColumn(value),
-    },
-    {
-      Header: "Dibuat Pada",
-      accessor: "created_at",
-      Cell: ({ value }: { value: string }) => {
-        const formattedDate = dayjs(value).locale("id").format("D MMMM YYYY");
-        return <span>{formattedDate}</span>;
-      },
-    },
-    {
-      Header: "Diupdate Pada",
-      accessor: "updated_at",
-      Cell: ({ value }: { value: string }) => {
-        const formattedDate = dayjs(value).locale("id").format("D MMMM YYYY");
-        return <span>{formattedDate}</span>;
-      },
-    },
+  const titleTabs = ["Do'a", "Kategori Do'a"];
+  const contentTabs = [
+    <section className="w-full overflow-hidden rounded-[10px]">
+      <CustomTable
+        columns={doaColumns}
+        data={doaColumnData}
+        isDisableInTable={isLoadingDoa || isLoadingKategori || isFetchingDoa}
+        isLoadingInTable={isLoadingDoa || isLoadingKategori || isFetchingDoa}
+        actionColumnInTable
+        updateRoute={"doa/update-doa/"}
+        onDeleteInTable={(id: number) => onDeleteDoa(id)}
+      />
+    </section>,
+    <section className="w-full overflow-hidden rounded-[10px]">
+      <CustomTable
+        columns={kategoriColumn}
+        data={kategoriColumnData}
+        isDisableInTable={
+          isLoadingKategori || isLoadingDeleteKategori || isFetchingKategori
+        }
+        isLoadingInTable={
+          isLoadingKategori || isLoadingDeleteKategori || isFetchingKategori
+        }
+        actionColumnInTable
+        updateRoute={"doa/update-doa/"}
+        onDeleteInTable={(id: number) => onDeleteKategori(id)}
+      />
+    </section>,
   ];
-
-  const data = useMemo(() => dataDoa?.data || [], [dataDoa]);
 
   return (
     <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="mb-[20px] flex w-full items-center justify-between rounded-[10px] bg-primary p-5">
-        <div className="flex flex-col items-start">
-          <p className="mb-2 text-[20px] font-semibold text-white">
-            Do'a{" "}
-            <span className="rounded-[22px] bg-[#ffffff65] px-2 py-1 text-[13px] font-normal text-white">
-              {dataDoa?.pagination.total} Do'a
-            </span>
-          </p>
-          <p className="text-white">List do'a. Lakukan perubahan</p>
-        </div>
-        <div>
-          <RouteButton
-            to={"doa/tambah-doa"}
-            title="Tambah Doa"
-            width={"100%"}
-            bg={"blue.500"}
-            color={"white"}
-            justifyContent="flex-start"
-            _hover={{ bg: "blue.600" }}
-            leftIcon={<FaSquarePlus color="#ffffff" />}
-          />
-        </div>
-      </section>
+      <CustomSecondheader
+        navigateTo="doa/tambah-doa"
+        title="Do'a"
+        totalData={dataDoa?.pagination.total ?? 0}
+        isLoading={isLoadingDoa || isLoadingKategori}
+      />
 
-      <section className="h-[600px] overflow-hidden rounded-[10px] border-2 border-primary">
-        <CustomTable
-          columns={columns}
-          data={data}
-          isDisableInTable={isLoadingDoa || isLoadingDeleteDoa}
-          isLoadingInTable={isLoadingDoa || isLoadingDeleteDoa}
-          actionColumnInTable
-          updateRoute={"doa/update-doa/"}
-          onDeleteInTable={(id: number) => onDeleteDoa(id)}
-        />
+      <section className="mb-[20px] w-full">
+        <CustomTableTabs titles={titleTabs} contents={contentTabs} />
       </section>
     </div>
   );

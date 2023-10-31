@@ -13,7 +13,8 @@ import {
 import { AxiosResponse } from "axios";
 
 const useDoaModule = () => {
-  const { toastError, toastSuccess, toastWarning } = useNotification();
+  const { toastError, toastSuccess, toastWarning, toastInfo } =
+    useNotification();
   const axiosClient = useAxiosAuth();
 
   const useGetDoa = () => {

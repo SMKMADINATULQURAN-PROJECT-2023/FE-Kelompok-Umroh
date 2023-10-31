@@ -21,14 +21,13 @@ import {
   PopoverCloseButton,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import Cookies from "js-cookie";
 import { useProfileService } from "@/app/auth/service/auth.service";
 import { signOut } from "next-auth/react";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { data } = useProfileService();
+  const { data, isLoading, isFetching } = useProfileService();
 
   const path: string[] = pathname ? pathname.split("/") : [];
   const lastPath = path[path.length - 1];
@@ -69,7 +68,7 @@ const CustomHeader = ({}) => {
     },
   ];
   return (
-    <div className="mb-[20px] flex w-full items-center justify-between">
+    <div className="mb-[20px] flex w-full items-start justify-between">
       <div className="flex w-[75%] flex-col">
         <div className="w-fit rounded-[5px] bg-primary px-5 py-1">
           <Breadcrumb
@@ -90,27 +89,6 @@ const CustomHeader = ({}) => {
               );
             })}
           </Breadcrumb>
-        </div>
-        <div className="flex h-fit w-full items-center space-x-3">
-          <div
-            className={`${
-              path.length > 3 ? "" : "w-[7px]"
-            } h-[30px]  rounded-[5px] bg-primary`}
-          >
-            {path.length > 3 ? (
-              <div
-                onClick={() => router.back()}
-                className="flex h-full w-full cursor-pointer items-center justify-center px-4"
-              >
-                <FaArrowLeft color="white"/>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-          <h1 className="items-center text-[25px] font-semibold capitalize text-primary truncate">
-            {lastPath?.replace(/-/g, " ")}
-          </h1>
         </div>
       </div>
 

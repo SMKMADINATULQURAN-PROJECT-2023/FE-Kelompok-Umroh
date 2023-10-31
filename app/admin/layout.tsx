@@ -61,6 +61,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <title>jkt48</title>
         <meta name="description" content="This is the page description." />
       </Head>
+
       <section className="grid w-full grid-cols-7  bg-white">
         <section className="sticky top-0 col-span-1 flex h-screen w-full flex-col items-center justify-start space-y-2 overflow-y-scroll rounded-tr-[50px] bg-primary px-5 py-[30px]">
           <div className="mb-[50px] w-full text-center text-[25px] font-extrabold uppercase text-white underline underline-offset-4">
@@ -70,7 +71,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             {dashmenu.map((_, i) => {
               const isSelected = currentNav === _.nav;
               return (
-                <Link href={`/admin/${_.nav.toLowerCase()}`}>
+                <Link href={`/admin/${_.nav.toLowerCase()}`} key={i}>
                   <Button
                     fontSize={15}
                     key={i}
@@ -83,7 +84,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                     variant={isSelected ? "solid" : "ghost"}
                     backgroundColor={isSelected ? "#ffffff" : "#262a56"}
                     _hover={{
-                      backgroundColor: '#ffffff66',
+                      backgroundColor: "#ffffff66",
                       height: "55px",
                       transition: "height 200ms ease-in-out",
                     }}
@@ -95,7 +96,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             })}
           </div>
         </section>
-        <section className="bg-sectionBg col-span-6 p-5">{children}</section>
+        <section className="col-span-6 p-5">{children}</section>
       </section>
     </>
   );

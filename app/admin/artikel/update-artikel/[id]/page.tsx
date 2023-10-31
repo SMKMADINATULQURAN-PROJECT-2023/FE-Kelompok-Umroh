@@ -55,8 +55,8 @@ const UpdateArtikel: NextPage<Props> = ({
     console.log(payload);
     mutate(
       {
-        id: params.id, // Pass slug property
-        payload: payload, // Pass payload property
+        id: params.id,
+        payload: payload,
       },
       {
         onSuccess: () => {
@@ -86,63 +86,60 @@ const UpdateArtikel: NextPage<Props> = ({
     setValues,
   } = formik;
 
-  console.log("data", dataArtikel);
-  console.log("id", params);
   return (
     <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] bg-primary p-5">
+      <section className="w-full rounded-[10px] p-5">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-3">
-              <div className="flex w-full flex-col items-start space-y-3">
-                <CustomInput
-                  id="title"
-                  title="Judul Artikel"
-                  type="text"
-                  values={values.title}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.title}
-                  errorMessage={errors?.title}
-                  backgroundColor="#ffffff"
-                />
-              </div>
+            <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-10">
+              <CustomInput
+                id="title"
+                title="Judul Artikel"
+                type="text"
+                values={values.title}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.title}
+                errorMessage={errors?.title}
+              />
 
               <div className="flex h-full w-full flex-col justify-between">
-                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-white p-5">
+                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
                     {values.file_update ? (
-                      <div className="overflow-hidden rounded-[10px] border border-primary">
+                      <div className="overflow-hidden rounded-[10px] border border-white">
                         <Image
                           width={200}
                           height={200}
                           style={{ objectFit: "cover" }}
-                          src={typeof values.file_update === 'string' ? values.file_update : URL.createObjectURL(values.file_update)}
-                          // src={values.file_update || URL.createObjectURL(values.file_update)}
+                          src={
+                            typeof values.file_update === "string"
+                              ? values.file_update
+                              : URL.createObjectURL(values.file_update)
+                          }
                           alt=""
                         />
                       </div>
                     ) : (
-                      <div className="rounded-[10px] border border-primary p-5">
-                        <Avatar size="xl" name="" src="" />
+                      <div className="rounded-[10px] border border-white p-5">
+                        <Avatar size="xl" name="-" src="" />
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col items-start">
                     <input
-                      className="w-fit cursor-pointer text-primary"
+                      className="w-fit cursor-pointer text-white"
                       type="file"
                       onBlur={handleBlur}
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0]; // Use optional chaining to handle null
+                        const file = e.target.files?.[0];
                         if (file) {
-                          // Check file size
                           if (file.size > 10 * 1024 * 1024) {
                             alert("File size exceeds 10 MB.");
                             return;
@@ -152,7 +149,7 @@ const UpdateArtikel: NextPage<Props> = ({
                       }}
                     />
                     {values.file_update && (
-                      <span className="text-primary">
+                      <span className="text-white">
                         {(values.file_update.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
@@ -161,13 +158,12 @@ const UpdateArtikel: NextPage<Props> = ({
                 </div>
               </div>
 
-              <div className="w-[100%]" onBlur={handleBlur}>
+              <div className="mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
-                  className="overflow-hidden rounded-[10px] border-none bg-white"
+                  className="h-[600px]"
                   id="description"
                   title="Deskripsi Artikel"
                   values={values.description}
-                  // values={quill}
                   handleChange={(value: any) => {
                     handleChange(value);
                     setQuill(value);
@@ -176,7 +172,6 @@ const UpdateArtikel: NextPage<Props> = ({
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.description}
                   errorMessage={errors?.description}
-                  backgroundColor="#ffffff"
                 />
               </div>
             </div>

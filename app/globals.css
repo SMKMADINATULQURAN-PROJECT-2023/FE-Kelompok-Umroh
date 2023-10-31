@@ -43,7 +43,7 @@ a {
 /* custom-table.module.css or global CSS */
 /* Add custom CSS classes for narrow columns */
 .narrow-column {
-  width: 200px;
+  width: 250px;
   white-space: normal;
 }
 
@@ -166,9 +166,6 @@ body {
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
   background-color: var(--abutrans);
-}
-.react-calendar__navigation * {
-  /* color: #262a56; */
 }
 
 .react-calendar__month-view__weekdays {

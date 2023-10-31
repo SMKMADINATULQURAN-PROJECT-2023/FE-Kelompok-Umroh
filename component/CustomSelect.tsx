@@ -1,9 +1,9 @@
-'use client';
+"use client";
 import React, {
   CSSProperties,
   ChangeEventHandler,
   FocusEventHandler,
-} from 'react';
+} from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -14,7 +14,7 @@ import {
   InputRightElement,
   Select,
   SelectProps,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 interface Props extends SelectProps {
   title: string;
@@ -44,17 +44,22 @@ const CustomSelect: React.FC<Props> = ({
   children,
   ...props
 }) => {
+  const inputHoverStyles = {
+    backgroundColor:
+      hoverStyles?.backgroundColor || backgroundColor || "#eeeeee",
+  };
   return (
     <>
       <FormControl isInvalid={isInvalid}>
         <FormLabel
-          cursor={'pointer'}
-          style={{ width: 'fit-content' }}
-          color={backgroundColor || '#262A56'}
+          cursor={"pointer"}
+          style={{ width: "fit-content" }}
+          color={backgroundColor || "#262A56"}
           htmlFor={id}
           fontWeight=""
         >
           {title}
+          <span className="text-red-500">*</span>
         </FormLabel>
         <Select
           style={style}
@@ -62,17 +67,17 @@ const CustomSelect: React.FC<Props> = ({
           value={values}
           onBlur={handleBlur}
           onChange={handleChange}
-          color={'#000000'}
-          backgroundColor={backgroundColor || '#262A56'}
-          _hover={hoverStyles || { backgroundColor: '#ffffff' }}
-          variant="filled"
+          color={"#262A56"}
+          _hover={inputHoverStyles}
+          border={"1px solid #262A56"}
+          variant="outline"
           placeholder={`Masukkan ${title}`}
           {...props}
         >
           {children}
         </Select>
 
-        <FormErrorMessage size={'xs'} color={'red'} fontWeight="">
+        <FormErrorMessage size={"xs"} color={"red"} fontWeight="">
           {errorMessage}
         </FormErrorMessage>
       </FormControl>

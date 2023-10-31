@@ -72,14 +72,14 @@ const TambahUser: NextPage = () => {
     <div className="h-full w-full ">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] bg-primary p-5">
+      <section className="w-full rounded-[10px] p-5">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="flex h-full w-full items-center justify-between gap-x-10">
-              <div className="flex w-[50%] flex-col items-start space-y-3">
+            <div className="grid h-full w-full grid-cols-2 gap-x-10 gap-y-10">
+              <div className="flex w-full flex-col items-start space-y-7">
                 <CustomInput
                   id="username"
                   title="Username"
@@ -89,7 +89,6 @@ const TambahUser: NextPage = () => {
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.username}
                   errorMessage={errors?.username}
-                  backgroundColor="#ffffff"
                 />
                 <CustomInput
                   id="email"
@@ -100,8 +99,9 @@ const TambahUser: NextPage = () => {
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.email}
                   errorMessage={errors?.email}
-                  backgroundColor="#ffffff"
                 />
+              </div>
+              <div className="flex w-full flex-col items-start space-y-7">
                 <CustomInput
                   id="password"
                   title="Password"
@@ -111,11 +111,28 @@ const TambahUser: NextPage = () => {
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.password}
                   errorMessage={errors?.password}
-                  backgroundColor="#ffffff"
                 />
+                <CustomSelect
+                  id="role_id"
+                  title="Role"
+                  size={"lg"}
+                  values={values.role_id.toString()}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.role_id}
+                  errorMessage={errors?.role_id}
+                >
+                  {option.map((_, i) => {
+                    return (
+                      <option value={_.value} key={i}>
+                        {_.label}
+                      </option>
+                    );
+                  })}
+                </CustomSelect>
               </div>
-              <div className="flex h-full w-[50%] flex-col justify-between space-y-3">
-                <div className="flex h-full w-full items-center space-x-5 rounded-[10px] bg-white p-5">
+              <div className="col-span-2 flex h-full w-full flex-col justify-between ">
+                <div className="flex h-full w-full items-center space-x-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
                     {values.file_create ? (
                       <Avatar
@@ -129,50 +146,28 @@ const TambahUser: NextPage = () => {
                   </div>
                   <div className="flex flex-col items-start">
                     <input
-                      className="w-fit cursor-pointer text-primary"
+                      className="w-fit cursor-pointer text-white"
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0]; // Use optional chaining to handle null
+                        const file = e.target.files?.[0];
                         if (file) {
-                          // Check file size
                           if (file.size > 10 * 1024 * 1024) {
                             alert("File size exceeds 10 MB.");
                             return;
                           }
-
-                          // Set the image source and display file size
                           setFieldValue("file_create", file);
                         }
                       }}
                     />
                     {values.file_create && (
-                      <span className="text-primary">
+                      <span className="text-white">
                         {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
                     )}
                   </div>
                 </div>
-                <CustomSelect
-                  id="role_id"
-                  title="Role"
-                  size={"lg"}
-                  values={values.role_id.toString()}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.role_id}
-                  errorMessage={errors?.role_id}
-                  backgroundColor="#ffffff"
-                >
-                  {option.map((_, i) => {
-                    return (
-                      <option value={_.value} key={i}>
-                        {_.label}
-                      </option>
-                    );
-                  })}
-                </CustomSelect>
               </div>
             </div>
             <div className="flex w-full items-center justify-between">

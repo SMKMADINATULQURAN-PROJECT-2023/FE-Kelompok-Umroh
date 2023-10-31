@@ -1,6 +1,6 @@
 import { BaseResponsePagination } from "@/service/axios";
 
-interface Artikel {
+export interface Artikel {
   id: number;
   title: string;
   description: string;
@@ -8,6 +8,7 @@ interface Artikel {
   file_update: any;
   slug: string;
   thumbnail: any;
+  status: string;
   created_at: string;
   updated_at: string;
   created_by: {

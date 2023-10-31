@@ -34,6 +34,7 @@ const useArtikelModule = () => {
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
       queryKey: ["/artikel/:id"],
       queryFn: () => getDetailArtikel(id),
+      enabled: !!id,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -42,7 +43,6 @@ const useArtikelModule = () => {
   const useTambahArtikel = () => {
     const { mutate, isLoading } = useMutation(
       async (payload: TambahArtikelPayload): Promise<AxiosResponse> => {
-        // Define the return type as Promise<AxiosResponse>
         try {
           const response = await axiosClient.post("/artikel/create", payload, {
             headers: {
@@ -51,9 +51,8 @@ const useArtikelModule = () => {
           });
           return response;
         } catch (error) {
-          // Handle error here
           console.error(error);
-          throw error; // Rethrow the error to be caught by onError
+          throw error;
         }
       },
       {

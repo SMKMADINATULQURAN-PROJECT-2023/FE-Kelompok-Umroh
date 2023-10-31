@@ -94,8 +94,8 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
     console.log(values);
     mutateUpdateDoa(
       {
-        id: params.id, // Pass slug property
-        payload: values, // Pass payload property
+        id: params.id,
+        payload: values,
       },
       {
         onSuccess: () => {
@@ -170,31 +170,22 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
             setFieldValue("kategori_id", 0);
             onClose();
           }}
+          size={"xl"}
           isOpen={isOpen}
           motionPreset="slideInBottom"
         >
           <ModalOverlay />
-          <ModalContent className="bg-primary" background={"#262A56"}>
+          <ModalContent background={"white"}>
             <FormikProvider value={formikKategori}>
               <Form onSubmit={handleSubmitKategori}>
                 <ModalHeader color={"white"}>Tambah Kategori Do'a</ModalHeader>
                 <ModalCloseButton color={"white"} />
                 <ModalBody>
                   <div className="mb-5 flex h-full w-full flex-col justify-between">
-                    <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-white p-5">
+                    <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                       <div className="flex items-center">
                         {valuesKategori.file_create ? (
                           <div className="overflow-hidden rounded-[10px]">
-                            {/* <img
-                          key={valuesKategori.file_create} // Add a unique key when src changes
-                          width={200}
-                          height={200}
-                          style={{ objectFit: "cover" }}
-                          src={URL.createObjectURL(
-                            valuesKategori.file_create,
-                          )}
-                          alt=""
-                        /> */}
                             <Avatar
                               size="xl"
                               name=""
@@ -204,23 +195,22 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
                             />
                           </div>
                         ) : (
-                          <div className="rounded-[10px] border border-primary p-5">
-                            <Avatar size="xl" name="" src="" />
+                          <div className="rounded-[10px] border border-white p-5">
+                            <Avatar size="xl" name="-" src="" />
                           </div>
                         )}
                       </div>
                       <div className="flex flex-col items-start">
                         <input
-                          className="w-fit cursor-pointer text-primary"
+                          className="w-fit cursor-pointer text-white"
                           type="file"
                           id="file_create"
                           onBlur={handleBlurKategori}
                           accept="image/*"
                           onChange={(e) => {
                             handleChangeKategori(e);
-                            const file = e.target.files?.[0]; // Use optional chaining to handle null
+                            const file = e.target.files?.[0];
                             if (file) {
-                              // Check file size
                               if (file.size > 10 * 1024 * 1024) {
                                 alert("File size exceeds 10 MB.");
                                 return;
@@ -230,7 +220,7 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
                           }}
                         />
                         {valuesKategori.file_create && (
-                          <span className="text-primary">
+                          <span className="text-white">
                             {(
                               valuesKategori.file_create.size /
                               (1024 * 1024)
@@ -250,7 +240,6 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
                     handleBlur={handleBlurKategori}
                     isInvalid={!!errorsKategori?.kategori_name}
                     errorMessage={errorsKategori?.kategori_name}
-                    backgroundColor="#ffffff"
                   />
                 </ModalBody>
                 <ModalFooter>
@@ -281,8 +270,7 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
                         isDisabled={isLoadingTambahKategori}
                         h="45px"
                         backgroundColor={"blue.500"}
-                        color={"#ffffff"}
-                        leftIcon={<FaSquarePlus color="#ffffff" />}
+                        leftIcon={<FaSquarePlus color="white" />}
                         _hover={{ bgColor: "blue.600" }}
                       >
                         Tambah Kategori
@@ -302,76 +290,68 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="flex h-full w-full flex-col items-center justify-between gap-y-3">
-              <div className="grid w-full grid-cols-2 gap-x-10 gap-y-3">
-                <CustomInput
-                  id="name"
-                  title="Nama Do'a"
-                  type="text"
-                  values={values.name}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.name}
-                  errorMessage={errors?.name}
-                  backgroundColor="#ffffff"
-                />
-                <CustomInput
-                  id="arab"
-                  title="Do'a (Arab)"
-                  type="text"
-                  values={values.arab}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.arab}
-                  errorMessage={errors?.arab}
-                  backgroundColor="#ffffff"
-                />
-                <CustomInput
-                  id="latin"
-                  title="Do'a (Latin)"
-                  type="text"
-                  values={values.latin}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.latin}
-                  errorMessage={errors?.latin}
-                  backgroundColor="#ffffff"
-                />
-                <CustomInput
-                  id="arti"
-                  title="Do'a (Arti)"
-                  type="text"
-                  values={values.arti}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.arti}
-                  errorMessage={errors?.arti}
-                  backgroundColor="#ffffff"
-                />
-              </div>
-              <div className="flex h-full w-[100%] flex-col justify-between space-y-3">
-                <CustomSelect
-                  id="kategori_id"
-                  title="Kategori Do'a"
-                  size={"lg"}
-                  values={values.kategori_id.toString()}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.kategori_id}
-                  errorMessage={errors?.kategori_id}
-                  backgroundColor="#ffffff"
-                >
-                  {dataKategori?.data.map((_, i) => {
-                    return (
-                      <option value={_.id} key={i}>
-                        {_.kategori_name}
-                      </option>
-                    );
-                  })}
-                  <option value="tambah_doa">+ Tambah Kategori Do'a</option>
-                </CustomSelect>
-              </div>
+            <div className="grid w-full grid-cols-1 gap-x-10 gap-y-10">
+              <CustomInput
+                id="name"
+                title="Nama Do'a"
+                type="text"
+                values={values.name}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.name}
+                errorMessage={errors?.name}
+              />
+              <CustomInput
+                id="arab"
+                title="Do'a (Arab)"
+                type="text"
+                values={values.arab}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.arab}
+                errorMessage={errors?.arab}
+              />
+              <CustomInput
+                id="latin"
+                title="Do'a (Latin)"
+                type="text"
+                values={values.latin}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.latin}
+                errorMessage={errors?.latin}
+              />
+              <CustomInput
+                id="arti"
+                title="Do'a (Arti)"
+                type="text"
+                values={values.arti}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.arti}
+                errorMessage={errors?.arti}
+              />
+              <CustomSelect
+                id="kategori_id"
+                title="Kategori Do'a"
+                size={"lg"}
+                values={values.kategori_id.toString()}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.kategori_id}
+                errorMessage={errors?.kategori_id}
+              >
+                {dataKategori?.data.map((_, i) => {
+                  return (
+                    <option value={_.id} key={i}>
+                      {_.kategori_name}
+                    </option>
+                  );
+                })}
+                <option value="tambah_doa">+ Tambah Kategori Do'a</option>
+              </CustomSelect>
             </div>
+
             <div className="flex w-full items-center justify-between">
               <div className="w-[20%]">
                 <Button

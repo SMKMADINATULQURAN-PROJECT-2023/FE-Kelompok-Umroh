@@ -1,7 +1,8 @@
+"use client";
 import { CustomHeader } from "@/component";
 import CustomTable from "@/component/CustomTable";
 import RouteButton from "@/component/RouteButton";
-import { StatusBarApproved } from "@/component/StatusBar";
+import { StatusBarApproved, StatusBarProcessed } from "@/component/StatusBar";
 import { Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import React from "react";
@@ -16,7 +17,7 @@ const fakeData = [
     nama_doa: "nama doa",
     kategori_doa: "kategori doa",
     created_by: "orang",
-    status: <StatusBarApproved />,
+    status: "diterima",
   },
   {
     id: 2,
@@ -26,7 +27,7 @@ const fakeData = [
     nama_doa: "nama doa",
     kategori_doa: "kategori doa",
     created_by: "orang",
-    status: <StatusBarApproved />,
+    status: "diproses",
   },
   {
     id: 3,
@@ -36,45 +37,68 @@ const fakeData = [
     nama_doa: "nama doa",
     kategori_doa: "kategori doa",
     created_by: "orang",
-    status: <StatusBarApproved />,
+    status: "diterima",
   },
 ];
 
 const Paket: NextPage = () => {
   const columns = [
     {
-      Header: "ID",
-      accessor: "id",
+      id: "id", // Assign a unique id
+      header: () => <span>ID</span>,
+      accessorFn: (row: { id: any }) => row.id,
     },
     {
-      Header: "Nama Do'a",
-      accessor: "nama_doa",
+      id: "nama_doa", // Assign a unique id
+      header: () => <span>Nama Do'a</span>,
+      accessorFn: (row: { nama_doa: any }) => row.nama_doa,
     },
     {
-      Header: "Kategori Do'a",
-      accessor: "kategori_doa",
+      id: "kategori_doa", // Assign a unique id
+      header: () => <span>Kategori Do'a</span>,
+      accessorFn: (row: { kategori_doa: any }) => row.kategori_doa,
     },
     {
-      Header: "Dibuat Oleh",
-      accessor: "created_by",
+      id: "created_by", // Assign a unique id
+      header: () => <span>Dibuat Oleh</span>,
+      accessorFn: (row: { created_by: any }) => row.created_by,
     },
     {
-      Header: "Status",
-      accessor: "status",
+      id: "status",
+      header: () => <span>Status</span>,
+      accessorFn: (row: { status: any }) => row.status,
+      // cell: ({ value }: { value: string }) => {
+      //   console.log('value status', value)
+      //   // return value == "diproses" ? (
+      //   //   <StatusBarApproved />
+      //   // ) : (
+      //   //   <StatusBarProcessed />
+      //   // );
+      //   return <span>{value}</span>
+      // },
+      cell: (props: any) => {
+        return props.getValue() == "diterima" ? (
+          <StatusBarApproved />
+        ) : (
+          <StatusBarProcessed />
+        );
+      },
     },
+
     {
       Header: "Arab",
-      accessor: "arab",
+      accessorKey: "arab",
     },
     {
       Header: "Latin",
-      accessor: "latin",
+      accessorKey: "latin",
     },
     {
       Header: "Arti",
-      accessor: "indonesia",
+      accessorKey: "indonesia",
     },
   ];
+
   const data = React.useMemo(() => fakeData, []);
   return (
     <div className="h-full w-full">
@@ -104,7 +128,7 @@ const Paket: NextPage = () => {
         </div>
       </section>
 
-      <section className="h-[600px] overflow-hidden rounded-[10px] border-2 border-primary">
+      <section className="h-[600px] overflow-hidden rounded-[10px]">
         <CustomTable
           columns={columns}
           data={data}

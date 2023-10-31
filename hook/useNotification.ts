@@ -13,7 +13,16 @@ export default function useNotification() {
       isClosable: true,
     });
   }
-
+  function toastInfo(message: string) {
+    toast({
+      position: "top-right",
+      title: "Berhasil",
+      description: message,
+      status: "info",
+      duration: 4000,
+      isClosable: true,
+    });
+  }
   function toastError() {
     toast({
       title: "Error",
@@ -33,5 +42,5 @@ export default function useNotification() {
     });
   }
 
-  return { toastSuccess, toastError, toastWarning };
+  return { toastSuccess, toastError, toastWarning, toastInfo };
 }
