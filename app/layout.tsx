@@ -1,11 +1,11 @@
 import "./globals.css";
 
 import React, { ReactNode } from "react";
-import ReactQuery from "@/component/ReactQuery";
-import CustomChakra from "@/component/CustomChakra";
-import NextAuthProvider from "@/component/NextAuthProvider";
+import ReactQuery from "@/components/ReactQuery";
+import CustomChakra from "@/components/CustomChakra";
+import NextAuthProvider from "@/components/NextAuthProvider";
 import { Session } from "next-auth";
-import ProgressBarClient from "@/component/ProgressBar";
+import ProgressBarClient from "@/components/ProgressBar";
 
 interface NextAuthProps {
   children: ReactNode;
@@ -25,6 +25,9 @@ const RootLayout: React.FC<NextAuthProps> = ({ children, session }) => {
             <ReactQuery>
               <CustomChakra>
                 <section className="h-full w-full">
+                  <div className="h-7 flex justify-center items-center w-screen bg-cyan-400 font-semibold text-white sticky top-0 z-[800]">
+                    DEMO VERSION
+                  </div>
                   <ProgressBarClient />
                   {children}
                 </section>

@@ -5,15 +5,15 @@ import HtmlRenderer from "@/hook/useMarkdownConvert";
 import "dayjs/locale/id";
 import dayjs from "dayjs";
 import { FaMapMarkedAlt } from "react-icons/fa";
-import { Button } from "@chakra-ui/react";
+import { Avatar, Button } from "@chakra-ui/react";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
-import RouteButton from "@/component/RouteButton";
+import RouteButton from "@/components/RouteButton";
 import {
   StatusBarApproved,
   StatusBarProcessed,
   StatusBarRejected,
   StatusBarUknown,
-} from "@/component/StatusBar";
+} from "@/components/StatusBar";
 
 interface Props {
   data: Ziarah;
@@ -59,7 +59,7 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             <h1 className="truncate text-[20px] font-semibold text-white">
               {data.name}
             </h1>
-            <div className="flex items-center space-x-2">
+            <div className="ml-7 flex items-center space-x-2">
               <p className="text-[11px] text-white">Status: </p>
               {statusText}
             </div>
@@ -74,14 +74,26 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             {dayjs(data.updated_at).locale("id").format("D MMMM YYYY")}
           </span>
         </div>
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="rounded-[5px] bg-white p-2">
-              <FaMapMarkedAlt color="#262a56" size={19} />
+        <div className="flex w-full items-end justify-between">
+          <div className="flex flex-col space-y-3">
+            <div className="flex items-center space-x-3">
+              <div className="rounded-[5px] bg-white p-2">
+                <FaMapMarkedAlt color="#262a56" size={15} />
+              </div>
+              <p className="truncate text-[13px] font-semibold text-white">
+                {data.location}
+              </p>
             </div>
-            <p className="truncate text-[13px] font-semibold text-white">
-              {data.location}
+            <div className="flex items-center space-x-3">
+            <Avatar
+              name={data.created_by.username}
+              src={data.created_by.avatar}
+              size={"sm"}
+            />
+            <p className="truncate text-[13px] text-white">
+              {data.created_by.username}
             </p>
+          </div>
           </div>
           <div className="flex items-center space-x-3">
             <div>

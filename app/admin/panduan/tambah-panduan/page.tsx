@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TambahPanduanPayload } from "../interface/panduan.interface";
 import { Form, FormikProvider, useFormik } from "formik";
-import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
+import { CustomHeader } from "@/components";
+import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/component/CustomTextarea";
+import CustomTextArea from "@/components/CustomTextarea";
 import Image from "next/image";
-import CustomSelect from "@/component/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 
 interface Props {}
 
@@ -24,28 +24,28 @@ const TambahPanduan: NextPage<Props> = ({}) => {
   const [quill, setQuill] = useState("");
   const genderOption = [
     {
-      value: "laki-laki",
+      value: "Laki-Laki",
       label: "Laki - Laki",
     },
     {
-      value: "perempuan",
+      value: "Perempuan",
       label: "Perempuan",
     },
   ];
   const kategoriOption = [
     {
-      value: "umrah",
+      value: "Umrah",
       label: "Umrah",
     },
     {
-      value: "haji",
+      value: "Haji",
       label: "Haji",
     },
   ];
 
   const createPanduanSchema = yup.object().shape({
     title: yup.string().default("").required("Wajib isi"),
-    url: yup.string().default("").required("Wajib isi"),
+    link: yup.string().default("").required("Wajib isi"),
     gender: yup.string().default("").required("Wajib isi"),
     kategori_panduan: yup.string().default("").required("Wajib isi"),
     description: yup.string().nullable().default("").required("Wajib isi"),
@@ -96,69 +96,6 @@ const TambahPanduan: NextPage<Props> = ({}) => {
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-10">
-              <div className="flex w-full flex-col items-start space-y-7">
-                <CustomInput
-                  id="title"
-                  title="Judul Panduan"
-                  type="text"
-                  values={values.title}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.title}
-                  errorMessage={errors?.title}
-                />
-                <CustomInput
-                  id="url"
-                  title="Link Video"
-                  type="url"
-                  values={values.url}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.url}
-                  errorMessage={errors?.url}
-                />
-              </div>
-
-              <div className="flex w-full flex-col items-start space-y-7">
-                <CustomSelect
-                  id="gender"
-                  title="Panduan Untuk"
-                  size={"lg"}
-                  values={values.gender.toString()}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.gender}
-                  errorMessage={errors?.gender}
-                >
-                  {genderOption.map((_, i) => {
-                    return (
-                      <option value={_.value} key={i}>
-                        {_.label}
-                      </option>
-                    );
-                  })}
-                </CustomSelect>
-
-                <CustomSelect
-                  id="kategori_panduan"
-                  title="Kategori Panduan"
-                  size={"lg"}
-                  values={values.kategori_panduan.toString()}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.kategori_panduan}
-                  errorMessage={errors?.kategori_panduan}
-                >
-                  {kategoriOption.map((_, i) => {
-                    return (
-                      <option value={_.value} key={i}>
-                        {_.label}
-                      </option>
-                    );
-                  })}
-                </CustomSelect>
-              </div>
-
               <div className="col-span-2 flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
@@ -205,7 +142,70 @@ const TambahPanduan: NextPage<Props> = ({}) => {
                 </div>
               </div>
 
-              <div className="col-span-2 w-full mb-12" onBlur={handleBlur}>
+              <div className="flex w-full flex-col items-start space-y-7">
+                <CustomInput
+                  id="title"
+                  title="Judul Panduan"
+                  type="text"
+                  values={values.title}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.title}
+                  errorMessage={errors?.title}
+                />
+                <CustomInput
+                  id="link"
+                  title="Link Video"
+                  type="url"
+                  values={values.link}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.link}
+                  errorMessage={errors?.link}
+                />
+              </div>
+
+              <div className="flex w-full flex-col items-start space-y-7">
+                <CustomSelect
+                  id="gender"
+                  title="Panduan Untuk"
+                  size={"lg"}
+                  values={values.gender.toString()}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.gender}
+                  errorMessage={errors?.gender}
+                >
+                  {genderOption.map((_, i) => {
+                    return (
+                      <option value={_.value} key={i}>
+                        {_.label}
+                      </option>
+                    );
+                  })}
+                </CustomSelect>
+
+                <CustomSelect
+                  id="kategori_panduan"
+                  title="Kategori Panduan"
+                  size={"lg"}
+                  values={values.kategori_panduan.toString()}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.kategori_panduan}
+                  errorMessage={errors?.kategori_panduan}
+                >
+                  {kategoriOption.map((_, i) => {
+                    return (
+                      <option value={_.value} key={i}>
+                        {_.label}
+                      </option>
+                    );
+                  })}
+                </CustomSelect>
+              </div>
+
+              <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
                   className="h-[600px]"
                   id="description"

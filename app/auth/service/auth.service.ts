@@ -15,7 +15,6 @@ export const useLoginService = () => {
   const { toastSuccess, toastError, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  console.log("ngecek token", session?.user?.accessToken);
   const { mutate, isLoading } = useMutation(
     (payload: loginPayload) => {
       return axiosClient.post("/admin/login", payload);

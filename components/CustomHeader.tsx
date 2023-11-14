@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import {
   Avatar,
@@ -23,14 +22,15 @@ import {
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useProfileService } from "@/app/auth/service/auth.service";
 import { signOut } from "next-auth/react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
-  const router = useRouter();
   const { data, isLoading, isFetching } = useProfileService();
+  const loading = isLoading || isFetching;
 
   const path: string[] = pathname ? pathname.split("/") : [];
-  const lastPath = path[path.length - 1];
   const popoverBody = [
     {
       button: (
@@ -93,14 +93,35 @@ const CustomHeader = ({}) => {
       </div>
 
       <div className="flex w-[25%] items-center  justify-between space-x-3 rounded-[10px] bg-primary px-5 py-3">
-        <div className="flex items-center justify-start space-x-3">
-          <div>
-            <Avatar name={data?.data.username} src={data?.data.avatar} />
+        <div className="flex w-full items-center justify-start space-x-3">
+          <div className={`${loading ? "w-[30%]" : ""}`}>
+            {loading ? (
+              <div className="w-full">
+                <Skeleton
+                  height={45}
+                  baseColor="#9FA1B5"
+                  highlightColor="#ffffff"
+                />
+              </div>
+            ) : (
+              <Avatar name={data?.data.username} src={data?.data.avatar} />
+            )}
           </div>
-          <div className="flex flex-col">
-            <p className="text-white">{data?.data.username}</p>
-            <p className="text-white">{data?.data.role_id.role_name}</p>
-          </div>
+          {loading ? (
+            <div className="w-full rounded-[15px]">
+              <Skeleton
+                height={20}
+                count={2}
+                baseColor="#9FA1B5"
+                highlightColor="#ffffff"
+              />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <p className="text-white">{data?.data.username}</p>
+              <p className="text-white">{data?.data.role_id.role_name}</p>
+            </div>
+          )}
         </div>
 
         <Popover placement="left-start" closeOnBlur={true}>

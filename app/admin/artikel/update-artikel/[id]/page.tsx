@@ -1,5 +1,5 @@
 "use client";
-import { CustomHeader } from "@/component";
+import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import useArtikelModule from "../../service/artikel.service";
 import { useRouter } from "next/navigation";
@@ -7,9 +7,9 @@ import * as yup from "yup";
 import { Form, FormikProvider, useFormik } from "formik";
 import { UpdateArtikelPayload } from "../../interface/artikel.interface";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/component/CustomTextarea";
+import CustomTextArea from "@/components/CustomTextarea";
 import Image from "next/image";
-import CustomInput from "@/component/CustomInput";
+import CustomInput from "@/components/CustomInput";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import { useState } from "react";
 
@@ -34,6 +34,8 @@ const UpdateArtikel: NextPage<Props> = ({
   const { isLoading: isLoadingUpdate, mutate } = useUpdateArtikel();
   const [quill, setQuill] = useState("");
 
+  const isLoading = isFetchingArtikel || isLoadingArtikel || isLoadingUpdate;
+
   const updateArtikelSchema = yup.object().shape({
     title: yup
       .string()
@@ -43,6 +45,10 @@ const UpdateArtikel: NextPage<Props> = ({
       .string()
       .nullable()
       .default(dataArtikel?.data.description ?? "")
+      .required("Wajib isi"),
+    source: yup
+      .string()
+      .default(dataArtikel?.data.source ?? "")
       .required("Wajib isi"),
     file_update: yup
       .mixed()
@@ -90,24 +96,13 @@ const UpdateArtikel: NextPage<Props> = ({
     <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] p-5">
+      <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-10">
-              <CustomInput
-                id="title"
-                title="Judul Artikel"
-                type="text"
-                values={values.title}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.title}
-                errorMessage={errors?.title}
-              />
-
               <div className="flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
@@ -157,7 +152,26 @@ const UpdateArtikel: NextPage<Props> = ({
                   </div>
                 </div>
               </div>
-
+              <CustomInput
+                id="title"
+                title="Judul Artikel"
+                type="text"
+                values={values.title}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.title}
+                errorMessage={errors?.title}
+              />
+              <CustomInput
+                id="s.source"
+                title="Dikutip Dari"
+                type="text"
+                values={values.source}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.source}
+                errorMessage={errors?.source}
+              />
               <div className="mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
                   className="h-[600px]"
@@ -183,8 +197,8 @@ const UpdateArtikel: NextPage<Props> = ({
                   fontWeight="normal"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoadingUpdate || isLoadingUpdate}
-                  isDisabled={isLoadingUpdate || isLoadingUpdate}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -198,8 +212,8 @@ const UpdateArtikel: NextPage<Props> = ({
                   width={"full"}
                   type="submit"
                   fontWeight="normal"
-                  isLoading={isLoadingUpdate || isLoadingUpdate}
-                  isDisabled={isLoadingUpdate || isLoadingUpdate}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}

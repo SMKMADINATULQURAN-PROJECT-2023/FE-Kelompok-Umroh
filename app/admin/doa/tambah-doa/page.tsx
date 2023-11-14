@@ -1,9 +1,9 @@
 "use client";
-import { CustomHeader } from "@/component";
+import { CustomHeader } from "@/components";
 import type { NextPage } from "next";
 import * as yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
-import CustomInput from "@/component/CustomInput";
+import CustomInput from "@/components/CustomInput";
 import {
   Avatar,
   Button,
@@ -16,7 +16,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import CustomSelect from "@/component/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import {
   TambahDoaPayload,
@@ -137,7 +137,7 @@ const TambahDoa: NextPage<Props> = ({}) => {
             onClose();
           }}
           isOpen={isOpen}
-          size={'xl'}
+          size={"xl"}
           motionPreset="slideInBottom"
         >
           <ModalOverlay />
@@ -253,7 +253,7 @@ const TambahDoa: NextPage<Props> = ({}) => {
         </Modal>
       </>
 
-      <section className="w-full rounded-[10px] p-5">
+      <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"

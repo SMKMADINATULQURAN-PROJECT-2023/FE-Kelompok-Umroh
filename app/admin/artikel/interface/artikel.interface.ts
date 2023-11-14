@@ -9,6 +9,7 @@ export interface Artikel {
   slug: string;
   thumbnail: any;
   status: string;
+  source: string;
   created_at: string;
   updated_at: string;
   created_by: {
@@ -35,7 +36,7 @@ export interface ArtikelPaginationResponse extends BaseResponsePagination {
 // }
 
 export interface TambahArtikelPayload
-  extends Pick<Artikel, "title" | "description" | "file_create"> {}
+  extends Pick<Artikel, "title" | "description" | "file_create" | "source"> {}
 
 export interface UpdateArtikelPayload
-  extends Pick<Artikel, "title" | "description" | "file_update"> {}
+  extends Pick<Artikel, "title" | "description" | "file_update" | "source"> {}

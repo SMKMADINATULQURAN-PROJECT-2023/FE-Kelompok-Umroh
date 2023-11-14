@@ -45,19 +45,15 @@ interface KategoriDoa {
 export interface DoaResponse {
   data: Doa;
 }
+export interface KategoriDoaResponse {
+  data: KategoriDoa;
+}
 export interface DoaListPaginationResponse extends BaseResponsePagination {
   data: Doa[];
 }
 export interface KategoriDoaPaginationResponse extends BaseResponsePagination {
   data: KategoriDoa[];
 }
-
-// export interface BookListFilter extends Partial<Book> {
-//   from_year?: string;
-//   to_year?: string;
-//   page : number
-//   pageSize : number
-// }
 
 export interface TambahDoaPayload
   extends Pick<Doa, "name" | "arab" | "latin" | "arti" | "kategori_id"> {}

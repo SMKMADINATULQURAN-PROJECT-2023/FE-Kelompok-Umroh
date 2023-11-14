@@ -1,8 +1,8 @@
 "use client";
-import { CustomHeader } from "@/component";
-import CustomTable from "@/component/CustomTable";
-import RouteButton from "@/component/RouteButton";
-import { StatusBarApproved, StatusBarProcessed } from "@/component/StatusBar";
+import { CustomHeader } from "@/components";
+import CustomTable from "@/components/CustomTable";
+import RouteButton from "@/components/RouteButton";
+import { StatusBarApproved, StatusBarProcessed } from "@/components/StatusBar";
 import { Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import React from "react";

@@ -13,9 +13,11 @@ const useArtikelModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetArtikel = () => {
+  const useGetArtikel = (page = 1, pageSize = 10) => {
     const getArtikel = async (): Promise<ArtikelPaginationResponse> => {
-      return axiosClient.get("/artikel").then((res) => res.data);
+      return axiosClient
+        .get(`/artikel?page=${page}&pageSize=${pageSize}`)
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
@@ -78,7 +80,7 @@ const useArtikelModule = () => {
         id: any;
         payload: UpdateArtikelPayload;
       }): Promise<AxiosResponse> => {
-        try {
+        try {;
           const response = await axiosClient.put(
             `/artikel/update/${id}`,
             payload,

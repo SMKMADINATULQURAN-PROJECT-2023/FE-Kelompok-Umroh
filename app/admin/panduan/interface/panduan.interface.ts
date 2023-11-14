@@ -9,10 +9,11 @@ interface User {
 
 interface Panduan {
   id: number;
-  url: string;
+  link: string;
   title: string;
   description: string;
   gender: string;
+  thumbnail: string;
   kategori_panduan: string;
   created_at: string;
   updated_at: string;
@@ -30,7 +31,7 @@ export interface PanduanPaginationResponse extends BaseResponsePagination {
   data: Panduan[];
 }
 
-type CommonPanduanPayload = Pick<Panduan, "url" | "title" | "description" | "gender" | "kategori_panduan">;
+type CommonPanduanPayload = Pick<Panduan, "link" | "title" | "description" | "gender" | "kategori_panduan">;
 
 export interface TambahPanduanPayload extends CommonPanduanPayload {
   file_create: any;

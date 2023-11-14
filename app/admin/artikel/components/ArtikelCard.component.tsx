@@ -5,13 +5,13 @@ import "dayjs/locale/id";
 import dayjs from "dayjs";
 import { Avatar, Button } from "@chakra-ui/react";
 import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
-import RouteButton from "@/component/RouteButton";
+import RouteButton from "@/components/RouteButton";
 import {
   StatusBarApproved,
   StatusBarProcessed,
   StatusBarRejected,
   StatusBarUknown,
-} from "@/component/StatusBar";
+} from "@/components/StatusBar";
 import { Artikel } from "../interface/artikel.interface";
 
 interface Props {
@@ -58,7 +58,7 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             <h1 className="truncate text-[20px] font-semibold text-white">
               {data.title}
             </h1>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 ml-7">
               <p className="text-[11px] text-white">Status: </p>
               {statusText}
             </div>

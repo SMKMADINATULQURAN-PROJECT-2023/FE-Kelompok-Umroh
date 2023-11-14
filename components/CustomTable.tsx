@@ -4,23 +4,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableContainer,
   Button,
-  Input,
 } from "@chakra-ui/react";
 import RouteButton from "./RouteButton";
-import {
-  FaAngleLeft,
-  FaAngleRight,
-  FaAnglesLeft,
-  FaAnglesRight,
-  FaRegPenToSquare,
-  FaTrash,
-} from "react-icons/fa6";
+import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
 import {
   TiArrowSortedDown,
   TiArrowSortedUp,
@@ -35,6 +26,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import PaginationMenu from "./PaginationMenu";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface TableProps {
   columns: any[];
@@ -65,6 +58,7 @@ const CustomTable: React.FC<TableProps> = ({
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const table = useReactTable({
     data,
@@ -78,11 +72,16 @@ const CustomTable: React.FC<TableProps> = ({
     getSortedRowModel: getSortedRowModel(),
   });
 
+  // console.log("page", table.getState().pagination.pageSize);
+
   return (
     <div className="h-full w-full overflow-y-scroll">
-      <TableContainer className="mb-5 h-[600px] rounded-lg border border-primary">
+      <TableContainer
+        overflowY={"scroll"}
+        className="mb-5 h-[600px] rounded-lg border border-primary"
+      >
         <Table>
-          <Thead>
+          <Thead position={"sticky"} top={"0px"} zIndex={500}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -138,23 +137,7 @@ const CustomTable: React.FC<TableProps> = ({
                 <Tr key={row.id} className="">
                   {row.getVisibleCells().map((cell) => (
                     <Td key={cell.id} className="">
-                      {isLoadingInTable
-                        ? Array.from({ length: 6 }, (_, i) => (
-                            <div
-                              key={i}
-                              className="flex w-full overflow-hidden rounded-[10px]"
-                            >
-                              <Skeleton
-                                height={200}
-                                count={1}
-                                baseColor="#1c1e3b"
-                              />
-                            </div>
-                          ))
-                        : flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Td>
                   ))}
 
@@ -199,7 +182,17 @@ const CustomTable: React.FC<TableProps> = ({
             ) : (
               <Tr>
                 <Td colSpan={columns.length} className="h-24 text-center">
-                  Tidak ditemukan.
+                  {isLoadingInTable ? (
+                    <Skeleton
+                      className="mb-5"
+                      height={70}
+                      count={6}
+                      baseColor="#9FA1B5"
+                      highlightColor="#1c1e3b"
+                    />
+                  ) : (
+                    "Tidak ditemukan."
+                  )}
                 </Td>
               </Tr>
             )}
@@ -207,115 +200,42 @@ const CustomTable: React.FC<TableProps> = ({
         </Table>
       </TableContainer>
 
-      <section className="mb-3 flex w-full items-center">
-        <div className="flex items-center space-x-5">
-          <div className="flex items-center space-x-2">
-            <Button
-              size={"sm"}
-              backgroundColor={"#262A56"}
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => {
-                setPage(0);
-                return table.setPageIndex(0);
-              }}
-            >
-              <FaAnglesLeft color="#ffffff" />
-            </Button>
-            <Button
-              size={"sm"}
-              backgroundColor={"#262A56"}
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => {
-                setPage(page - 1);
-                return table.previousPage();
-              }}
-            >
-              <FaAngleLeft color="#ffffff" />
-            </Button>
-          </div>
-
-          <div>
-            <Input
-              type="number"
-              size={"sm"}
-              borderRadius={"5px"}
-              border={"1px solid #262A56"}
-              width={"60px"}
-              defaultValue={table.getState().pagination.pageIndex + 1}
-              onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                table.setPageIndex(page);
-              }}
-              className="w-16 rounded border p-1 text-center"
-            />
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button
-              size={"sm"}
-              backgroundColor={"#262A56"}
-              disabled={!table.getCanNextPage()}
-              onClick={() => {
-                setPage(page + 1);
-                return table.nextPage();
-              }}
-            >
-              <FaAngleRight color="#ffffff" />
-            </Button>
-            <Button
-              size={"sm"}
-              backgroundColor={"#262A56"}
-              disabled={!table.getCanNextPage()}
-              onClick={() => {
-                setPage(table.getPageCount() - 1);
-                return table.setPageIndex(table.getPageCount() - 1);
-              }}
-            >
-              <FaAnglesRight color="#ffffff" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="ml-2">
-          <span className="flex items-center gap-1">
-            <div> | Halaman</div>
-            <strong>
-              {table.getState().pagination.pageIndex + 1} dari{" "}
-              {table.getPageCount()}
-            </strong>
-          </span>
-        </div>
-      </section>
-
-      <section className="flex w-full items-center">
-        <div className="flex items-center space-x-4">
-          <p className="">Jumlah Per Halaman</p>
-          <div className="flex items-center space-x-2">
-            {[10, 20, 30, 40, 50].map((pageSize, i) => (
-              <Button
-                size={"sm"}
-                key={pageSize}
-                backgroundColor={
-                  pageSize === table.getState().pagination.pageSize
-                    ? "#262a56"
-                    : ""
-                }
-                color={
-                  pageSize === table.getState().pagination.pageSize
-                    ? "white"
-                    : "#262a56"
-                }
-                onClick={(e) => {
-                  table.setPageSize(Number(pageSize));
-                }}
-                className={`rounded-full px-3 py-1`}
-              >
-                {pageSize}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PaginationMenu
+        className={""}
+        firstPageButtonIsDisabled={!table.getCanPreviousPage()}
+        firstPageButtonOnClick={() => {
+          setPage(1);
+          return table.setPageIndex(0);
+        }}
+        previousPageButtonIsDisabled={!table.getCanPreviousPage()}
+        previousPageButtonOnClick={() => {
+          setPage(page - 1);
+          return table.previousPage();
+        }}
+        inputValue={page}
+        inputPageOnChange={(e) => {
+          const page = e.target.value ? Number(e.target.value) - 1 : 0;
+          table.setPageIndex(page);
+          setPage(page + 1);
+        }}
+        nextPageButtonIsDisabled={!table.getCanNextPage()}
+        nextPageButtonOnClick={() => {
+          setPage(page + 1);
+          return table.nextPage();
+        }}
+        lastPageButtonIsDisabled={!table.getCanNextPage()}
+        lastPageButtonOnClick={() => {
+          setPage(table.getPageCount() - 1);
+          return table.setPageIndex(table.getPageCount() - 1);
+        }}
+        pageFrom={table.getState().pagination.pageIndex + 1}
+        pageTo={table.getPageCount()}
+        currentPageSize={table.getState().pagination.pageSize}
+        pageSizeOnClick={(pageSize: number) => {
+          setPageSize(pageSize);
+          table.setPageSize(pageSize);
+        }}
+      />
     </div>
   );
 };

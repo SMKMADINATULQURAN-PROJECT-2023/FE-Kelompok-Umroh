@@ -1,14 +1,19 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Input,
-  InputGroup,
-  InputProps,
-  InputRightElement,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Button,
+  IconButton,
 } from "@chakra-ui/react";
+import { FaFilter } from "react-icons/fa6";
 
 interface TabProps {
   titles: (string | number | any)[];
@@ -34,6 +39,9 @@ const CustomTableTabs: React.FC<TabProps> = ({
   searchId,
   ...props
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef<HTMLButtonElement>(null);
+
   return (
     <div className="w-full">
       <Tabs>
@@ -53,7 +61,46 @@ const CustomTableTabs: React.FC<TabProps> = ({
           </TabList>
 
           <div>
-            <FormControl isInvalid={searchIsInvalid}>
+            {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+              Open
+            </Button> */}
+            <IconButton
+              aria-label="Filter menu"
+              ref={btnRef}
+              onClick={onOpen}
+              variant="outline"
+              colorScheme="teal"
+              icon={<FaFilter />}
+            />
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent bg={"#262a56"}>
+                <DrawerCloseButton color={"white"} />
+                <DrawerHeader color={"white"}>Filter</DrawerHeader>
+
+                <DrawerBody>
+                  <Input placeholder="Type here..." />
+                </DrawerBody>
+
+                <DrawerFooter>
+                  <Button
+                    variant="outline"
+                    mr={3}
+                    onClick={onClose}
+                    color={"white"}
+                  >
+                    Batal
+                  </Button>
+                  <Button colorScheme="blue">Terapkan</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+            {/* <FormControl isInvalid={searchIsInvalid}>
               <InputGroup>
                 <Input
                   width={"300px"}
@@ -76,7 +123,7 @@ const CustomTableTabs: React.FC<TabProps> = ({
               <FormErrorMessage size={"xs"} color={"red"} fontWeight="">
                 {searchErrorMessage}
               </FormErrorMessage>
-            </FormControl>
+            </FormControl> */}
           </div>
         </div>
 

@@ -3,7 +3,7 @@ import {
   StatusBarProcessed,
   StatusBarRejected,
   StatusBarUknown,
-} from "@/component/StatusBar";
+} from "@/components/StatusBar";
 import dayjs from "dayjs";
 import Image from "next/image";
 
@@ -73,7 +73,7 @@ export const kategoriColumn = createCommonColumns([
     header: () => <span>Thumbnail</span>,
     accessorFn: (row: { thumbnail: any }) => row.thumbnail,
     cell: (props: any) => (
-      <div className="w-40 rounded-[5px] border border-primary">
+      <div className="h-[100px] w-40 overflow-hidden rounded-[5px] border border-primary">
         <Image
           className="h-full w-full bg-cover"
           src={props.getValue()}

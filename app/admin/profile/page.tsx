@@ -1,8 +1,8 @@
 "use client";
 import { EditProfilePayload } from "@/app/auth/interface";
 import { useProfileService } from "@/app/auth/service/auth.service";
-import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
+import { CustomHeader } from "@/components";
+import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -74,7 +74,7 @@ const Profile: NextPage<Props> = ({}) => {
   ];
 
   return (
-    <div className="h-full w-full flex flex-col justify-between">
+    <div className="flex h-full w-full flex-col justify-between">
       <section className="w-full">
         <CustomHeader />
 

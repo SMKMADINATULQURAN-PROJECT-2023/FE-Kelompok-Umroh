@@ -1,4 +1,4 @@
-import { CustomHeader } from "@/component";
+import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 
 interface Props {}

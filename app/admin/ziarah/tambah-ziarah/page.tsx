@@ -1,13 +1,13 @@
 "use client";
-import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
+import { CustomHeader } from "@/components";
+import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { Form, FormikProvider, useFormik } from "formik";
 import { NextPage } from "next";
 import * as yup from "yup";
 import Image from "next/image";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/component/CustomTextarea";
+import CustomTextArea from "@/components/CustomTextarea";
 import { useState } from "react";
 import { TambahZiarahPayload } from "../interface/ziarah.interface";
 import useZiarahModule from "../service/ziarah.service";
@@ -66,34 +66,13 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     <div className="h-full w-full ">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] p-5">
+      <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-10">
-              <CustomInput
-                id="name"
-                title="Tempat Ziarah"
-                type="text"
-                values={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.name}
-                errorMessage={errors?.name}
-              />
-              <CustomInput
-                id="location"
-                title="Lokasi"
-                type="text"
-                values={values.location}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.location}
-                errorMessage={errors?.location}
-              />
-
               <div className="col-span-2 flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
@@ -139,6 +118,27 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   </div>
                 </div>
               </div>
+
+              <CustomInput
+                id="name"
+                title="Tempat Ziarah"
+                type="text"
+                values={values.name}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.name}
+                errorMessage={errors?.name}
+              />
+              <CustomInput
+                id="location"
+                title="Lokasi"
+                type="text"
+                values={values.location}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.location}
+                errorMessage={errors?.location}
+              />
 
               <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea

@@ -1,11 +1,11 @@
 "use client";
-import { CustomHeader } from "@/component";
+import { CustomHeader } from "@/components";
 import type { NextPage } from "next";
 import * as yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
-import CustomInput from "@/component/CustomInput";
+import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomSelect from "@/component/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import { TambahUserPayload } from "../interface/user.interface";
 import useUserModule from "../service/user.service";
@@ -18,15 +18,15 @@ const TambahUser: NextPage = () => {
   const { mutate, isLoading } = useTambahUser();
 
   const createUserSchema = yup.object().shape({
-    username: yup.string().nullable().default("").required("Wajib isi"),
+    username: yup.string().default("").required("Wajib diisi"),
     email: yup
       .string()
       .default("")
-      .required("Wajib pilih")
+      .required("Wajib diisi")
       .email("Gunakan Format Email"),
-    role_id: yup.number().nullable().default(0).required("Wajib pilih"),
-    password: yup.string().default("").required("Wajib pilih"),
-    file_create: yup.mixed().nullable().default(undefined),
+    role_id: yup.number().default(0).required("Wajib diisi"),
+    password: yup.string().default("").required("Wajib diisi"),
+    file_create: yup.mixed().default(undefined),
   });
 
   const option = [
@@ -72,13 +72,51 @@ const TambahUser: NextPage = () => {
     <div className="h-full w-full ">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] p-5">
+      <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-2 gap-x-10 gap-y-10">
+              <div className="col-span-2 flex h-full w-full flex-col justify-between ">
+                <div className="flex h-full w-full items-center space-x-5 rounded-[10px] bg-primary p-5">
+                  <div className="flex items-center">
+                    {values.file_create ? (
+                      <Avatar
+                        size="xl"
+                        name=""
+                        src={URL.createObjectURL(values.file_create)}
+                      />
+                    ) : (
+                      <Avatar size="xl" name="" src="" />
+                    )}
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <input
+                      className="w-fit cursor-pointer text-white"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > 10 * 1024 * 1024) {
+                            alert("File size exceeds 10 MB.");
+                            return;
+                          }
+                          setFieldValue("file_create", file);
+                        }
+                      }}
+                    />
+                    {values.file_create && (
+                      <span className="text-white">
+                        {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
+                        MB
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="flex w-full flex-col items-start space-y-7">
                 <CustomInput
                   id="username"
@@ -130,44 +168,6 @@ const TambahUser: NextPage = () => {
                     );
                   })}
                 </CustomSelect>
-              </div>
-              <div className="col-span-2 flex h-full w-full flex-col justify-between ">
-                <div className="flex h-full w-full items-center space-x-5 rounded-[10px] bg-primary p-5">
-                  <div className="flex items-center">
-                    {values.file_create ? (
-                      <Avatar
-                        size="xl"
-                        name=""
-                        src={URL.createObjectURL(values.file_create)}
-                      />
-                    ) : (
-                      <Avatar size="xl" name="" src="" />
-                    )}
-                  </div>
-                  <div className="flex flex-col items-start">
-                    <input
-                      className="w-fit cursor-pointer text-white"
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          if (file.size > 10 * 1024 * 1024) {
-                            alert("File size exceeds 10 MB.");
-                            return;
-                          }
-                          setFieldValue("file_create", file);
-                        }
-                      }}
-                    />
-                    {values.file_create && (
-                      <span className="text-white">
-                        {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
-                        MB
-                      </span>
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
             <div className="flex w-full items-center justify-between">

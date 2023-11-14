@@ -13,9 +13,11 @@ const useZiarahModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetZiarah = () => {
+  const useGetZiarah = (page = 1, pageSize = 10) => {
     const getZiarah = async (): Promise<ZiarahPaginationResponse> => {
-      return axiosClient.get("/lokasi_ziarah").then((res) => res.data);
+      return axiosClient
+        .get(`/lokasi_ziarah?page=${page}&pageSize=${pageSize}`)
+        .then((res) => res.data);
     };
     const { data, isError, isFetching, isLoading, refetch } = useQuery({
       queryKey: ["lokasi_ziarah"],
@@ -26,17 +28,15 @@ const useZiarahModule = () => {
   };
 
   const useGetDetailZiarah = (id: any) => {
-    const getZiarah = async (): Promise<ZiarahResponse> => {
+    const getDetail = async (): Promise<ZiarahResponse> => {
       return axiosClient.get(`/lokasi_ziarah/${id}`).then((res) => res.data);
     };
 
-    const { data, isError, isFetching, isLoading, refetch } = useQuery(
-      ["lokasi_ziarah", id], // Pass the slug as part of the query key
-      () => getZiarah(),
-      {
-        enabled: !!id, // Enable the query when slug is truthy (i.e., not empty)
-      },
-    );
+    const { data, isError, isFetching, isLoading, refetch } = useQuery({
+      queryKey: [`lokasi_ziarah/${id}`, id],
+      queryFn: () => getDetail(),
+      enabled: !!id,
+    });
 
     return { data, isError, isFetching, isLoading, refetch };
   };

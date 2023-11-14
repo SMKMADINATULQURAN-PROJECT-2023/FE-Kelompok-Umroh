@@ -13,13 +13,17 @@ const usePanduanModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetPanduan = (kategori: string = '') => {
-    const getPanduan = async (kategori: string): Promise<PanduanPaginationResponse> => {
-      return axiosClient.get(`/panduan?kategori=${kategori}`).then((res) => res.data);
+  const useGetPanduan = (kategori: string = "") => {
+    const getPanduan = async (
+      kategori: string,
+    ): Promise<PanduanPaginationResponse> => {
+      return axiosClient
+        .get(`/panduan?kategori=${kategori}`)
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/panduan"],
+      queryKey: ["/panduan", kategori],
       queryFn: () => getPanduan(kategori),
     });
 
@@ -32,7 +36,7 @@ const usePanduanModule = () => {
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/panduan/:id"],
+      queryKey: [`/panduan/:${id}`, id],
       queryFn: () => getDetailPanduan(id),
       enabled: !!id,
     });
@@ -44,7 +48,11 @@ const usePanduanModule = () => {
     const { mutate, isLoading } = useMutation(
       async (payload: TambahPanduanPayload): Promise<AxiosResponse> => {
         try {
-          const response = await axiosClient.post("/panduan/create", payload);
+          const response = await axiosClient.post("/panduan/create", payload, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
           return response;
         } catch (error) {
           console.error(error);
@@ -78,6 +86,11 @@ const usePanduanModule = () => {
           const response = await axiosClient.put(
             `/panduan/update/${id}`,
             payload,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            },
           );
           return response;
         } catch (error) {

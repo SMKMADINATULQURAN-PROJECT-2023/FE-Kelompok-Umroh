@@ -10,8 +10,8 @@ const HtmlRenderer: React.FC<HtmlRendererProps> = ({
   className,
 }) => {
   return (
-    <div
-      className={`${className} prose putih`} // You can apply Tailwind CSS classes for styling
+    <span
+      className={`${className} prose`} // You can apply Tailwind CSS classes for styling
       dangerouslySetInnerHTML={{ __html: htmlString }}
     />
   );

@@ -1,85 +1,68 @@
 "use client";
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
-import useZiarahModule from "../../service/ziarah.service";
-import { useState } from "react";
-import { Form, FormikProvider, useFormik } from "formik";
+import useDoaModule from "../../service/doa.service";
 import * as yup from "yup";
-import { UpdateZiarahPayload } from "../../interface/ziarah.interface";
 import { useRouter } from "next/navigation";
-import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/components/CustomTextarea";
-import Image from "next/image";
+import { UpdateKategoriDoaPayload } from "../../interface/doa.interface";
+import { Form, FormikProvider, useFormik } from "formik";
+import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
+import { Avatar, Button } from "@chakra-ui/react";
+import { FaSquarePlus, FaTrash } from "react-icons/fa6";
+import Image from "next/image";
 
 interface Props {
   params: any;
 }
 
-const UpdateZiarah: NextPage<Props> = ({
+const UpdateKategoriDoa: NextPage<Props> = ({
   params,
 }: {
   params: { id: number };
 }) => {
-  const route = useRouter();
-  const { useUpdateZiarah, useGetDetailZiarah } = useZiarahModule();
+  const router = useRouter();
+  const { useGetDetailKategoriDoa, useUpdateKategoriDoa } = useDoaModule();
+
   const {
-    data: dataZiarah,
+    data,
     isError,
     isFetching,
-    isLoading: isLoadingZiarah,
+    isLoading: isLoadingKategori,
     refetch,
-  } = useGetDetailZiarah(params.id);
-  const { isLoading: isLoadingMutate, mutate } = useUpdateZiarah();
-  const [quill, setQuill] = useState("");
+  } = useGetDetailKategoriDoa(params.id);
+  const { isLoading: isLoadingUpdate, mutate } = useUpdateKategoriDoa();
 
-  const updateZiarahSchema = yup.object().shape({
-    name: yup
+  const updateKategoriDoaSchema = yup.object().shape({
+    kategori_name: yup
       .string()
-      .default(dataZiarah?.data.name ?? "")
-      .required("Wajib isi"),
-    location: yup
-      .string()
-      .default(dataZiarah?.data.location ?? "")
-      .required("Wajib isi"),
-    description: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.description ?? "")
+      .default(data?.data.kategori_name ?? "")
       .required("Wajib isi"),
     file_update: yup
       .mixed()
       .nullable()
-      .default(dataZiarah?.data.thumbnail ?? undefined)
+      .default(data?.data.thumbnail ?? undefined)
       .required("Wajib isi"),
-    latitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.latitude ?? ""),
-    longitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.longitude ?? ""),
   });
 
-  const onSubmit = async (payload: UpdateZiarahPayload) => {
-    console.log(payload);
+  const onSubmit = async (values: UpdateKategoriDoaPayload) => {
     mutate(
-      { id: params.id, payload: payload },
+      {
+        id: params.id,
+        payload: values,
+      },
       {
         onSuccess: () => {
           resetForm();
-          setValues(updateZiarahSchema.getDefault());
-          return route.replace("/admin/ziarah");
+          setValues(updateKategoriDoaSchema.getDefault());
+          return router.replace("/admin/doa");
         },
       },
     );
   };
 
-  const formik = useFormik<UpdateZiarahPayload>({
-    initialValues: updateZiarahSchema.getDefault(),
-    validationSchema: updateZiarahSchema,
+  const formik = useFormik<UpdateKategoriDoaPayload>({
+    initialValues: updateKategoriDoaSchema.getDefault(),
+    validationSchema: updateKategoriDoaSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -94,18 +77,19 @@ const UpdateZiarah: NextPage<Props> = ({
     resetForm,
     setValues,
   } = formik;
+
   return (
     <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px]">
+      <section className="w-full">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-10">
-              <div className="col-span-2 flex h-full w-full flex-col justify-between">
+            <div className="grid w-full grid-cols-1 gap-x-10 gap-y-10">
+              <div className="mb-5 flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
                     {values.file_update ? (
@@ -135,6 +119,7 @@ const UpdateZiarah: NextPage<Props> = ({
                       onBlur={handleBlur}
                       accept="image/*"
                       onChange={(e) => {
+                        handleChange(e);
                         const file = e.target.files?.[0];
                         if (file) {
                           if (file.size > 10 * 1024 * 1024) {
@@ -156,53 +141,27 @@ const UpdateZiarah: NextPage<Props> = ({
               </div>
 
               <CustomInput
-                id="name"
-                title="Tempat Ziarah"
+                id="kategori_name"
+                title="Nama Kategori Do'a"
                 type="text"
-                values={values.name}
+                values={values.kategori_name}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-                isInvalid={!!errors?.name}
-                errorMessage={errors?.name}
+                isInvalid={!!errors?.kategori_name}
+                errorMessage={errors?.kategori_name}
               />
-              <CustomInput
-                id="location"
-                title="Lokasi"
-                type="text"
-                values={values.location}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.location}
-                errorMessage={errors?.location}
-              />
-
-              <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
-                <CustomTextArea
-                  className="h-[600px]"
-                  id="description"
-                  title="Deskripsi Ziarah"
-                  values={values.description}
-                  handleChange={(value: any) => {
-                    handleChange(value);
-                    setQuill(value);
-                    setFieldValue("description", value);
-                  }}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.description}
-                  errorMessage={errors?.description}
-                />
-              </div>
             </div>
+
             <div className="flex w-full items-center justify-between">
               <div className="w-[20%]">
                 <Button
                   width={"full"}
-                  type="reset"
                   fontWeight="normal"
+                  type="reset"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoadingMutate || isLoadingZiarah || isFetching}
-                  isDisabled={isLoadingMutate || isLoadingZiarah || isFetching}
+                  isLoading={isLoadingKategori || isLoadingUpdate}
+                  isDisabled={isLoadingKategori || isLoadingUpdate}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -214,17 +173,17 @@ const UpdateZiarah: NextPage<Props> = ({
               <div className="w-[20%]">
                 <Button
                   width={"full"}
-                  type="submit"
                   fontWeight="normal"
-                  isLoading={isLoadingMutate || isLoadingZiarah || isFetching}
-                  isDisabled={isLoadingMutate || isLoadingZiarah || isFetching}
+                  type="submit"
+                  isLoading={isLoadingKategori || isLoadingUpdate}
+                  isDisabled={isLoadingKategori || isLoadingUpdate}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}
                   leftIcon={<FaSquarePlus color="#ffffff" />}
                   _hover={{ bgColor: "blue.600" }}
                 >
-                  Update Ziarah
+                  Update Do'a
                 </Button>
               </div>
             </div>
@@ -235,4 +194,4 @@ const UpdateZiarah: NextPage<Props> = ({
   );
 };
 
-export default UpdateZiarah;
+export default UpdateKategoriDoa;

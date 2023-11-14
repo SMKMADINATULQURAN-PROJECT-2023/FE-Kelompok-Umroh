@@ -19,7 +19,6 @@ export const useRefreshToken = () => {
     const { user } = session as Session & { user: SessionUser };
 
     const res = await axiosClient.post("/admin/refresh-token", {
-      // token: user.refreshToken,
       refresh_token: user.refreshToken,
       id: user.id,
     });

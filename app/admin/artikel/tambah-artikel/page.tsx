@@ -6,11 +6,11 @@ import useArtikelModule from "../service/artikel.service";
 import { useState } from "react";
 import { TambahArtikelPayload } from "../interface/artikel.interface";
 import { Form, FormikProvider, useFormik } from "formik";
-import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
+import { CustomHeader } from "@/components";
+import CustomInput from "@/components/CustomInput";
 import Image from "next/image";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/component/CustomTextarea";
+import CustomTextArea from "@/components/CustomTextarea";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import * as yup from "yup";
 
@@ -22,8 +22,9 @@ const TambahArtikel: NextPage<Props> = ({}) => {
   const { isLoading, mutate } = useTambahArtikel();
   const [quill, setQuill] = useState("");
 
-  const createUserSchema = yup.object().shape({
+  const createArtikelSchema = yup.object().shape({
     title: yup.string().default("").required("Wajib isi"),
+    source: yup.string().default("").required("Wajib isi"),
     description: yup.string().default("").required("Wajib isi"),
     file_create: yup
       .mixed()
@@ -37,15 +38,15 @@ const TambahArtikel: NextPage<Props> = ({}) => {
     mutate(values, {
       onSuccess: () => {
         resetForm();
-        setValues(createUserSchema.getDefault());
+        setValues(createArtikelSchema.getDefault());
         return router.replace("/admin/artikel");
       },
     });
   };
 
   const formik = useFormik<TambahArtikelPayload>({
-    initialValues: createUserSchema.getDefault(),
-    validationSchema: createUserSchema,
+    initialValues: createArtikelSchema.getDefault(),
+    validationSchema: createArtikelSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -64,24 +65,13 @@ const TambahArtikel: NextPage<Props> = ({}) => {
     <div className="h-full w-full ">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px] p-5">
+      <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-10">
-              <CustomInput
-                id="title"
-                title="Judul Artikel"
-                type="text"
-                values={values.title}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.title}
-                errorMessage={errors?.title}
-              />
-
               <div className="flex h-full w-full flex-col justify-between">
                 <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                   <div className="flex items-center">
@@ -108,7 +98,7 @@ const TambahArtikel: NextPage<Props> = ({}) => {
                       onBlur={handleBlur}
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0]; 
+                        const file = e.target.files?.[0];
                         if (file) {
                           if (file.size > 10 * 1024 * 1024) {
                             alert("File size exceeds 10 MB.");
@@ -127,7 +117,26 @@ const TambahArtikel: NextPage<Props> = ({}) => {
                   </div>
                 </div>
               </div>
-
+              <CustomInput
+                id="title"
+                title="Judul Artikel"
+                type="text"
+                values={values.title}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.title}
+                errorMessage={errors?.title}
+              />
+              <CustomInput
+                id="source"
+                title="Dikutip Dari"
+                type="text"
+                values={values.source}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.source}
+                errorMessage={errors?.source}
+              />
               <div className="mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
                   className="h-[600px]"

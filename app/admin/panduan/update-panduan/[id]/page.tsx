@@ -1,85 +1,108 @@
 "use client";
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
-import useZiarahModule from "../../service/ziarah.service";
-import { useState } from "react";
-import { Form, FormikProvider, useFormik } from "formik";
+import usePanduanModule from "../../service/panduan.service";
 import * as yup from "yup";
-import { UpdateZiarahPayload } from "../../interface/ziarah.interface";
-import { useRouter } from "next/navigation";
-import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/components/CustomTextarea";
+import { UpdatePanduanPayload } from "../../interface/panduan.interface";
+import { Form, FormikProvider, useFormik } from "formik";
+import { useState } from "react";
+import { CustomHeader } from "@/components";
 import Image from "next/image";
+import { Avatar, Button } from "@chakra-ui/react";
 import CustomInput from "@/components/CustomInput";
+import CustomSelect from "@/components/CustomSelect";
+import CustomTextArea from "@/components/CustomTextarea";
+import { FaSquarePlus, FaTrash } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: any;
 }
 
-const UpdateZiarah: NextPage<Props> = ({
+const UpdatePanduan: NextPage<Props> = ({
   params,
 }: {
   params: { id: number };
 }) => {
-  const route = useRouter();
-  const { useUpdateZiarah, useGetDetailZiarah } = useZiarahModule();
+  const router = useRouter();
+  const { useGetDetailPanduan, useUpdatePanduan } = usePanduanModule();
   const {
-    data: dataZiarah,
+    data,
     isError,
     isFetching,
-    isLoading: isLoadingZiarah,
+    isLoading: isLoadingPanduan,
     refetch,
-  } = useGetDetailZiarah(params.id);
-  const { isLoading: isLoadingMutate, mutate } = useUpdateZiarah();
-  const [quill, setQuill] = useState("");
+  } = useGetDetailPanduan(params.id);
+  const { isLoading: isLoadingUpdate, mutate } = useUpdatePanduan();
+  const isLoading = isFetching || isLoadingPanduan || isLoadingUpdate;
 
-  const updateZiarahSchema = yup.object().shape({
-    name: yup
+  const [quill, setQuill] = useState("");
+  const genderOption = [
+    {
+      value: "Laki-Laki",
+      label: "Laki - Laki",
+    },
+    {
+      value: "Perempuan",
+      label: "Perempuan",
+    },
+  ];
+  const kategoriOption = [
+    {
+      value: "Umrah",
+      label: "Umrah",
+    },
+    {
+      value: "Haji",
+      label: "Haji",
+    },
+  ];
+
+  const updatePanduanSchema = yup.object().shape({
+    title: yup
       .string()
-      .default(dataZiarah?.data.name ?? "")
-      .required("Wajib isi"),
-    location: yup
-      .string()
-      .default(dataZiarah?.data.location ?? "")
+      .default(data?.data.title ?? "")
       .required("Wajib isi"),
     description: yup
       .string()
       .nullable()
-      .default(dataZiarah?.data.description ?? "")
+      .default(data?.data.description ?? "")
+      .required("Wajib isi"),
+    link: yup
+      .string()
+      .default(data?.data.link ?? "")
+      .required("Wajib isi"),
+    gender: yup
+      .string()
+      .default(data?.data.gender ?? "")
+      .required("Wajib isi"),
+    kategori_panduan: yup
+      .string()
+      .default(data?.data.kategori_panduan ?? "")
       .required("Wajib isi"),
     file_update: yup
       .mixed()
       .nullable()
-      .default(dataZiarah?.data.thumbnail ?? undefined)
+      .default(data?.data.thumbnail ?? undefined)
       .required("Wajib isi"),
-    latitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.latitude ?? ""),
-    longitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.longitude ?? ""),
   });
 
-  const onSubmit = async (payload: UpdateZiarahPayload) => {
-    console.log(payload);
+  const onSubmit = async (values: UpdatePanduanPayload) => {
+    console.log(values);
     mutate(
-      { id: params.id, payload: payload },
+      { id: params.id, payload: values },
       {
         onSuccess: () => {
           resetForm();
-          setValues(updateZiarahSchema.getDefault());
-          return route.replace("/admin/ziarah");
+          setValues(updatePanduanSchema.getDefault());
+          return router.replace("/admin/panduan");
         },
       },
     );
   };
 
-  const formik = useFormik<UpdateZiarahPayload>({
-    initialValues: updateZiarahSchema.getDefault(),
-    validationSchema: updateZiarahSchema,
+  const formik = useFormik<UpdatePanduanPayload>({
+    initialValues: updatePanduanSchema.getDefault(),
+    validationSchema: updatePanduanSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
   });
@@ -98,7 +121,7 @@ const UpdateZiarah: NextPage<Props> = ({
     <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px]">
+      <section className="w-full rounded-[10px] p-5">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
@@ -155,32 +178,74 @@ const UpdateZiarah: NextPage<Props> = ({
                 </div>
               </div>
 
-              <CustomInput
-                id="name"
-                title="Tempat Ziarah"
-                type="text"
-                values={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.name}
-                errorMessage={errors?.name}
-              />
-              <CustomInput
-                id="location"
-                title="Lokasi"
-                type="text"
-                values={values.location}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.location}
-                errorMessage={errors?.location}
-              />
+              <div className="flex w-full flex-col items-start space-y-7">
+                <CustomInput
+                  id="title"
+                  title="Judul Panduan"
+                  type="text"
+                  values={values.title}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.title}
+                  errorMessage={errors?.title}
+                />
+                <CustomInput
+                  id="link"
+                  title="Link Video"
+                  type="url"
+                  values={values.link}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.link}
+                  errorMessage={errors?.link}
+                />
+              </div>
+
+              <div className="flex w-full flex-col items-start space-y-7">
+                <CustomSelect
+                  id="gender"
+                  title="Panduan Untuk"
+                  size={"lg"}
+                  values={values.gender.toString()}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.gender}
+                  errorMessage={errors?.gender}
+                >
+                  {genderOption.map((_, i) => {
+                    return (
+                      <option value={_.value} key={i}>
+                        {_.label}
+                      </option>
+                    );
+                  })}
+                </CustomSelect>
+
+                <CustomSelect
+                  id="kategori_panduan"
+                  title="Kategori Panduan"
+                  size={"lg"}
+                  values={values.kategori_panduan.toString()}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.kategori_panduan}
+                  errorMessage={errors?.kategori_panduan}
+                >
+                  {kategoriOption.map((_, i) => {
+                    return (
+                      <option value={_.value} key={i}>
+                        {_.label}
+                      </option>
+                    );
+                  })}
+                </CustomSelect>
+              </div>
 
               <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
                 <CustomTextArea
                   className="h-[600px]"
                   id="description"
-                  title="Deskripsi Ziarah"
+                  title="Deskripsi Panduan"
                   values={values.description}
                   handleChange={(value: any) => {
                     handleChange(value);
@@ -201,8 +266,8 @@ const UpdateZiarah: NextPage<Props> = ({
                   fontWeight="normal"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoadingMutate || isLoadingZiarah || isFetching}
-                  isDisabled={isLoadingMutate || isLoadingZiarah || isFetching}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -216,15 +281,15 @@ const UpdateZiarah: NextPage<Props> = ({
                   width={"full"}
                   type="submit"
                   fontWeight="normal"
-                  isLoading={isLoadingMutate || isLoadingZiarah || isFetching}
-                  isDisabled={isLoadingMutate || isLoadingZiarah || isFetching}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}
                   leftIcon={<FaSquarePlus color="#ffffff" />}
                   _hover={{ bgColor: "blue.600" }}
                 >
-                  Update Ziarah
+                  Update Panduan
                 </Button>
               </div>
             </div>
@@ -235,4 +300,4 @@ const UpdateZiarah: NextPage<Props> = ({
   );
 };
 
-export default UpdateZiarah;
+export default UpdatePanduan;

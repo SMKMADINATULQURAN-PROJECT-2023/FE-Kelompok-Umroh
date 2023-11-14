@@ -1,6 +1,6 @@
 "use client";
-import { CustomHeader } from "@/component";
-import CustomInput from "@/component/CustomInput";
+import { CustomHeader } from "@/components";
+import CustomInput from "@/components/CustomInput";
 import {
   Avatar,
   Button,
@@ -20,7 +20,7 @@ import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import useDoaModule from "../../service/doa.service";
 import * as yup from "yup";
 import { useEffect } from "react";
-import CustomSelect from "@/component/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 import {
   TambahKategoriDoaPayload,
   UpdateDoaPayload,
@@ -91,7 +91,6 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
   });
 
   const onSubmit = async (values: UpdateDoaPayload) => {
-    console.log(values);
     mutateUpdateDoa(
       {
         id: params.id,
@@ -284,7 +283,7 @@ const UpdateDoa: NextPage<Props> = ({ params }: { params: { id: number } }) => {
         </Modal>
       </>
 
-      <section className="w-full rounded-[10px] bg-primary p-5">
+      <section className="w-full">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"

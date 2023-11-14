@@ -5,6 +5,7 @@ import {
   DoaListPaginationResponse,
   DoaResponse,
   KategoriDoaPaginationResponse,
+  KategoriDoaResponse,
   TambahDoaPayload,
   TambahKategoriDoaPayload,
   UpdateDoaPayload,
@@ -36,8 +37,23 @@ const useDoaModule = () => {
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/doa/:id"],
+      queryKey: [`/doa/${id}}`, id],
       queryFn: () => getDetail(id),
+      enabled: !!id,
+    });
+
+    return { data, isFetching, isLoading, isError, refetch };
+  };
+
+  const useGetDetailKategoriDoa = (id: any) => {
+    const getDetail = (id: any): Promise<KategoriDoaResponse> => {
+      return axiosClient.get(`/doa/kategori/${id}`).then((res) => res.data);
+    };
+
+    const { data, isFetching, isLoading, isError, refetch } = useQuery({
+      queryKey: [`/doa/kategori/${id}}`, id],
+      queryFn: () => getDetail(id),
+      enabled: !!id,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -65,7 +81,7 @@ const useDoaModule = () => {
           return response;
         } catch (error) {
           console.error(error);
-          throw error; // Rethrow the error to be caught by onError
+          throw error;
         }
       },
       {
@@ -98,7 +114,7 @@ const useDoaModule = () => {
           return response;
         } catch (error) {
           console.error(error);
-          throw error; // Rethrow the error to be caught by onError
+          throw error;
         }
       },
       {
@@ -154,7 +170,15 @@ const useDoaModule = () => {
         payload: UpdateKategoriDoaPayload;
       }): Promise<AxiosResponse> => {
         try {
-          const response = await axiosClient.put(`/doa/update/${id}`, payload);
+          const response = await axiosClient.put(
+            `/doa/kategori/update/${id}`,
+            payload,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            },
+          );
           return response;
         } catch (error) {
           console.error(error);
@@ -239,6 +263,7 @@ const useDoaModule = () => {
     useDeleteKategoriDoa,
     useGetDetailDoa,
     useDeleteDoa,
+    useGetDetailKategoriDoa,
   };
 };
 
