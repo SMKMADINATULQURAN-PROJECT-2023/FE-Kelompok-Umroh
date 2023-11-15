@@ -85,7 +85,6 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                     backgroundColor={isSelected ? "#ffffff" : "#262a56"}
                     _hover={{
                       backgroundColor: "#ffffff66",
-                      height: "55px",
                       transition: "height 200ms ease-in-out",
                     }}
                   >

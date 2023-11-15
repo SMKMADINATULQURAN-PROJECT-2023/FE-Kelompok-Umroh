@@ -82,6 +82,8 @@ const usePanduanModule = () => {
         id: any;
         payload: UpdatePanduanPayload;
       }): Promise<AxiosResponse> => {
+        console.log('payload', payload)
+        console.log('id', id)
         try {
           const response = await axiosClient.put(
             `/panduan/update/${id}`,
@@ -104,6 +106,7 @@ const usePanduanModule = () => {
         },
         onError: (error) => {
           console.error("error", error);
+          console.log("error pakk", error);
           toastError();
         },
       },

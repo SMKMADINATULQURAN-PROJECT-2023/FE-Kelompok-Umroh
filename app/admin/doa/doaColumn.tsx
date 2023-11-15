@@ -7,7 +7,7 @@ import {
 import dayjs from "dayjs";
 import Image from "next/image";
 
-const NarrowColumn = (value: string) => (
+const NarrowColumn = (value: any) => (
   <div className="narrow-column line-clamp-2">{value}</div>
 );
 

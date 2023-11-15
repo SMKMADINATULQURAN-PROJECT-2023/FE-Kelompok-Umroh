@@ -22,6 +22,14 @@ const getStatusComponent = (value: string) => {
   }
 };
 
+const NarrowColumn = ({
+  children,
+  className,
+}: {
+  children: any;
+  className: string;
+}) => <div className={`${className} narrow-column line-clamp-2`}>{children}</div>;
+
 const formatDate = (date: any) =>
   date ? dayjs(date).locale("id").format("D MMMM YYYY") : "-";
 
@@ -136,7 +144,9 @@ export const panduanColumn = createCommonColumns([
     id: "description",
     accessorFn: (row: { description: any }) => row.description,
     cell: (props: any) => (
-      <HtmlRenderer htmlString={props.getValue()} className="text-primary" />
+      <NarrowColumn className="">
+        <HtmlRenderer htmlString={props.getValue()} className="text-primary" />
+      </NarrowColumn>
     ),
     header: () => <span>Deskripsi</span>,
   },

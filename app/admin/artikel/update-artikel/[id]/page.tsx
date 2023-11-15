@@ -57,12 +57,12 @@ const UpdateArtikel: NextPage<Props> = ({
       .required("Wajib isi"),
   });
 
-  const onSubmit = async (payload: UpdateArtikelPayload) => {
-    console.log(payload);
+  const onSubmit = async (values: UpdateArtikelPayload) => {
+    console.log(values);
     mutate(
       {
         id: params.id,
-        payload: payload,
+        payload: values,
       },
       {
         onSuccess: () => {
@@ -163,7 +163,7 @@ const UpdateArtikel: NextPage<Props> = ({
                 errorMessage={errors?.title}
               />
               <CustomInput
-                id="s.source"
+                id="source"
                 title="Dikutip Dari"
                 type="text"
                 values={values.source}

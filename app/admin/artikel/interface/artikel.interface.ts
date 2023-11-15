@@ -1,5 +1,12 @@
 import { BaseResponsePagination } from "@/service/axios";
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  avatar: any;
+}
+
 export interface Artikel {
   id: number;
   title: string;
@@ -12,12 +19,8 @@ export interface Artikel {
   source: string;
   created_at: string;
   updated_at: string;
-  created_by: {
-    id: number;
-    username: string;
-    email: string;
-    avatar: any;
-  };
+  created_by: User;
+  updated_by: User;
 }
 
 export interface ArtikelResponse {
