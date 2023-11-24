@@ -20,10 +20,10 @@ import {
   PopoverCloseButton,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { useProfileService } from "@/app/auth/service/auth.service";
 import { signOut } from "next-auth/react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useProfileService } from "@/app/auth/service/auth.service";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
