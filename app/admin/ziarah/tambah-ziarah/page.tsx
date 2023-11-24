@@ -63,18 +63,18 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full">
       <CustomHeader />
 
-      <section className="w-full rounded-[10px]">
+      <section className="w-full">
         <FormikProvider value={formik}>
           <Form
-            className="flex h-full flex-col space-y-5"
+            className="flex h-full flex-col space-y-28 lg:space-y-10"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-2 items-center gap-x-10 gap-y-10">
-              <div className="col-span-2 flex h-full w-full flex-col justify-between">
-                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
+            <div className="grid h-full w-full grid-cols-2 items-center gap-10">
+              <div className="col-span-2 flex h-full w-full flex-col justify-between overflow-x-hidden">
+                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_create ? (
                       <div className="overflow-hidden rounded-[10px] border border-white">
@@ -88,7 +88,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                       </div>
                     ) : (
                       <div className="rounded-[10px] border border-white p-5">
-                        <Avatar size="xl" name="-" src="" />
+                        <Avatar size="xl" name="-" src="" bg={"transparent"} />
                       </div>
                     )}
                   </div>
@@ -119,46 +119,52 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                 </div>
               </div>
 
-              <CustomInput
-                id="name"
-                title="Tempat Ziarah"
-                type="text"
-                values={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.name}
-                errorMessage={errors?.name}
-              />
-              <CustomInput
-                id="location"
-                title="Lokasi"
-                type="text"
-                values={values.location}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.location}
-                errorMessage={errors?.location}
-              />
-
-              <div className="col-span-2 mb-12 w-full" onBlur={handleBlur}>
-                <CustomTextArea
-                  className="h-[600px]"
-                  id="description"
-                  title="Deskripsi Ziarah"
-                  values={values.description}
-                  handleChange={(value: any) => {
-                    handleChange(value);
-                    setQuill(value);
-                    setFieldValue("description", value);
-                  }}
+              <div className="col-span-2 grid grid-cols-1 gap-10 px-5 lg:grid-cols-2 lg:px-0">
+                <CustomInput
+                  id="name"
+                  title="Tempat Ziarah"
+                  type="text"
+                  values={values.name}
+                  handleChange={handleChange}
                   handleBlur={handleBlur}
-                  isInvalid={!!errors?.description}
-                  errorMessage={errors?.description}
+                  isInvalid={!!errors?.name}
+                  errorMessage={errors?.name}
                 />
+                <CustomInput
+                  id="location"
+                  title="Lokasi"
+                  type="text"
+                  values={values.location}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.location}
+                  errorMessage={errors?.location}
+                />
+
+                <div
+                  className="col-span-1 mb-12 w-full lg:col-span-2"
+                  onBlur={handleBlur}
+                >
+                  <CustomTextArea
+                    className="h-[600px]"
+                    id="description"
+                    title="Deskripsi Ziarah"
+                    values={values.description}
+                    handleChange={(value: any) => {
+                      handleChange(value);
+                      setQuill(value);
+                      setFieldValue("description", value);
+                    }}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.description}
+                    errorMessage={errors?.description}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              <div className="w-[20%]">
+
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   type="reset"
@@ -175,7 +181,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   Reset Form
                 </Button>
               </div>
-              <div className="w-[20%]">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   type="submit"

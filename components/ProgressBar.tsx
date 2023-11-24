@@ -4,7 +4,7 @@ import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 
 const ProgressBarClient = () => {
   return (
-    <div>
+    <div className="relative z-[9999]">
       <ProgressBar
         height="3px"
         color="#3182ce"

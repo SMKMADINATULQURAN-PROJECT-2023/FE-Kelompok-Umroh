@@ -3,7 +3,9 @@ export interface Profile {
   avatar: string;
   username: string;
   email: string;
+  refresh_token: string;
   file_create: any;
+  file_edit_profile: any;
   role_id: {
     id: number;
     role_name: string;
@@ -12,12 +14,18 @@ export interface Profile {
   };
 }
 
+export interface resetPassword {
+  refresh_token: string;
+  new_password: string;
+  confirm_password: string;
+}
+
 export interface GetProfileResponse {
   data: Profile;
 }
 
 export interface EditProfilePayload
-  extends Pick<Profile, "username" | "email" | "file_create"> {}
+  extends Pick<Profile, "username" | "email" | "file_edit_profile"> {}
 
 export interface ChangePasswordPayload {
   password: string;

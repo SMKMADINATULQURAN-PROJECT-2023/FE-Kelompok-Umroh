@@ -39,8 +39,8 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
       break;
   }
   return (
-    <div className="flex w-full overflow-hidden rounded-[10px] border border-primary bg-primary">
-      <div className="h-full w-[30%] bg-cover">
+    <div className="flex flex-col lg:flex-row w-full overflow-hidden rounded-[10px] border border-primary bg-primary">
+      <div className="h-full w-full lg:w-[30%] bg-cover">
         <Image
           width="0"
           height="0"
@@ -53,7 +53,7 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
           src={data.thumbnail}
         />
       </div>
-      <div className="flex h-full w-[75%] flex-col justify-between p-5">
+      <div className="flex h-full w-full lg:w-[75%] flex-col justify-between p-5">
         <div className="mb-[20px] flex w-full flex-col items-start">
           <div className="mb-3 flex w-full items-center justify-between">
             <h1 className="truncate text-[20px] font-semibold text-white">

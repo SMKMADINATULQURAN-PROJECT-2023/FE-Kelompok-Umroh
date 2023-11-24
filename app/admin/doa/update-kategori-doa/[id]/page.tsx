@@ -90,7 +90,7 @@ const UpdateKategoriDoa: NextPage<Props> = ({
           >
             <div className="grid w-full grid-cols-1 gap-x-10 gap-y-10">
               <div className="mb-5 flex h-full w-full flex-col justify-between">
-                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
+                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_update ? (
                       <div className="overflow-hidden rounded-[10px] border border-white">
@@ -108,7 +108,7 @@ const UpdateKategoriDoa: NextPage<Props> = ({
                       </div>
                     ) : (
                       <div className="rounded-[10px] border border-white p-5">
-                        <Avatar size="xl" name="-" src="" />
+                        <Avatar size="xl" name="-" src=""/>
                       </div>
                     )}
                   </div>
@@ -140,20 +140,22 @@ const UpdateKategoriDoa: NextPage<Props> = ({
                 </div>
               </div>
 
-              <CustomInput
-                id="kategori_name"
-                title="Nama Kategori Do'a"
-                type="text"
-                values={values.kategori_name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.kategori_name}
-                errorMessage={errors?.kategori_name}
-              />
+              <div className="px-5 lg:px-0">
+                <CustomInput
+                  id="kategori_name"
+                  title="Nama Kategori Do'a"
+                  type="text"
+                  values={values.kategori_name}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.kategori_name}
+                  errorMessage={errors?.kategori_name}
+                />
+              </div>
             </div>
 
-            <div className="flex w-full items-center justify-between">
-              <div className="w-[20%]">
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"
@@ -170,7 +172,7 @@ const UpdateKategoriDoa: NextPage<Props> = ({
                   Reset Form
                 </Button>
               </div>
-              <div className="w-[20%]">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"

@@ -3,7 +3,12 @@ import useNotification from "@/hook/useNotification";
 import useAxiosAuth from "@/hook/useAxiosAuth";
 import { signIn, useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import { GetProfileResponse } from "../interface";
+import {
+  EditProfilePayload,
+  GetProfileResponse,
+  resetPassword,
+} from "../interface";
+import { AxiosResponse } from "axios";
 
 export interface loginPayload {
   email: string;
@@ -11,9 +16,8 @@ export interface loginPayload {
 }
 
 export const useLoginService = () => {
-  const { data: session, status } = useSession();
-  const { toastSuccess, toastError, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const { toastSuccess, toastError, toastWarning } = useNotification();
 
   const { mutate, isLoading } = useMutation(
     (payload: loginPayload) => {
@@ -22,7 +26,7 @@ export const useLoginService = () => {
     {
       onSuccess: async (response) => {
         toastSuccess(response.data.message);
-      console.log("ini dia", response);
+        console.log("ini dia", response);
         await signIn("credentials", {
           id: response.data.data.id,
           name: response.data.data.username,
@@ -51,16 +55,83 @@ export const useLoginService = () => {
 
 export const useProfileService = () => {
   const axiosClient = useAxiosAuth();
-  const { data: session, status } = useSession();
+  const { toastSuccess, toastError, toastWarning } = useNotification();
 
   const getProfile = async (): Promise<GetProfileResponse> => {
     return axiosClient.get(`/auth/profile-admin`).then((res) => res.data);
   };
 
-  const { data, isFetching, isLoading } = useQuery({
+  const { data, isFetching, isLoading, refetch } = useQuery({
     queryKey: ["/admin/profile"],
     queryFn: () => getProfile(),
   });
 
-  return { data, isFetching, isLoading };
+  return { data, isFetching, isLoading, refetch };
+};
+
+export const useUpdateProfile = () => {
+  const axiosClient = useAxiosAuth();
+  const { toastSuccess, toastError, toastWarning } = useNotification();
+
+  const { mutate, isLoading } = useMutation(
+    async (payload: EditProfilePayload): Promise<AxiosResponse> => {
+      try {
+        const response = await axiosClient.put(
+          `/auth/update-profile-admin`,
+          payload,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        );
+        return response;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
+    {
+      onSuccess: (response) => {
+        toastSuccess(response.data.message);
+      },
+      onError: (error) => {
+        console.error("error", error);
+        toastError();
+      },
+    },
+  );
+
+  return { mutate, isLoading };
+};
+
+export const useResetPassword = () => {
+  const axiosClient = useAxiosAuth();
+  const { toastSuccess, toastError, toastWarning } = useNotification();
+
+  const { mutate, isLoading } = useMutation(
+    async (payload: resetPassword): Promise<AxiosResponse> => {
+      try {
+        const response = await axiosClient.put(
+          `/admin/reset-password`,
+          payload,
+        );
+        return response;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
+    {
+      onSuccess: (response) => {
+        toastSuccess(response.data.message);
+      },
+      onError: (error) => {
+        console.error("error", error);
+        toastError();
+      },
+    },
+  );
+
+  return { mutate, isLoading };
 };

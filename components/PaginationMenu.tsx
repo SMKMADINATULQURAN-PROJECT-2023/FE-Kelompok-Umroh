@@ -45,8 +45,8 @@ const PaginationMenu: NextPage<Props> = ({
 }) => {
   return (
     <div className={`${className} flex w-full flex-col`}>
-      <section className="mb-3 flex w-full items-center">
-        <div className="flex items-center space-x-5">
+      <section className="mb-7 grid w-full grid-cols-1 items-center gap-y-3 lg:mb-3 lg:flex lg:justify-start lg:gap-y-0">
+        <div className="flex items-center justify-center space-x-5 lg:justify-start">
           <div className="flex items-center space-x-2">
             <Button
               size={"sm"}
@@ -100,8 +100,9 @@ const PaginationMenu: NextPage<Props> = ({
         </div>
 
         <div className="ml-2">
-          <span className="flex items-center gap-1">
-            <div> | Halaman</div>
+          <span className="flex items-center justify-center gap-1 lg:justify-start">
+            <div className="hidden lg:block"> | Halaman</div>
+            <div className="block lg:hidden">Halaman</div>
             <strong>
               {pageFrom} dari {pageTo}
             </strong>
@@ -110,8 +111,8 @@ const PaginationMenu: NextPage<Props> = ({
       </section>
 
       <section className="flex w-full items-center">
-        <div className="flex items-center space-x-4">
-          <p className="">Jumlah Per Halaman</p>
+        <div className="flex w-full flex-col items-center space-x-4 space-y-2 lg:flex-row lg:space-y-0">
+          <p className="">Jumlah Per Halaman:</p>
           <div className="flex items-center space-x-2">
             {[10, 20, 30, 40, 50].map((pageSize, i) => (
               <Button

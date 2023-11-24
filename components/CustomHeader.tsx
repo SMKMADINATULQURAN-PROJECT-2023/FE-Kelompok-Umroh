@@ -68,7 +68,7 @@ const CustomHeader = ({}) => {
     },
   ];
   return (
-    <div className="mb-[20px] flex w-full items-start justify-between">
+    <div className="mb-[20px] hidden w-full items-start justify-between lg:flex">
       <div className="flex w-[75%] flex-col">
         <div className="w-fit rounded-[5px] bg-primary px-5 py-1">
           <Breadcrumb

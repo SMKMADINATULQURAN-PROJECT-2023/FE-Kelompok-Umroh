@@ -1,10 +1,4 @@
-import {
-  FaHouseChimney,
-  FaSliders,
-  FaFilePen,
-  FaHandsHolding,
-  FaUser,
-} from "react-icons/fa6";
+import { FaHandsHolding, FaUser } from "react-icons/fa6";
 import { RiShieldUserFill } from "react-icons/ri";
 import { BiSolidCategory } from "react-icons/bi";
 import { MdArticle, MdPermDeviceInformation } from "react-icons/md";
@@ -76,14 +70,9 @@ const totalDataDashboardModule = () => {
 
   const totalItem = [
     {
-      item: "Total User Mobile",
-      total: userMobileData?.pagination.total,
-      icon: <FaUser color="#262a56" size={18} />,
-    },
-    {
-      item: "Total User Admin",
-      total: userAdminData?.pagination.total,
-      icon: <RiShieldUserFill color="#262a56" size={18} />,
+      item: "Total Do'a",
+      total: doaData?.pagination.total,
+      icon: <FaHandsHolding color="#262a56" size={18} />,
     },
     {
       item: "Total Artikel",
@@ -96,9 +85,9 @@ const totalDataDashboardModule = () => {
       icon: <FaMapMarkedAlt color="#262a56" size={18} />,
     },
     {
-      item: "Total Do'a",
-      total: doaData?.pagination.total,
-      icon: <FaHandsHolding color="#262a56" size={18} />,
+      item: "Total Panduan",
+      total: panduanData?.pagination.total,
+      icon: <MdPermDeviceInformation color="#262a56" size={18} />,
     },
     {
       item: "Total Kategori Do'a",
@@ -106,9 +95,14 @@ const totalDataDashboardModule = () => {
       icon: <BiSolidCategory color="#262a56" size={18} />,
     },
     {
-      item: "Total Panduan",
-      total: panduanData?.pagination.total,
-      icon: <MdPermDeviceInformation color="#262a56" size={18} />,
+      item: "Total User Mobile",
+      total: userMobileData?.pagination.total,
+      icon: <FaUser color="#262a56" size={18} />,
+    },
+    {
+      item: "Total User Admin",
+      total: userAdminData?.pagination.total,
+      icon: <RiShieldUserFill color="#262a56" size={18} />,
     },
   ];
   return { totalItem, isLoading };

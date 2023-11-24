@@ -58,7 +58,7 @@ const UserSection: React.FC<Props> = ({}) => {
     <div>
       <SecondTopNav
         navigateTo="user/tambah-user"
-        title="User"
+        title="User Admin"
         totalData={dataUser?.pagination.total ?? 0}
         isLoading={isLoadingAdmin || isLoadingMobile}
         isSecondTitle
@@ -66,7 +66,7 @@ const UserSection: React.FC<Props> = ({}) => {
         totalSecondData={dataUserMobile?.pagination.total ?? 0}
       />
 
-      <section className="mb-[20px] w-full">
+      <section className="mb-[20px] w-full px-5 lg:px-0">
         <CustomTableTabs titles={titleTabs} contents={contentTabs} />
       </section>
     </div>

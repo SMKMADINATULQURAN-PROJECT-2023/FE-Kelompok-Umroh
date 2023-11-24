@@ -50,9 +50,9 @@ const CustomTableTabs: React.FC<TabProps> = ({
             {titles.map((title, index) => (
               <Tab
                 key={index}
-                selectedClassName="bg-primary hover:bg-primary text-white w-[18%]"
+                selectedClassName="bg-primary hover:bg-primary text-white lg:w-[18%] w-[45%]"
                 className={
-                  "w-[15%] cursor-pointer rounded-[5px] border border-primary py-2 text-center text-primary hover:bg-primary hover:text-white"
+                  "w-[40%] cursor-pointer rounded-[5px] border border-primary py-2 text-center text-primary hover:bg-primary hover:text-white lg:w-[15%]"
                 }
               >
                 {title}
@@ -61,16 +61,14 @@ const CustomTableTabs: React.FC<TabProps> = ({
           </TabList>
 
           <div>
-            {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-              Open
-            </Button> */}
             <IconButton
               aria-label="Filter menu"
               ref={btnRef}
               onClick={onOpen}
               variant="outline"
-              colorScheme="teal"
-              icon={<FaFilter />}
+              border={"1px solid #262a56"}
+              bg={isOpen ? "#262a56" : "transparent"}
+              icon={<FaFilter color={isOpen ? "white" : "#262a56"} />}
             />
             <Drawer
               isOpen={isOpen}
@@ -79,21 +77,16 @@ const CustomTableTabs: React.FC<TabProps> = ({
               finalFocusRef={btnRef}
             >
               <DrawerOverlay />
-              <DrawerContent bg={"#262a56"}>
-                <DrawerCloseButton color={"white"} />
-                <DrawerHeader color={"white"}>Filter</DrawerHeader>
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Filter</DrawerHeader>
 
                 <DrawerBody>
                   <Input placeholder="Type here..." />
                 </DrawerBody>
 
                 <DrawerFooter>
-                  <Button
-                    variant="outline"
-                    mr={3}
-                    onClick={onClose}
-                    color={"white"}
-                  >
+                  <Button variant="outline" mr={3} onClick={onClose}>
                     Batal
                   </Button>
                   <Button colorScheme="blue">Terapkan</Button>

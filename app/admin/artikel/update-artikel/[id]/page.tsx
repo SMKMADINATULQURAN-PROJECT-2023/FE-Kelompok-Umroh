@@ -99,12 +99,12 @@ const UpdateArtikel: NextPage<Props> = ({
       <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
-            className="flex h-full flex-col space-y-5"
+            className="flex h-full flex-col space-y-28 lg:space-y-10"
             onSubmit={handleSubmit}
           >
-            <div className="grid h-full w-full grid-cols-1 items-center gap-x-10 gap-y-10">
+            <div className="grid h-full w-full grid-cols-1 items-center gap-10">
               <div className="flex h-full w-full flex-col justify-between">
-                <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
+                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_update ? (
                       <div className="overflow-hidden rounded-[10px] border border-white">
@@ -152,45 +152,49 @@ const UpdateArtikel: NextPage<Props> = ({
                   </div>
                 </div>
               </div>
-              <CustomInput
-                id="title"
-                title="Judul Artikel"
-                type="text"
-                values={values.title}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.title}
-                errorMessage={errors?.title}
-              />
-              <CustomInput
-                id="source"
-                title="Dikutip Dari"
-                type="text"
-                values={values.source}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.source}
-                errorMessage={errors?.source}
-              />
-              <div className="mb-12 w-full" onBlur={handleBlur}>
-                <CustomTextArea
-                  className="h-[600px]"
-                  id="description"
-                  title="Deskripsi Artikel"
-                  values={values.description}
-                  handleChange={(value: any) => {
-                    handleChange(value);
-                    setQuill(value);
-                    setFieldValue("description", value);
-                  }}
+
+              <div className="grid grid-cols-1 gap-10 px-5 lg:px-0">
+                <CustomInput
+                  id="title"
+                  title="Judul Artikel"
+                  type="text"
+                  values={values.title}
+                  handleChange={handleChange}
                   handleBlur={handleBlur}
-                  isInvalid={!!errors?.description}
-                  errorMessage={errors?.description}
+                  isInvalid={!!errors?.title}
+                  errorMessage={errors?.title}
                 />
+                <CustomInput
+                  id="source"
+                  title="Dikutip Dari"
+                  type="text"
+                  values={values.source}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.source}
+                  errorMessage={errors?.source}
+                />
+                <div className="mb-12 w-full" onBlur={handleBlur}>
+                  <CustomTextArea
+                    className="h-[600px]"
+                    id="description"
+                    title="Deskripsi Artikel"
+                    values={values.description}
+                    handleChange={(value: any) => {
+                      handleChange(value);
+                      setQuill(value);
+                      setFieldValue("description", value);
+                    }}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.description}
+                    errorMessage={errors?.description}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              <div className="w-[20%]">
+
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
+              <div className="ww-full lg:-[20%]">
                 <Button
                   width={"full"}
                   type="reset"
@@ -207,7 +211,7 @@ const UpdateArtikel: NextPage<Props> = ({
                   Reset Form
                 </Button>
               </div>
-              <div className="w-[20%]">
+              <div className="ww-full lg:-[20%]">
                 <Button
                   width={"full"}
                   type="submit"

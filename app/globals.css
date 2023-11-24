@@ -29,12 +29,16 @@ a {
 }
 * {
   transition-property: all;
-  /* overflow: hidden; */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  /* outline: red dashed 1px; */
   font-family: "Poppins", sans-serif;
+  /* overflow: hidden; */
+  /* outline: red dashed 1px; */
+}
+
+.noScrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .putih * {

@@ -60,7 +60,7 @@ const ZiarahSection: React.FC<Props> = ({}) => {
         isLoading={isLoadingDelete || isLoadingZiarah}
       />
 
-      <section className="mb-5 grid w-full grid-cols-2 grid-rows-3 gap-4">
+      <section className="mb-5 grid w-full grid-cols-1 lg:grid-cols-2 grid-rows-3 gap-4 px-5 lg:px-0">
         {isErrorZiarah ? (
           <p>Terjadi kesalahan</p>
         ) : isFetchingZiarah || isLoadingZiarah ? (

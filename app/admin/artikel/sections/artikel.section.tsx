@@ -64,7 +64,7 @@ const ArtikelSection: React.FC<Props> = ({}) => {
         isLoading={isLoadingArtikel || isLoadingDelete}
       />
 
-      <section className="grid w-full grid-cols-2 grid-rows-3 gap-4 mb-5">
+      <section className="grid w-full grid-cols-1 lg:grid-cols-2 grid-rows-3 gap-4 mb-5 px-5 lg:px-0">
         {isErrorArtikel ? (
           <p>Terjadi kesalahan</p>
         ) : isFetchingArtikel || isLoadingArtikel ? (

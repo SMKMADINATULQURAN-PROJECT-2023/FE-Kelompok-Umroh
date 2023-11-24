@@ -7,7 +7,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
   Stack,
 } from "@chakra-ui/react";
 import * as yup from "yup";
@@ -16,8 +15,9 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useLoginService } from "./auth/service/auth.service";
-import Cookies from "js-cookie";
 import Loader from "@/components/Loader";
+import { NextPage } from "next";
+import Link from "next/link";
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -28,9 +28,11 @@ const loginSchema = yup.object().shape({
   password: yup.string().default("").required("Passowrd tidak boleh kosong"),
 });
 
+interface Props {}
+
 type LoginValues = yup.Asserts<typeof loginSchema>;
 
-export default function Home() {
+const Home: NextPage<Props> = () => {
   const [show, setShow] = useState<boolean>(false);
   const { mutate, isLoading } = useLoginService();
   const { data: session, status } = useSession();
@@ -42,7 +44,6 @@ export default function Home() {
       ...loginSchema.getDefault(),
     },
     onSubmit: async (values: LoginValues) => {
-      console.log("onsumbit", values);
       return mutate(values);
     },
     validationSchema: loginSchema,
@@ -65,8 +66,8 @@ export default function Home() {
 
   return (
     <div className="flex h-screen w-screen bg-white">
-      <section className="flex h-full w-[60%] items-center justify-center">
-        <div className="w-[50%]">
+      <section className="flex h-full w-full items-center justify-center p-7 lg:w-[60%]">
+        <div className="w-full lg:w-[50%]">
           <div className="mb-[50px]">
             <p className="text-[35px] font-bold text-black">LOGIN</p>
             <p className="text-black">
@@ -95,13 +96,12 @@ export default function Home() {
                       backgroundColor={"gray.100"}
                       _hover={{ bgColor: "violet.100" }}
                       _placeholder={{ opacity: 1, color: "gray.500" }}
-                      // borderColor={'gray'}
                       variant="filled"
                       placeholder="Masukkan Email"
                       size="lg"
                     />
 
-                    <FormErrorMessage color={"red"} fontWeight="bold">
+                    <FormErrorMessage color={"red"}>
                       {errors?.email}
                     </FormErrorMessage>
                   </FormControl>
@@ -124,7 +124,6 @@ export default function Home() {
                         backgroundColor={"gray.100"}
                         _hover={{ bgColor: "violet.100" }}
                         _placeholder={{ opacity: 1, color: "gray.500" }}
-                        // borderColor={'gray'}
                         variant="filled"
                         pr="4.5rem"
                         type={show ? "text" : "password"}
@@ -145,16 +144,14 @@ export default function Home() {
                       </InputRightElement>
                     </InputGroup>
                     <div className="flex items-center justify-between">
-                      <FormErrorMessage
-                        size={"xs"}
-                        color={"red"}
-                        fontWeight="bold"
-                      >
+                      <FormErrorMessage color={"red"}>
                         {errors?.password}
                       </FormErrorMessage>
-                      <p className="biru cursor-pointer text-right hover:pr-2 hover:text-[#1c1e3b]">
-                        Lupa password
-                      </p>
+                      <Link href={'/lupa-password'}>
+                        <p className="biru cursor-pointer text-right hover:pr-2 hover:text-[#1c1e3b]">
+                          Lupa password
+                        </p>
+                      </Link>
                     </div>
                   </FormControl>
                 </Stack>
@@ -176,7 +173,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="h-full w-[40%] rounded-tl-[70px] bg-[#262A56]"></section>
+
+      <section className="hidden h-full w-[40%] rounded-tl-[70px] bg-[#262A56] lg:block"></section>
     </div>
   );
-}
+};
+
+export default Home;

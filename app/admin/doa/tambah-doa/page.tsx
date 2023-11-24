@@ -46,6 +46,12 @@ const TambahDoa: NextPage<Props> = ({}) => {
   const { isLoading: isLoadingTambahKategori, mutate: mutateTambahKategori } =
     useTambahKategoriDoa();
 
+  const isLoading =
+    isLoadingKategori ||
+    isLoadingTambahDoa ||
+    isLoadingTambahKategori ||
+    isFetchingKategori;
+
   const createDoaSchema = yup.object().shape({
     name: yup.string().default("").required("Wajib isi"),
     arab: yup.string().default("").required("Wajib isi"),
@@ -149,7 +155,7 @@ const TambahDoa: NextPage<Props> = ({}) => {
                 </ModalHeader>
                 <ModalCloseButton color={"#262A56"} />
                 <ModalBody>
-                  <div className="mb-5 flex h-full w-full flex-col justify-between">
+                  <div className="mb-5 flex h-full w-full flex-col justify-between overflow-x-hidden">
                     <div className="flex h-full w-full items-center gap-5 rounded-[10px] bg-primary p-5">
                       <div className="flex items-center">
                         {valuesKategori.file_create ? (
@@ -164,7 +170,12 @@ const TambahDoa: NextPage<Props> = ({}) => {
                           </div>
                         ) : (
                           <div className="rounded-[10px] border border-white p-5">
-                            <Avatar size="xl" name="-" src="" />
+                            <Avatar
+                              size="xl"
+                              name="-"
+                              src=""
+                              bg={"transparent"}
+                            />
                           </div>
                         )}
                       </div>
@@ -219,8 +230,8 @@ const TambahDoa: NextPage<Props> = ({}) => {
                         type="reset"
                         colorScheme={"red"}
                         variant={"outline"}
-                        isLoading={isLoadingTambahKategori}
-                        isDisabled={isLoadingTambahKategori}
+                        isLoading={isLoading}
+                        isDisabled={isLoading}
                         h="45px"
                         color={"red.500"}
                         leftIcon={<FaTrash color="##E53E3E" />}
@@ -234,8 +245,8 @@ const TambahDoa: NextPage<Props> = ({}) => {
                         width={"full"}
                         fontWeight="normal"
                         type="submit"
-                        isLoading={isLoadingTambahKategori}
-                        isDisabled={isLoadingTambahKategori}
+                        isLoading={isLoading}
+                        isDisabled={isLoading}
                         h="45px"
                         backgroundColor={"blue.500"}
                         color={"white"}
@@ -253,13 +264,13 @@ const TambahDoa: NextPage<Props> = ({}) => {
         </Modal>
       </>
 
-      <section className="w-full rounded-[10px]">
+      <section className="mt-10 w-full lg:mt-0">
         <FormikProvider value={formik}>
           <Form
             className="flex h-full flex-col space-y-5"
             onSubmit={handleSubmit}
           >
-            <div className="grid w-full grid-cols-1 gap-x-10 gap-y-10">
+            <div className="grid w-full grid-cols-1 gap-10 px-5 lg:px-0">
               <CustomInput
                 id="name"
                 title="Nama Do'a"
@@ -321,16 +332,16 @@ const TambahDoa: NextPage<Props> = ({}) => {
               </CustomSelect>
             </div>
 
-            <div className="flex w-full items-center justify-between">
-              <div className="w-[20%]">
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"
                   type="reset"
                   colorScheme={"red"}
                   variant={"outline"}
-                  isLoading={isLoadingTambahDoa}
-                  isDisabled={isLoadingTambahDoa}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaTrash color="##E53E3E" />}
@@ -339,13 +350,13 @@ const TambahDoa: NextPage<Props> = ({}) => {
                   Reset Form
                 </Button>
               </div>
-              <div className="w-[20%]">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"
                   type="submit"
-                  isLoading={isLoadingTambahDoa}
-                  isDisabled={isLoadingTambahDoa}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   h="45px"
                   backgroundColor={"blue.500"}
                   color={"#ffffff"}

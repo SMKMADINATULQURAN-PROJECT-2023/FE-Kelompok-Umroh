@@ -54,7 +54,7 @@ const PanduanSection: React.FC<Props> = ({}) => {
         isLoading={isLoading}
       />
 
-      <section className="mb-[20px] w-full">
+      <section className="mb-[20px] w-full px-5 lg:px-0">
         <CustomTable
           columns={panduanColumn}
           data={data.panduan}

@@ -79,8 +79,8 @@ const TambahUser: NextPage = () => {
             onSubmit={handleSubmit}
           >
             <div className="grid h-full w-full grid-cols-2 gap-x-10 gap-y-10">
-              <div className="col-span-2 flex h-full w-full flex-col justify-between ">
-                <div className="flex h-full w-full items-center space-x-5 rounded-[10px] bg-primary p-5">
+              <div className="col-span-2 flex h-full w-full flex-col justify-between overflow-x-hidden ">
+                <div className="flex h-full w-full items-center space-x-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_create ? (
                       <Avatar
@@ -117,61 +117,65 @@ const TambahUser: NextPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex w-full flex-col items-start space-y-7">
-                <CustomInput
-                  id="username"
-                  title="Username"
-                  type="text"
-                  values={values.username}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.username}
-                  errorMessage={errors?.username}
-                />
-                <CustomInput
-                  id="email"
-                  title="Email"
-                  type="email"
-                  values={values.email}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.email}
-                  errorMessage={errors?.email}
-                />
-              </div>
-              <div className="flex w-full flex-col items-start space-y-7">
-                <CustomInput
-                  id="password"
-                  title="Password"
-                  type="password"
-                  values={values.password}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.password}
-                  errorMessage={errors?.password}
-                />
-                <CustomSelect
-                  id="role_id"
-                  title="Role"
-                  size={"lg"}
-                  values={values.role_id.toString()}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  isInvalid={!!errors?.role_id}
-                  errorMessage={errors?.role_id}
-                >
-                  {option.map((_, i) => {
-                    return (
-                      <option value={_.value} key={i}>
-                        {_.label}
-                      </option>
-                    );
-                  })}
-                </CustomSelect>
+
+              <div className="col-span-2 grid grid-cols-1 gap-10 px-5 lg:grid-cols-2 lg:px-0">
+                <div className="flex w-full flex-col items-start space-y-7">
+                  <CustomInput
+                    id="username"
+                    title="Username"
+                    type="text"
+                    values={values.username}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.username}
+                    errorMessage={errors?.username}
+                  />
+                  <CustomInput
+                    id="email"
+                    title="Email"
+                    type="email"
+                    values={values.email}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.email}
+                    errorMessage={errors?.email}
+                  />
+                </div>
+                <div className="flex w-full flex-col items-start space-y-7">
+                  <CustomInput
+                    id="password"
+                    title="Password"
+                    type="password"
+                    values={values.password}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.password}
+                    errorMessage={errors?.password}
+                  />
+                  <CustomSelect
+                    id="role_id"
+                    title="Role"
+                    size={"lg"}
+                    values={values.role_id.toString()}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isInvalid={!!errors?.role_id}
+                    errorMessage={errors?.role_id}
+                  >
+                    {option.map((_, i) => {
+                      return (
+                        <option value={_.value} key={i}>
+                          {_.label}
+                        </option>
+                      );
+                    })}
+                  </CustomSelect>
+                </div>
               </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              <div className="w-[20%]">
+
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:space-x-0 lg:px-0">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"
@@ -188,7 +192,7 @@ const TambahUser: NextPage = () => {
                   Reset Form
                 </Button>
               </div>
-              <div className="w-[20%]">
+              <div className="w-full lg:w-[20%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"

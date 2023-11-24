@@ -7,22 +7,18 @@ import { Calendar } from "./component";
 import { useProfileService } from "@/app/auth/service/auth.service";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import totalDataDashboardModule from "./service/totalData.service";
-import { Suspense } from "react";
+import { SummaryData } from "./sections";
 
 interface Props {}
+
 const Dashboard: NextPage<Props> = ({}) => {
   const { data, isFetching, isLoading: isLoadingProfile } = useProfileService();
-  const { isLoading, totalItem } = totalDataDashboardModule();
-
-  const firstRowItems = totalItem.slice(0, 4);
-  const secondRowItems = totalItem.slice(4);
 
   return (
     <div className="h-full w-full bg-white">
       <CustomHeader />
 
-      <section className="relative mb-[20px] h-60 w-full overflow-hidden rounded-[10px] bg-primary">
+      <section className="relative mb-[50px] lg:mb-[20px] h-60 w-full overflow-hidden bg-primary lg:rounded-[10px]">
         <Image
           src={"/assets/images/kaabah.jpeg"}
           alt="Background Image"
@@ -38,10 +34,12 @@ const Dashboard: NextPage<Props> = ({}) => {
           sizes="100vw"
           className="h-full w-full bg-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-transparent"></div>
+        <div className="absolute inset-0 from-primary lg:bg-gradient-to-r lg:via-primary lg:to-transparent"></div>
+        <div className="absolute inset-0 block bg-gradient-to-t from-primary lg:hidden lg:to-transparent"></div>
+
         <div className="absolute inset-0 flex h-full w-full flex-col justify-between p-5 text-white">
           <div className="flex flex-col items-start">
-            <p className="text-abu">Selamat Datang 👋,</p>
+            <p className="text-white lg:text-abu text-[15px] lg:text-[16px]">Selamat Datang 👋,</p>
             {isLoadingProfile || isFetching ? (
               <div
                 className={`${
@@ -61,72 +59,15 @@ const Dashboard: NextPage<Props> = ({}) => {
             )}
           </div>
           <div className="flex flex-col items-start">
-            <p className="text-abu">Senang bertemu denganmu kembali!</p>
-            <p className="text-abu">semoga harimu indah 😊.</p>
+            <p className="text-abu text-[15px] lg:text-[16px]">Senang bertemu denganmu kembali!</p>
+            <p className="text-abu text-[15px] lg:text-[16px]">semoga harimu indah 😊.</p>
           </div>
         </div>
       </section>
 
-      <section className="mb-[20px] space-y-5">
-        <div className="grid grid-cols-4 gap-5">
-          {firstRowItems.map((_, i) => (
-            <div
-              key={i}
-              className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5"
-            >
-              <div className="flex flex-col items-start">
-                <p className="text-abu">{_.item}</p>
-                {isLoading ? (
-                  <div
-                    className={`${
-                      isLoading ? "w-14" : "w-full"
-                    } rounded-[15px]`}
-                  >
-                    <Skeleton
-                      height={25}
-                      baseColor="#9FA1B5"
-                      highlightColor="#ffffff"
-                    />
-                  </div>
-                ) : (
-                  <p className="text-[20px] font-bold text-white">{_.total}</p>
-                )}
-              </div>
-              <div className="rounded-[5px] bg-white p-3">{_.icon}</div>
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-3 gap-5">
-          {secondRowItems.map((_, i) => (
-            <div
-              key={i}
-              className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5"
-            >
-              <div className="flex flex-col items-start">
-                <p className="text-abu">{_.item}</p>
-                {isLoading ? (
-                  <div
-                    className={`${
-                      isLoading ? "w-14" : "w-full"
-                    } rounded-[15px]`}
-                  >
-                    <Skeleton
-                      height={25}
-                      baseColor="#9FA1B5"
-                      highlightColor="#ffffff"
-                    />
-                  </div>
-                ) : (
-                  <p className="text-[20px] font-bold text-white">{_.total}</p>
-                )}
-              </div>
-              <div className="rounded-[5px] bg-white p-3">{_.icon}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <SummaryData />
 
-      <section className="mb-[20px] grid grid-cols-3 gap-x-5">
+      <section className="mb-[50px] lg:mb-[20px] grid grid-cols-1 gap-y-[50px] px-5 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-0 lg:px-0">
         <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-primary p-5">
           <div className="mb-[10px] flex  items-center space-x-3">
             <div className="rounded-[5px] bg-white p-3">

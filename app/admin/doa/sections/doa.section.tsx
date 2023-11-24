@@ -98,7 +98,7 @@ const DoaSection: React.FC<Props> = ({}) => {
         isLoading={loadingDoa || loadingKategori}
       />
 
-      <section className="mb-[20px] w-full">
+      <section className="mb-[20px] w-full px-5 lg:px-0">
         <CustomTableTabs titles={titleTabs} contents={contentTabs} />
       </section>
     </div>

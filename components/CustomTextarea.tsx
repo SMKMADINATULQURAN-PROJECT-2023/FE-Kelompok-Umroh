@@ -85,14 +85,16 @@ const CustomTextArea: React.FC<Props> = ({
           onBlur={handleBlur}
         />
 
-        <FormErrorMessage
-          size={"xs"}
-          color={"red"}
-          fontWeight=""
-          mt={'50px'}
-        >
-          {errorMessage}
-        </FormErrorMessage>
+        <div className="hidden lg:block">
+          <FormErrorMessage size={"xs"} color={"red"} fontWeight="" mt={"50px"}>
+            {errorMessage}
+          </FormErrorMessage>
+        </div>
+        <div className="block lg:hidden">
+          <FormErrorMessage size={"xs"} color={"red"} fontWeight="" mt={"130px"}>
+            {errorMessage}
+          </FormErrorMessage>
+        </div>
       </FormControl>
     </>
   );
