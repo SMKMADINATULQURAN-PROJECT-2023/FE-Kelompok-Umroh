@@ -38,7 +38,7 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
       break;
   }
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-[10px] border border-primary bg-primary lg:flex-row">
+    <div className="flex w-full flex-col overflow-hidden rounded-lg bg-white shadow-md lg:flex-row">
       <div className="h-full w-full bg-cover lg:w-[30%]">
         <Image
           width="0"
@@ -55,16 +55,16 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
       <div className="flex h-full w-full flex-col justify-between p-5 lg:w-[75%]">
         <div className="mb-[20px] flex w-full flex-col items-start">
           <div className="mb-3 flex w-full items-center justify-between">
-            <h1 className="truncate text-[20px] font-semibold text-white">
+            <h1 className="truncate text-[20px] font-semibold text-primary">
               {data.title}
             </h1>
             <div className="ml-7 flex items-center space-x-2">
-              <p className="text-[11px] text-white">Status: </p>
+              <p className="text-[11px] text-primary">Status: </p>
               {statusText}
             </div>
           </div>
-          <p className="line-clamp-2 text-[13px] text-white">
-            <HtmlRenderer htmlString={data.description} className="putih" />
+          <p className="line-clamp-2 text-[13px] text-primary">
+            <HtmlRenderer htmlString={data.description} className="primary" />
           </p>
           <span className="mt-[10px] text-[12px] text-gray-400">
             Dibuat pada{" "}
@@ -80,7 +80,7 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
               src={data.created_by.avatar}
               size={"sm"}
             />
-            <p className="truncate text-[13px] text-white">
+            <p className="truncate text-[13px] text-primary">
               {data.created_by.username}
             </p>
           </div>

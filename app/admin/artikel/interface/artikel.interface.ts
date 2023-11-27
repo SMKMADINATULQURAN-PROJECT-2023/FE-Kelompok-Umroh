@@ -23,6 +23,12 @@ export interface Artikel {
   updated_by: User;
 }
 
+export interface ArtikelFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
 export interface ArtikelResponse {
   data: Artikel;
 }

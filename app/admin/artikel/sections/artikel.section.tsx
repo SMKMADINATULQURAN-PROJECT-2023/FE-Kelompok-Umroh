@@ -8,12 +8,16 @@ import PaginationMenu from "@/components/PaginationMenu";
 import usePagination from "@/hook/usePagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ArtikelFilterSection from "./artikelFilter.section";
 
 interface Props {}
 
 const ArtikelSection: React.FC<Props> = ({}) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState("");
+  const [created_by, setCreated_by] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { useGetArtikel, useDeleteArtikel } = useArtikelModule();
   const { isLoading: isLoadingDelete, mutate } = useDeleteArtikel();
@@ -23,7 +27,9 @@ const ArtikelSection: React.FC<Props> = ({}) => {
     isLoading: isLoadingArtikel,
     isError: isErrorArtikel,
     refetch: refetchArtikel,
-  } = useGetArtikel(page, pageSize);
+  } = useGetArtikel(page, pageSize, status, created_by, keyword);
+
+  const isLoading = isLoadingArtikel || isLoadingDelete || isFetchingArtikel;
 
   const onDelete = useCallback(
     async (id: any) => {
@@ -64,7 +70,15 @@ const ArtikelSection: React.FC<Props> = ({}) => {
         isLoading={isLoadingArtikel || isLoadingDelete}
       />
 
-      <section className="grid w-full grid-cols-1 lg:grid-cols-2 grid-rows-3 gap-4 mb-5 px-5 lg:px-0">
+      <ArtikelFilterSection
+        isLoading={isLoading}
+        refetch={refetchArtikel}
+        setCreated_by={setCreated_by}
+        setKeyword={setKeyword}
+        setStatus={setStatus}
+      />
+
+      <section className="mb-5 grid w-full grid-cols-1 grid-rows-3 gap-4 px-5 lg:grid-cols-2 lg:px-0">
         {isErrorArtikel ? (
           <p>Terjadi kesalahan</p>
         ) : isFetchingArtikel || isLoadingArtikel ? (
@@ -77,13 +91,13 @@ const ArtikelSection: React.FC<Props> = ({}) => {
               />
             </div>
           ))
-        ) : dataArtikel?.pagination.total === 0 ? (
+        ) : dataArtikel?.data === null ? (
           <p>Tidak ada data</p>
         ) : (
           dataArtikel?.data.map((item, i) => (
             <ArtikelCard
               data={item}
-              isLoading={isLoadingDelete || isLoadingArtikel}
+              isLoading={isLoading}
               key={item.id}
               onClickDelete={() => onDelete(item.id)}
             />

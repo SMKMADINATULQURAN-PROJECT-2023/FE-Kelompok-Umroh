@@ -15,12 +15,12 @@ const SummaryData: React.FC<Props> = ({}) => {
   const secondRowItems = totalItem.slice(4);
 
   return (
-    <section className="mb-[50px] lg:mb-[20px] space-y-5 px-5 lg:px-0">
+    <section className="mb-[50px] space-y-5 px-5 lg:mb-[20px] lg:px-0">
       <div className="hidden grid-cols-4 gap-5 lg:grid">
         {firstRowItems.map((_, i) => (
           <div
             key={i}
-            className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5"
+            className="flex w-full items-center justify-between rounded-[10px] bg-white p-5 shadow-md"
           >
             <div className="flex flex-col items-start">
               <p className="text-abu">{_.item}</p>
@@ -35,10 +35,10 @@ const SummaryData: React.FC<Props> = ({}) => {
                   />
                 </div>
               ) : (
-                <p className="text-[20px] font-bold text-white">{_.total}</p>
+                <p className="text-[20px] font-bold text-primary">{_.total}</p>
               )}
             </div>
-            <div className="rounded-[5px] bg-white p-3">{_.icon}</div>
+            <div className="rounded-[5px] bg-primary p-3">{_.icon}</div>
           </div>
         ))}
       </div>
@@ -57,9 +57,11 @@ const SummaryData: React.FC<Props> = ({}) => {
         >
           {firstRowItems.map((_, i) => (
             <SwiperSlide key={i}>
-              <div className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5">
+              <div className="flex w-full items-center justify-between rounded-[10px] bg-white p-5 shadow-md">
                 <div className="flex flex-col items-start">
-                  <p className="text-abu text-[15px] lg:text-[16px]">{_.item}</p>
+                  <p className="text-[13px] text-abu lg:text-[16px]">
+                    {_.item}
+                  </p>
                   {isLoading ? (
                     <div
                       className={`${
@@ -73,7 +75,7 @@ const SummaryData: React.FC<Props> = ({}) => {
                       />
                     </div>
                   ) : (
-                    <p className="text-[20px] font-bold text-white">
+                    <p className="text-[17px] font-bold text-primary lg:text-[20px]">
                       {_.total}
                     </p>
                   )}
@@ -89,7 +91,7 @@ const SummaryData: React.FC<Props> = ({}) => {
         {secondRowItems.map((_, i) => (
           <div
             key={i}
-            className="flex w-full items-center justify-between rounded-[10px] bg-primary p-5"
+            className="flex w-full items-center justify-between rounded-[10px] bg-white p-5 shadow-md"
           >
             <div className="flex flex-col items-start">
               <p className="text-abu">{_.item}</p>
@@ -104,10 +106,10 @@ const SummaryData: React.FC<Props> = ({}) => {
                   />
                 </div>
               ) : (
-                <p className="text-[20px] font-bold text-white">{_.total}</p>
+                <p className="text-[20px] font-bold text-primary">{_.total}</p>
               )}
             </div>
-            <div className="rounded-[5px] bg-white p-3">{_.icon}</div>
+            <div className="rounded-[5px] bg-primary p-3">{_.icon}</div>
           </div>
         ))}
       </div>
@@ -126,9 +128,11 @@ const SummaryData: React.FC<Props> = ({}) => {
         >
           {secondRowItems.map((_, i) => (
             <SwiperSlide key={i}>
-              <div className="flex h-32 w-full items-start rounded-[10px] bg-primary p-5">
+              <div className="flex h-3 w-full items-start rounded-[10px] bg-white p-5 shadow-md">
                 <div className="flex h-full flex-col items-start justify-between">
-                  <p className="text-abu text-[15px] lg:text-[16px]">{_.item}</p>
+                  <p className="text-[13px] text-abu lg:text-[16px]">
+                    {_.item}
+                  </p>
                   {isLoading ? (
                     <div
                       className={`${
@@ -142,7 +146,7 @@ const SummaryData: React.FC<Props> = ({}) => {
                       />
                     </div>
                   ) : (
-                    <p className="text-[20px] font-bold text-white">
+                    <p className="text-[17px] font-bold text-primary lg:text-[20px]">
                       {_.total}
                     </p>
                   )}

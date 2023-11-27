@@ -13,9 +13,11 @@ const useUserModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetUserAdmin = () => {
+  const useGetUserAdmin = (page: number = 1, pageSize: number = 10) => {
     const getUserAdmin = async (): Promise<AdminListPaginationResponse> => {
-      return axiosClient.get("/admin").then((res) => res.data);
+      return axiosClient
+        .get(`/admin?page=${page}&pageSize=${pageSize}`)
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({

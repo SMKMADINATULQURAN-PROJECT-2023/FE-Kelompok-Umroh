@@ -8,12 +8,16 @@ import PaginationMenu from "@/components/PaginationMenu";
 import useZiarahModule from "../service/ziarah.service";
 import React, { useEffect, useMemo, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
+import ZiarahFilterSection from "./ziarahFilter.section";
 
 interface Props {}
 
 const ZiarahSection: React.FC<Props> = ({}) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState("");
+  const [created_by, setCreated_by] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { useGetZiarah, useDeleteZiarah } = useZiarahModule();
   const { isLoading: isLoadingDelete, mutate } = useDeleteZiarah();
@@ -24,7 +28,8 @@ const ZiarahSection: React.FC<Props> = ({}) => {
     isLoading: isLoadingZiarah,
     refetch: refetchZiarah,
   } = useGetZiarah(page, pageSize);
-  
+  const isLoading = isLoadingDelete || isLoadingZiarah || isFetchingZiarah;
+
   const onDelete = async (id: any) => {
     mutate(id, {
       onSuccess: () => {
@@ -60,7 +65,15 @@ const ZiarahSection: React.FC<Props> = ({}) => {
         isLoading={isLoadingDelete || isLoadingZiarah}
       />
 
-      <section className="mb-5 grid w-full grid-cols-1 lg:grid-cols-2 grid-rows-3 gap-4 px-5 lg:px-0">
+      <ZiarahFilterSection
+        isLoading={isLoading}
+        refetch={refetchZiarah}
+        setCreated_by={setCreated_by}
+        setKeyword={setKeyword}
+        setStatus={setStatus}
+      />
+
+      <section className="mb-5 grid w-full grid-cols-1 grid-rows-3 gap-4 px-5 lg:grid-cols-2 lg:px-0">
         {isErrorZiarah ? (
           <p>Terjadi kesalahan</p>
         ) : isFetchingZiarah || isLoadingZiarah ? (
@@ -80,7 +93,7 @@ const ZiarahSection: React.FC<Props> = ({}) => {
             return (
               <ZiarahCard
                 data={item}
-                isLoading={isLoadingDelete || isLoadingZiarah}
+                isLoading={isLoading}
                 key={item.id}
                 onClickDelete={() => onDelete(item.id)}
               />

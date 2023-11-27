@@ -13,10 +13,18 @@ const useZiarahModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetZiarah = (page = 1, pageSize = 10) => {
+  const useGetZiarah = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getZiarah = async (): Promise<ZiarahPaginationResponse> => {
       return axiosClient
-        .get(`/lokasi_ziarah?page=${page}&pageSize=${pageSize}`)
+        .get(
+          `/lokasi_ziarah?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
         .then((res) => res.data);
     };
     const { data, isError, isFetching, isLoading, refetch } = useQuery({

@@ -41,6 +41,10 @@ interface TableProps {
   isErrorInTable?: any;
   isDisableInTable?: any;
   updateRoute?: any;
+  page?: number;
+  pageSize?: number;
+  setPage?: any;
+  setPageSize?: any;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -55,10 +59,14 @@ const CustomTable: React.FC<TableProps> = ({
   isLoadingInTable,
   isDisableInTable,
   updateRoute,
+  page = 1,
+  pageSize = 10,
+  setPage,
+  setPageSize,
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  // const [page, setPage] = useState(1);
+  // const [pageSize, setPageSize] = useState(10);
 
   const table = useReactTable({
     data,
@@ -78,9 +86,9 @@ const CustomTable: React.FC<TableProps> = ({
     <div className="h-full w-full overflow-y-scroll">
       <TableContainer
         overflowY={"scroll"}
-        className="mb-5 h-[600px] rounded-lg border border-primary"
+        className="mb-5 h-[600px] rounded-lg shadow-md border border-white bg-white"
       >
-        <Table>
+        <Table className="bg-white">
           <Thead position={"sticky"} top={"0px"} zIndex={500}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -88,8 +96,8 @@ const CustomTable: React.FC<TableProps> = ({
                   return (
                     <Th
                       key={header.id}
-                      className="bg-primary text-white"
-                      color={"#ffffff"}
+                      className="bg-primary"
+                      color={"white"}
                     >
                       {header.isPlaceholder ? null : (
                         <div
@@ -117,13 +125,13 @@ const CustomTable: React.FC<TableProps> = ({
                 })}
 
                 {actionColumn && (
-                  <Th className="bg-primary text-white" color={"#ffffff"}>
+                  <Th className="bg-primary" color={"#262A56"}>
                     Action
                   </Th>
                 )}
 
                 {actionColumnInTable && (
-                  <Th className="bg-primary text-white" color={"#ffffff"}>
+                  <Th className="bg-primary" color={"#262A56"}>
                     Action
                   </Th>
                 )}
@@ -137,22 +145,25 @@ const CustomTable: React.FC<TableProps> = ({
                 <Tr key={row.id} className="">
                   {row.getVisibleCells().map((cell) => (
                     <Td key={cell.id} className="">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </Td>
                   ))}
 
                   {actionColumn && (
-                    <Td className="text-primary" color={"#ffffff"}>
+                    <Td className="text-primary" color={"#262A56"}>
                       {actionData}
                     </Td>
                   )}
 
                   {actionColumnInTable && (
-                    <Td className="" color={"#ffffff"}>
+                    <Td className="" color={"#262A56"}>
                       <div className="flex w-full flex-col space-y-2">
                         <RouteButton
                           to={`${updateRoute}${row.original?.id}`}
-                          title={<FaRegPenToSquare color="#ffffff" />}
+                          title={<FaRegPenToSquare color="white" />}
                           h="35px"
                           width={"full"}
                           bg={"yellow.500"}
@@ -167,12 +178,11 @@ const CustomTable: React.FC<TableProps> = ({
                           isDisabled={isDisableInTable}
                           h="35px"
                           backgroundColor={"red.500"}
-                          color={"#ffffff"}
                           _hover={{ bgColor: "red.600" }}
                           fontSize={12}
                           onClick={() => onDeleteInTable(row.original?.id)}
                         >
-                          <FaTrash color="#ffffff" />
+                          <FaTrash color="white" />
                         </Button>
                       </div>
                     </Td>
@@ -188,7 +198,7 @@ const CustomTable: React.FC<TableProps> = ({
                       height={70}
                       count={6}
                       baseColor="#9FA1B5"
-                      highlightColor="#1c1e3b"
+                      highlightColor="#262A56"
                     />
                   ) : (
                     "Tidak ditemukan."
@@ -214,9 +224,10 @@ const CustomTable: React.FC<TableProps> = ({
         }}
         inputValue={page}
         inputPageOnChange={(e) => {
-          const page = e.target.value ? Number(e.target.value) - 1 : 0;
-          table.setPageIndex(page);
-          setPage(page + 1);
+          const pageSum = e.target.value ? Number(e.target.value) - 1 : 0;
+
+          setPage(pageSum + 1);
+          table.setPageIndex(pageSum);
         }}
         nextPageButtonIsDisabled={!table.getCanNextPage()}
         nextPageButtonOnClick={() => {
@@ -231,9 +242,9 @@ const CustomTable: React.FC<TableProps> = ({
         pageFrom={table.getState().pagination.pageIndex + 1}
         pageTo={table.getPageCount()}
         currentPageSize={table.getState().pagination.pageSize}
-        pageSizeOnClick={(pageSize: number) => {
-          setPageSize(pageSize);
-          table.setPageSize(pageSize);
+        pageSizeOnClick={(size: number) => {
+          setPageSize(size);
+          table.setPageSize(size);
         }}
       />
     </div>

@@ -72,37 +72,37 @@ const totalDataDashboardModule = () => {
     {
       item: "Total Do'a",
       total: doaData?.pagination.total,
-      icon: <FaHandsHolding color="#262a56" size={18} />,
+      icon: <FaHandsHolding color="white" size={18} />,
     },
     {
       item: "Total Artikel",
       total: artikelData?.pagination.total,
-      icon: <MdArticle color="#262a56" size={18} />,
+      icon: <MdArticle color="white" size={18} />,
     },
     {
       item: "Total Ziarah",
       total: ziarahData?.pagination.total,
-      icon: <FaMapMarkedAlt color="#262a56" size={18} />,
+      icon: <FaMapMarkedAlt color="white" size={18} />,
     },
     {
       item: "Total Panduan",
       total: panduanData?.pagination.total,
-      icon: <MdPermDeviceInformation color="#262a56" size={18} />,
+      icon: <MdPermDeviceInformation color="white" size={18} />,
     },
     {
       item: "Total Kategori Do'a",
       total: kategoriDoaData?.pagination.total,
-      icon: <BiSolidCategory color="#262a56" size={18} />,
+      icon: <BiSolidCategory color="white" size={18} />,
     },
     {
       item: "Total User Mobile",
       total: userMobileData?.pagination.total,
-      icon: <FaUser color="#262a56" size={18} />,
+      icon: <FaUser color="white" size={18} />,
     },
     {
       item: "Total User Admin",
       total: userAdminData?.pagination.total,
-      icon: <RiShieldUserFill color="#262a56" size={18} />,
+      icon: <RiShieldUserFill color="white" size={18} />,
     },
   ];
   return { totalItem, isLoading };

@@ -70,18 +70,18 @@ const CustomHeader = ({}) => {
   return (
     <div className="mb-[20px] hidden w-full items-start justify-between lg:flex">
       <div className="flex w-[75%] flex-col">
-        <div className="w-fit rounded-[5px] bg-primary px-5 py-1">
+        <div className="w-fit rounded-md bg-white px-5 py-1 shadow-md">
           <Breadcrumb
             spacing="8px"
             separator={<ChevronRightIcon color="gray.500" />}
           >
             {path?.slice(2).map((_, i) => {
               return (
-                <BreadcrumbItem key={i} color={"#ffffff"} isCurrentPage>
+                <BreadcrumbItem key={i} color={"#262a56"} isCurrentPage>
                   <BreadcrumbLink
                     href={""}
                     className="text-primary"
-                    color={"#ffffff"}
+                    color={"#262a56"}
                   >
                     {_}
                   </BreadcrumbLink>
@@ -92,7 +92,7 @@ const CustomHeader = ({}) => {
         </div>
       </div>
 
-      <div className="flex w-[25%] items-center  justify-between space-x-3 rounded-[10px] bg-primary px-5 py-3">
+      <div className="flex w-[25%] items-center justify-between space-x-3 rounded-lg bg-white px-5 py-3 shadow-md">
         <div className="flex w-full items-center justify-start space-x-3">
           <div className={`${loading ? "w-[30%]" : ""}`}>
             {loading ? (
@@ -118,17 +118,17 @@ const CustomHeader = ({}) => {
             </div>
           ) : (
             <div className="flex flex-col">
-              <p className="text-white">{data?.data.username}</p>
-              <p className="text-white">{data?.data.role_id.role_name}</p>
+              <p className="text-primary">{data?.data.username}</p>
+              <p className="text-primary">{data?.data.role_id.role_name}</p>
             </div>
           )}
         </div>
 
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
-            <Button bg="#ffffff">
+            <Button bg="#262a56">
               {" "}
-              <FaGear color="#262a56" />
+              <FaGear color="white" />
             </Button>
           </PopoverTrigger>
           <PopoverContent>
