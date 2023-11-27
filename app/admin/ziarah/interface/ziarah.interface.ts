@@ -22,6 +22,12 @@ export interface Ziarah {
   };
 }
 
+export interface ZiarahFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
 export interface ZiarahResponse {
   data: Ziarah;
 }

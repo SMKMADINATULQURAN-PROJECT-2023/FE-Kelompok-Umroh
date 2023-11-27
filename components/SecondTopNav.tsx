@@ -22,27 +22,27 @@ const SecondTopNav: React.FC<SecondHeaderProps> = ({
   totalSecondData,
 }) => {
   const renderTitle = (title: string, data: any) => (
-    <p className="mb-2 text-[20px] font-semibold text-white flex items-center">
+    <p className="mb-2 text-[20px] font-semibold text-primary flex items-center">
       {title}{" "}
-      <span className="ml-3 rounded-[22px] bg-[#ffffff65] px-2 py-1 text-[11px] lg:text-[13px] font-normal text-white">
+      <span className="ml-3 rounded-[22px] bg-primary px-3 py-1 text-[11px] lg:text-[13px] font-normal text-white">
         {isLoading ? "Loading..." : data} {title}
       </span>
     </p>
   );
 
   return (
-    <section className="mb-[50px] flex w-full flex-col items-start lg:items-center justify-between rounded-none bg-primary p-5 lg:flex-row lg:rounded-[10px]">
+    <section className="mb-[50px] flex w-full flex-col items-start lg:items-center justify-between rounded-none bg-white p-5 lg:flex-row lg:rounded-lg shadow-md">
       <div className="flex w-full mb-3 lg:mb-0">
         <div className="flex flex-col items-start">
           <div className="flex flex-col lg:items-center lg:space-x-4 lg:flex-row">
             {renderTitle(title, totalData)}
-            {isSecondTitle && <p className="hidden text-white lg:block">|</p>}
+            {isSecondTitle && <p className="hidden text-primary lg:block">|</p>}
             {isSecondTitle && renderTitle(secondTitle!, totalSecondData)}
           </div>
 
           <div className="flex items-center space-x-1 mt-3 lg:mt-0">
-            <p className="text-white text-[15px] lg:text-[16px]">Kumpulan berbagai {title}</p>
-            {isSecondTitle && <p className="text-white text-[15px] lg:text-[16px]">& {secondTitle}</p>}
+            <p className="text-primary text-[15px] lg:text-[16px]">Kumpulan berbagai {title}</p>
+            {isSecondTitle && <p className="text-primary text-[15px] lg:text-[16px]">& {secondTitle}</p>}
           </div>
         </div>
       </div>

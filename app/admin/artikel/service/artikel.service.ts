@@ -1,6 +1,6 @@
 import useAxiosAuth from "@/hook/useAxiosAuth";
 import useNotification from "@/hook/useNotification";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ArtikelPaginationResponse,
   ArtikelResponse,
@@ -12,31 +12,44 @@ import { AxiosResponse } from "axios";
 const useArtikelModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
-  const useGetArtikel = (page = 1, pageSize = 10) => {
+  const useGetArtikel = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getArtikel = async (): Promise<ArtikelPaginationResponse> => {
       return axiosClient
-        .get(`/artikel?page=${page}&pageSize=${pageSize}`)
+        .get(
+          `/artikel?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
         .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/artikel"],
+      queryKey: ["/artikel", page, pageSize, status, created_by, keyword],
       queryFn: () => getArtikel(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
   };
 
-  const useGetDetailArtikel = (id: any) => {
-    const getDetailArtikel = (id: any): Promise<ArtikelResponse> => {
+  const useGetDetailArtikel = (id: number) => {
+    const getDetailArtikel = (): Promise<ArtikelResponse> => {
       return axiosClient.get(`/artikel/${id}`).then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/artikel/:id"],
-      queryFn: () => getDetailArtikel(id),
+      queryKey: [`/artikel/${id}`, id],
+      queryFn: () => getDetailArtikel(),
       enabled: !!id,
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -60,6 +73,7 @@ const useArtikelModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/artikel"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -80,7 +94,7 @@ const useArtikelModule = () => {
         id: any;
         payload: UpdateArtikelPayload;
       }): Promise<AxiosResponse> => {
-        try {;
+        try {
           const response = await axiosClient.put(
             `/artikel/update/${id}`,
             payload,
@@ -99,6 +113,7 @@ const useArtikelModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/artikel"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -125,6 +140,7 @@ const useArtikelModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/artikel"]);
         },
         onError: (error) => {
           console.error("error", error);

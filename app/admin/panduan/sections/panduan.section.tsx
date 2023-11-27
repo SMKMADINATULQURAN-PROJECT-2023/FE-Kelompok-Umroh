@@ -1,22 +1,22 @@
 "use client";
 import CustomTable from "@/components/CustomTable";
 import SecondTopNav from "@/components/SecondTopNav";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import usePanduanModule from "../service/panduan.service";
 import { panduanColumn } from "../panduanColumn";
+import PanduanFilterSection from "./panduanFilter.section";
 
 interface Props {}
 
 const PanduanSection: React.FC<Props> = ({}) => {
-  const {
-    useGetPanduan,
-    useGetDetailPanduan,
-    useTambahPanduan,
-    useUpdatePanduan,
-    useDeletePanduan,
-  } = usePanduanModule();
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState("");
+  const [created_by, setCreated_by] = useState("");
   const [kategori, setKategori] = useState("");
+  const [gender, setGender] = useState("");
+
+  const { useGetPanduan, useDeletePanduan } = usePanduanModule();
 
   const {
     data: dataPanduan,
@@ -24,7 +24,7 @@ const PanduanSection: React.FC<Props> = ({}) => {
     isFetching,
     isLoading: isLoadingPanduan,
     refetch,
-  } = useGetPanduan(kategori);
+  } = useGetPanduan(page, pageSize, status, created_by, kategori, gender);
   const { isLoading: isLoadingDelete, mutate } = useDeletePanduan();
 
   const onDelete = useCallback(
@@ -45,6 +45,14 @@ const PanduanSection: React.FC<Props> = ({}) => {
     };
   }, [dataPanduan]);
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      refetch();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [page, pageSize]);
+
   return (
     <div>
       <SecondTopNav
@@ -55,6 +63,14 @@ const PanduanSection: React.FC<Props> = ({}) => {
       />
 
       <section className="mb-[20px] w-full px-5 lg:px-0">
+        <PanduanFilterSection
+          isLoading={isLoading}
+          setCreated_by={setCreated_by}
+          setKategori={setKategori}
+          setStatus={setStatus}
+          setGender={setGender}
+          refetch={refetch}
+        />
         <CustomTable
           columns={panduanColumn}
           data={data.panduan}
@@ -63,6 +79,10 @@ const PanduanSection: React.FC<Props> = ({}) => {
           actionColumnInTable
           updateRoute={"panduan/update-panduan/"}
           onDeleteInTable={(id: number) => onDelete(id)}
+          page={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
         />
       </section>
     </div>

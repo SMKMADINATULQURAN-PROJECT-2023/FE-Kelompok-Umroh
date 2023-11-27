@@ -23,6 +23,13 @@ interface Panduan {
   updated_by: User;
 }
 
+export interface PanduanFilter {
+  kategori_panduan: string;
+  gender: string;
+  status: string;
+  created_by: string;
+}
+
 export interface PanduanResponse {
   data: Panduan;
 }
@@ -31,7 +38,10 @@ export interface PanduanPaginationResponse extends BaseResponsePagination {
   data: Panduan[];
 }
 
-type CommonPanduanPayload = Pick<Panduan, "link" | "title" | "description" | "gender" | "kategori_panduan">;
+type CommonPanduanPayload = Pick<
+  Panduan,
+  "link" | "title" | "description" | "gender" | "kategori_panduan"
+>;
 
 export interface TambahPanduanPayload extends CommonPanduanPayload {
   file_create: any;

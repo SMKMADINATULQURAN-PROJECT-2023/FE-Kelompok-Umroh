@@ -16,12 +16,13 @@ import { useProfileService } from "../auth/service/auth.service";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { signOut } from "next-auth/react";
+import { IconType } from "react-icons/lib";
 
 interface DashMenu {
   nav: string;
   isDisabled: boolean;
   to: string;
-  icon: JSX.Element;
+  icon: JSX.Element | IconType;
 }
 
 interface Props {

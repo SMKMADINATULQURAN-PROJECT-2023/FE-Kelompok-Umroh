@@ -41,10 +41,13 @@ a {
   display: none;
 }
 
+/* custom-table.module.css or global CSS */
 .putih * {
   color: white !important;
 }
-/* custom-table.module.css or global CSS */
+.primary * {
+  color: #262a56 !important;
+}
 /* Add custom CSS classes for narrow columns */
 .narrow-column {
   width: 250px;
@@ -96,7 +99,7 @@ body {
 .react-calendar {
   width: 100%;
   max-width: 100%;
-  background: #262a56;
+  background: white;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
 }
@@ -112,17 +115,17 @@ body {
   margin: -0.5em;
 }
 .react-calendar__navigation {
-  color: white; /* Gaya yang ingin Anda berikan */
+  color: #262a56; /* Gaya yang ingin Anda berikan */
 }
 .react-calendar * {
-  color: white; /* Gaya yang ingin Anda berikan */
+  color: #262a56; /* Gaya yang ingin Anda berikan */
 }
 .react-calendar__navigation * {
-  color: white; /* Gaya yang ingin Anda berikan */
+  color: #262a56; /* Gaya yang ingin Anda berikan */
   color: inherit; /* Mengembalikan warna ke warisan (putih) */
 }
 .react-calendar__month-view__weekdays__weekday abbr {
-  color: white;
+  color: #262a56;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer > * {
@@ -164,7 +167,7 @@ body {
 }
 
 .react-calendar__navigation button:disabled {
-  background-color: #262a56;
+  background-color: white;
 }
 
 .react-calendar__navigation button:enabled:hover,
@@ -196,7 +199,7 @@ body {
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #262a56;
+  color: white;
 }
 
 .react-calendar__year-view .react-calendar__tile,
@@ -225,12 +228,15 @@ body {
 }
 
 .react-calendar__tile--now {
-  background: gainsboro;
+  background: #262a56;
+}
+.react-calendar__tile--now abbr {
+  color: white !important;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: gainsboro;
+  background: white;
 }
 
 .react-calendar__tile--hasActive {
@@ -243,14 +249,13 @@ body {
 }
 
 .react-calendar__tile--active {
-  background: white;
+  background: #262a56;
   border-radius: 10px;
-  color: white;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: white;
+  background: var(--abutrans);
   border-radius: 10px;
 }
 
@@ -260,8 +265,8 @@ body {
 }
 
 .react-calendar__month-view__days__day abbr {
-  color: white;
+  color: #262a56;
 }
 .react-calendar__tile--active abbr {
-  color: #262a56;
+  color: white;
 }

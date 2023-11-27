@@ -13,18 +13,34 @@ const usePanduanModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetPanduan = (kategori: string = "") => {
-    const getPanduan = async (
-      kategori: string,
-    ): Promise<PanduanPaginationResponse> => {
+  const useGetPanduan = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    kategori_panduan: string = "",
+    gender: string = "",
+  ) => {
+    const getPanduan = async (): Promise<PanduanPaginationResponse> => {
       return axiosClient
-        .get(`/panduan?kategori=${kategori}`)
+        .get(
+          `/panduan?kategori_panduan=${kategori_panduan}&page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&gender=${gender}`,
+        )
         .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/panduan", kategori],
-      queryFn: () => getPanduan(kategori),
+      queryKey: [
+        "/panduan",
+        kategori_panduan,
+        status,
+        created_by,
+        page,
+        pageSize,
+      ],
+      queryFn: () => getPanduan(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -82,8 +98,8 @@ const usePanduanModule = () => {
         id: any;
         payload: UpdatePanduanPayload;
       }): Promise<AxiosResponse> => {
-        console.log('payload', payload)
-        console.log('id', id)
+        console.log("payload", payload);
+        console.log("id", id);
         try {
           const response = await axiosClient.put(
             `/panduan/update/${id}`,
