@@ -86,7 +86,7 @@ const CustomTable: React.FC<TableProps> = ({
     <div className="h-full w-full overflow-y-scroll">
       <TableContainer
         overflowY={"scroll"}
-        className="mb-5 h-[600px] rounded-lg shadow-md border border-white bg-white"
+        className="mb-5 h-[600px] rounded-lg border border-white bg-white shadow-md"
       >
         <Table className="bg-white">
           <Thead position={"sticky"} top={"0px"} zIndex={500}>
@@ -94,11 +94,7 @@ const CustomTable: React.FC<TableProps> = ({
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <Th
-                      key={header.id}
-                      className="bg-primary"
-                      color={"white"}
-                    >
+                    <Th key={header.id} className="bg-primary" color={"white"}>
                       {header.isPlaceholder ? null : (
                         <div
                           {...{
@@ -124,17 +120,19 @@ const CustomTable: React.FC<TableProps> = ({
                   );
                 })}
 
-                {actionColumn && (
-                  <Th className="bg-primary" color={"#262A56"}>
+                {/* {actionColumn && (
+                  <Th className="bg-primary" color={"primary"}>
                     Action
                   </Th>
-                )}
+                )} */}
 
-                {actionColumnInTable && (
-                  <Th className="bg-primary" color={"#262A56"}>
-                    Action
-                  </Th>
-                )}
+                {isLoadingInTable
+                  ? undefined
+                  : actionColumnInTable && (
+                      <Th className="bg-primary" color={"primary"}>
+                        Action
+                      </Th>
+                    )}
               </Tr>
             ))}
           </Thead>
@@ -152,41 +150,43 @@ const CustomTable: React.FC<TableProps> = ({
                     </Td>
                   ))}
 
-                  {actionColumn && (
-                    <Td className="text-primary" color={"#262A56"}>
+                  {/* {actionColumn && (
+                    <Td className="text-primary" color={"primary"}>
                       {actionData}
                     </Td>
-                  )}
+                  )} */}
 
-                  {actionColumnInTable && (
-                    <Td className="" color={"#262A56"}>
-                      <div className="flex w-full flex-col space-y-2">
-                        <RouteButton
-                          to={`${updateRoute}${row.original?.id}`}
-                          title={<FaRegPenToSquare color="white" />}
-                          h="35px"
-                          width={"full"}
-                          bg={"yellow.500"}
-                          color={"white"}
-                          _hover={{ bg: "yellow.600" }}
-                          fontSize={12}
-                        />
-                        <Button
-                          width={"full"}
-                          type="button"
-                          isLoading={isLoadingInTable}
-                          isDisabled={isDisableInTable}
-                          h="35px"
-                          backgroundColor={"red.500"}
-                          _hover={{ bgColor: "red.600" }}
-                          fontSize={12}
-                          onClick={() => onDeleteInTable(row.original?.id)}
-                        >
-                          <FaTrash color="white" />
-                        </Button>
-                      </div>
-                    </Td>
-                  )}
+                  {isLoadingInTable
+                    ? undefined
+                    : actionColumnInTable && (
+                        <Td className="" color={"primary"}>
+                          <div className="flex w-full flex-col space-y-2">
+                            <RouteButton
+                              to={`${updateRoute}${row.original?.id}`}
+                              title={<FaRegPenToSquare color="white" />}
+                              h="35px"
+                              width={"full"}
+                              bg={"yellow.500"}
+                              color={"white"}
+                              _hover={{ bg: "yellow.600" }}
+                              fontSize={12}
+                            />
+                            <Button
+                              width={"full"}
+                              type="button"
+                              isLoading={isLoadingInTable}
+                              isDisabled={isDisableInTable}
+                              h="35px"
+                              backgroundColor={"red.500"}
+                              _hover={{ bgColor: "red.600" }}
+                              fontSize={12}
+                              onClick={() => onDeleteInTable(row.original?.id)}
+                            >
+                              <FaTrash color="white" />
+                            </Button>
+                          </div>
+                        </Td>
+                      )}
                 </Tr>
               ))
             ) : (
@@ -198,7 +198,7 @@ const CustomTable: React.FC<TableProps> = ({
                       height={70}
                       count={6}
                       baseColor="#9FA1B5"
-                      highlightColor="#262A56"
+                      // highlightColor="#003F37"
                     />
                   ) : (
                     "Tidak ditemukan."

@@ -6,7 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import ZiarahCard from "../components/ZiarahCard.component";
 import PaginationMenu from "@/components/PaginationMenu";
 import useZiarahModule from "../service/ziarah.service";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import ZiarahFilterSection from "./ziarahFilter.section";
 
@@ -27,16 +27,20 @@ const ZiarahSection: React.FC<Props> = ({}) => {
     isFetching: isFetchingZiarah,
     isLoading: isLoadingZiarah,
     refetch: refetchZiarah,
-  } = useGetZiarah(page, pageSize);
+  } = useGetZiarah(page, pageSize, status, created_by, keyword);
+
   const isLoading = isLoadingDelete || isLoadingZiarah || isFetchingZiarah;
 
-  const onDelete = async (id: any) => {
-    mutate(id, {
-      onSuccess: () => {
-        return refetchZiarah();
-      },
-    });
-  };
+  const onDelete = useCallback(
+    async (id: any) => {
+      mutate(id, {
+        onSuccess: () => {
+          return refetchZiarah();
+        },
+      });
+    },
+    [mutate, refetchZiarah],
+  );
 
   const paginationData = useMemo(() => {
     return {
@@ -82,7 +86,7 @@ const ZiarahSection: React.FC<Props> = ({}) => {
               <Skeleton
                 height={200}
                 baseColor="#9FA1B5"
-                highlightColor="#1c1e3b"
+                highlightColor="#003F37"
               />
             </div>
           ))

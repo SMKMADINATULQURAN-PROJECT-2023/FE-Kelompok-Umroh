@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Avatar, Button } from "@chakra-ui/react";
 import CustomInput from "@/components/CustomInput";
 import CustomSelect from "@/components/CustomSelect";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
@@ -242,7 +242,10 @@ const UpdatePanduan: NextPage<Props> = ({
                   </CustomSelect>
                 </div>
 
-                <div className="col-span-1 lg:col-span-2 mb-12 w-full" onBlur={handleBlur}>
+                <div
+                  className="col-span-1 mb-12 w-full lg:col-span-2"
+                  onBlur={handleBlur}
+                >
                   <CustomTextArea
                     className="h-[600px]"
                     id="description"

@@ -28,8 +28,10 @@ const useZiarahModule = () => {
         .then((res) => res.data);
     };
     const { data, isError, isFetching, isLoading, refetch } = useQuery({
-      queryKey: ["lokasi_ziarah"],
+      queryKey: ["lokasi_ziarah", page, pageSize, status, created_by, keyword],
       queryFn: () => getZiarah(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isError, isFetching, isLoading, refetch };
@@ -44,6 +46,8 @@ const useZiarahModule = () => {
       queryKey: [`lokasi_ziarah/${id}`, id],
       queryFn: () => getDetail(),
       enabled: !!id,
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isError, isFetching, isLoading, refetch };

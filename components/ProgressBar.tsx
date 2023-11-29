@@ -6,9 +6,9 @@ const ProgressBarClient = () => {
   return (
     <div className="relative z-[9999]">
       <ProgressBar
-        height="3px"
-        color="#3182ce"
-        options={{ showSpinner: false }}
+        height="4px"
+        color="#1E5236"
+        options={{ showSpinner: true }}
         shallowRouting
       />
     </div>

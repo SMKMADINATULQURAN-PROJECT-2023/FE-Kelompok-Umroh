@@ -34,7 +34,7 @@ const Dashboard: NextPage<Props> = ({}) => {
           sizes="100vw"
           className="h-full w-full bg-cover"
         />
-        <div className="absolute inset-0 from-transparent lg:bg-gradient-to-r lg:via-transparent lg:to-transparent"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="absolute inset-0 block bg-gradient-to-t from-white lg:hidden lg:to-transparent"></div>
 
         <div className="absolute inset-0 flex h-full w-full flex-col justify-between p-5 text-white">

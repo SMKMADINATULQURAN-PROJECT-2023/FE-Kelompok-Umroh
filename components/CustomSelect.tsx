@@ -54,7 +54,7 @@ const CustomSelect: React.FC<Props> = ({
         <FormLabel
           cursor={"pointer"}
           style={{ width: "fit-content" }}
-          color={backgroundColor || "#262A56"}
+          color={backgroundColor || "primary"}
           htmlFor={id}
           fontWeight=""
         >
@@ -67,9 +67,9 @@ const CustomSelect: React.FC<Props> = ({
           value={values}
           onBlur={handleBlur}
           onChange={handleChange}
-          color={"#262A56"}
+          color={"primary"}
           _hover={inputHoverStyles}
-          border={"1px solid #262A56"}
+          border={"primary"}
           variant="outline"
           placeholder={`Masukkan ${title}`}
           {...props}

@@ -59,7 +59,7 @@ const CustomTextArea: React.FC<Props> = ({
         <FormLabel
           cursor={"pointer"}
           style={{ width: "fit-content" }}
-          color={backgroundColor || "#262A56"}
+          color={backgroundColor || "primary"}
           htmlFor={id}
           fontWeight=""
         >
@@ -91,7 +91,12 @@ const CustomTextArea: React.FC<Props> = ({
           </FormErrorMessage>
         </div>
         <div className="block lg:hidden">
-          <FormErrorMessage size={"xs"} color={"red"} fontWeight="" mt={"130px"}>
+          <FormErrorMessage
+            size={"xs"}
+            color={"red"}
+            fontWeight=""
+            mt={"130px"}
+          >
             {errorMessage}
           </FormErrorMessage>
         </div>

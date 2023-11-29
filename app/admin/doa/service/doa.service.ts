@@ -18,14 +18,26 @@ const useDoaModule = () => {
     useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetDoa = () => {
+  const useGetDoa = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getDoa = async (): Promise<DoaListPaginationResponse> => {
-      return axiosClient.get("/doa").then((res) => res.data);
+      return axiosClient
+        .get(
+          `/doa?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/doa"],
+      queryKey: ["/doa", page, pageSize, status, created_by, keyword],
       queryFn: () => getDoa(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -40,6 +52,8 @@ const useDoaModule = () => {
       queryKey: [`/doa/${id}}`, id],
       queryFn: () => getDetail(id),
       enabled: !!id,
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -54,19 +68,33 @@ const useDoaModule = () => {
       queryKey: [`/doa/kategori/${id}}`, id],
       queryFn: () => getDetail(id),
       enabled: !!id,
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
   };
 
-  const useGetKategoriDoa = () => {
+  const useGetKategoriDoa = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getKategori = async (): Promise<KategoriDoaPaginationResponse> => {
-      return axiosClient.get("/doa/kategori").then((res) => res.data);
+      return axiosClient
+        .get(
+          `/doa/kategori?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/doa/kategori"],
+      queryKey: ["/doa/kategori", page, pageSize, status, created_by, keyword],
       queryFn: () => getKategori(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };

@@ -10,7 +10,7 @@ import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import Image from "next/image";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import * as yup from "yup";
 

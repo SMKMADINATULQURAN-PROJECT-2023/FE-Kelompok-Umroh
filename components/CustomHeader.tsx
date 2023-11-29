@@ -35,7 +35,12 @@ const CustomHeader = ({}) => {
     {
       button: (
         <Link href={"/admin/profile"}>
-          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+          <Button
+            variant={"ghost"}
+            width={"100%"}
+            justifyContent="flex-start"
+            color={"primary"}
+          >
             Profil
           </Button>
         </Link>
@@ -44,7 +49,12 @@ const CustomHeader = ({}) => {
     {
       button: (
         <Link href={"/admin/notifikasi"}>
-          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+          <Button
+            variant={"ghost"}
+            width={"100%"}
+            justifyContent="flex-start"
+            color={"primary"}
+          >
             Notifikasi
           </Button>
         </Link>
@@ -77,11 +87,11 @@ const CustomHeader = ({}) => {
           >
             {path?.slice(2).map((_, i) => {
               return (
-                <BreadcrumbItem key={i} color={"#262a56"} isCurrentPage>
+                <BreadcrumbItem key={i} color={"primary"} isCurrentPage>
                   <BreadcrumbLink
                     href={""}
                     className="text-primary"
-                    color={"#262a56"}
+                    color={"primary"}
                   >
                     {_}
                   </BreadcrumbLink>
@@ -118,7 +128,9 @@ const CustomHeader = ({}) => {
             </div>
           ) : (
             <div className="flex flex-col">
-              <p className="text-primary">{data?.data.username}</p>
+              <p className="truncate font-semibold text-primary">
+                {data?.data.username}
+              </p>
               <p className="text-primary">{data?.data.role_id.role_name}</p>
             </div>
           )}
@@ -126,7 +138,7 @@ const CustomHeader = ({}) => {
 
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
-            <Button bg="#262a56">
+            <Button bg="primary">
               {" "}
               <FaGear color="white" />
             </Button>
@@ -134,7 +146,7 @@ const CustomHeader = ({}) => {
           <PopoverContent>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverHeader>Pengaturan</PopoverHeader>
+            <PopoverHeader color={'primary'}>Pengaturan</PopoverHeader>
             <PopoverBody width={"100%"}>
               <div className="flex w-full flex-col items-start space-y-3">
                 {popoverBody.map((_, i) => {

@@ -13,28 +13,50 @@ const useUserModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
 
-  const useGetUserAdmin = (page: number = 1, pageSize: number = 10) => {
+  const useGetUserAdmin = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getUserAdmin = async (): Promise<AdminListPaginationResponse> => {
       return axiosClient
-        .get(`/admin?page=${page}&pageSize=${pageSize}`)
+        .get(
+          `/admin?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
         .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/admin"],
+      queryKey: ["/admin", page, pageSize, status, created_by, keyword],
       queryFn: () => getUserAdmin(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
   };
-  const useGetUserMobile = () => {
+  const useGetUserMobile = (
+    page: number = 1,
+    pageSize: number = 10,
+    status: string = "",
+    created_by: string = "",
+    keyword: string = "",
+  ) => {
     const getUser = async (): Promise<UserListPaginationResponse> => {
-      return axiosClient.get("/user").then((res) => res.data);
+      return axiosClient
+        .get(
+          `/user?page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&keyword=${keyword}`,
+        )
+        .then((res) => res.data);
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/user"],
+      queryKey: ["/user", page, pageSize, status, created_by, keyword],
       queryFn: () => getUser(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -46,8 +68,10 @@ const useUserModule = () => {
     };
 
     const { data, isFetching, isLoading, isError, refetch } = useQuery({
-      queryKey: ["/user/:id"],
+      queryKey: [`/user/${id}`, id],
       queryFn: () => getDetail(id),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isFetching, isLoading, isError, refetch };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import CustomDrawer from "./CustomDrawer";
+import CustomDrawer from "./FilterDrawer";
 
 interface TabProps {
   titles: (string | number | any)[];

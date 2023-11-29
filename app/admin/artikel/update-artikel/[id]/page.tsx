@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { Form, FormikProvider, useFormik } from "formik";
 import { UpdateArtikelPayload } from "../../interface/artikel.interface";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import Image from "next/image";
 import CustomInput from "@/components/CustomInput";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";

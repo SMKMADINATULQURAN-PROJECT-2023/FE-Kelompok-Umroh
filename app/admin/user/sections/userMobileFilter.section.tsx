@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ArtikelFilter } from "../interface/artikel.interface";
 import CustomInput from "@/components/CustomInput";
 import FilterDrawer from "@/components/FilterDrawer";
+import type { UserMobileFilter } from "../interface/user.interface";
 
-const artikelFilterSchema = yup.object().shape({
+const userMobileFilterSchema = yup.object().shape({
   status: yup.string().default("").optional(),
   created_by: yup.string().default("").optional(),
   keyword: yup.string().default("").optional(),
@@ -19,7 +19,7 @@ interface Props {
   refetch: any;
 }
 
-const ArtikelFilterSection: React.FC<Props> = ({
+const UserMobileFilter: React.FC<Props> = ({
   isLoading,
   setCreated_by,
   setStatus,
@@ -27,7 +27,7 @@ const ArtikelFilterSection: React.FC<Props> = ({
   refetch,
 }) => {
   const onSubmit = useCallback(
-    async (values: ArtikelFilter) => {
+    async (values: UserMobileFilter) => {
       setCreated_by(values.created_by);
       setKeyword(values.keyword);
       setStatus(values.status);
@@ -43,9 +43,9 @@ const ArtikelFilterSection: React.FC<Props> = ({
     return refetch();
   }, [setCreated_by, setKeyword, setStatus, refetch]);
 
-  const formik = useFormik<ArtikelFilter>({
-    initialValues: artikelFilterSchema.getDefault(),
-    validationSchema: artikelFilterSchema,
+  const formik = useFormik<UserMobileFilter>({
+    initialValues: userMobileFilterSchema.getDefault(),
+    validationSchema: userMobileFilterSchema,
     enableReinitialize: true,
     onSubmit: onSubmit,
     onReset: onReset,
@@ -82,4 +82,4 @@ const ArtikelFilterSection: React.FC<Props> = ({
   );
 };
 
-export default ArtikelFilterSection;
+export default UserMobileFilter;

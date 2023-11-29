@@ -1,9 +1,15 @@
-import CustomDrawer from "@/components/CustomDrawer";
-import CustomInput from "@/components/CustomInput";
+import React, { useCallback } from "react";
+import FilterDrawer from "@/components/FilterDrawer";
 import { useFormik } from "formik";
-import React from "react";
 import * as yup from "yup";
 import { ZiarahFilter } from "../interface/ziarah.interface";
+import CustomInput from "@/components/CustomInput";
+
+const ziarahFilterSchema = yup.object().shape({
+  status: yup.string().default("").optional(),
+  created_by: yup.string().default("").optional(),
+  keyword: yup.string().default("").optional(),
+});
 
 interface Props {
   isLoading: boolean;
@@ -20,24 +26,22 @@ const ZiarahFilterSection: React.FC<Props> = ({
   setKeyword,
   refetch,
 }) => {
-  const ziarahFilterSchema = yup.object().shape({
-    status: yup.string().default("").optional(),
-    created_by: yup.string().default("").optional(),
-    keyword: yup.string().default("").optional(),
-  });
+  const onSubmit = useCallback(
+    async (values: ZiarahFilter) => {
+      setCreated_by(values.created_by);
+      setKeyword(values.keyword);
+      setStatus(values.status);
+      return refetch();
+    },
+    [setCreated_by, setKeyword, setStatus, refetch],
+  );
 
-  const onSubmit = async (values: ZiarahFilter) => {
-    setCreated_by(values.created_by);
-    setKeyword(values.keyword);
-    setStatus(values.status);
-    return refetch();
-  };
-  const onReset = async (values: ZiarahFilter) => {
+  const onReset = useCallback(async () => {
     setCreated_by("");
     setKeyword("");
     setStatus("");
     return refetch();
-  };
+  }, [setCreated_by, setKeyword, setStatus, refetch]);
 
   const formik = useFormik<ZiarahFilter>({
     initialValues: ziarahFilterSchema.getDefault(),
@@ -59,7 +63,7 @@ const ZiarahFilterSection: React.FC<Props> = ({
   } = formik;
   return (
     <div className="flex w-full items-center justify-end">
-      <CustomDrawer
+      <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -81,7 +85,7 @@ const ZiarahFilterSection: React.FC<Props> = ({
             errorMessage={errors?.keyword}
           />
         </div>
-      </CustomDrawer>
+      </FilterDrawer>
     </div>
   );
 };

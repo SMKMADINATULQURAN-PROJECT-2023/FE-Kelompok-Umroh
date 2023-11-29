@@ -1,9 +1,9 @@
-import CustomDrawer from "@/components/CustomDrawer";
 import React from "react";
 import * as yup from "yup";
 import { PanduanFilter } from "../interface/panduan.interface";
 import { useFormik } from "formik";
 import CustomSelect from "@/components/CustomSelect";
+import FilterDrawer from "@/components/FilterDrawer";
 
 interface Props {
   isLoading: boolean;
@@ -86,7 +86,7 @@ const PanduanFilterSection: React.FC<Props> = ({
   } = formik;
   return (
     <div className="flex w-full items-center justify-end">
-      <CustomDrawer
+      <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -134,7 +134,7 @@ const PanduanFilterSection: React.FC<Props> = ({
             })}
           </CustomSelect>
         </div>
-      </CustomDrawer>
+      </FilterDrawer>
     </div>
   );
 };

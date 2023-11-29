@@ -87,7 +87,7 @@ const ArtikelSection: React.FC<Props> = ({}) => {
               <Skeleton
                 height={200}
                 baseColor="#9FA1B5"
-                highlightColor="#1c1e3b"
+                highlightColor="#003F37"
               />
             </div>
           ))
