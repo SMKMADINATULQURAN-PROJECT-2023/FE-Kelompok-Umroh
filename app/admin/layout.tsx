@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import { usePathname } from "next/navigation";
 import React, { ReactNode } from "react";
 import {
@@ -106,7 +105,7 @@ const NavigationButton = ({
   name: string;
   to: string;
 }) => (
-  <Link href={to}>
+  <Link href={to} className={`${isDisabled ? "hidden" : "block"}`}>
     <Button
       fontSize={15}
       width={"full"}
@@ -141,6 +140,8 @@ interface AdminLayoutProps {
 const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const currentNav = pathname?.split("/")[2];
+  const nav = pathname?.split("/");
+  const multipleNav = nav ? nav[nav.length - 1] : undefined;
 
   return (
     <>
@@ -182,7 +183,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       {_.multipleNav.map((item, index) => (
                         <NavigationButton
                           isMultiple={_.isMultiple}
-                          isSelected={currentNav === item.to}
+                          isSelected={multipleNav === item.to.split("/").pop()}
                           isDisabled={_.isDisabled}
                           icon={_.icon}
                           name={item.name}
@@ -206,7 +207,11 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </div>
         </section>
 
-        <LayoutMobile data={dashmenu} currentNav={currentNav} />
+        <LayoutMobile
+          data={dashmenu}
+          currentNav={currentNav}
+          multipleNav={multipleNav}
+        />
 
         <section className="col-span-6 bg-[#eff2f8] pb-7 lg:p-5">
           {children}

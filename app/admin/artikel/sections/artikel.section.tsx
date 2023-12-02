@@ -31,6 +31,7 @@ const ArtikelSection: React.FC<Props> = ({}) => {
 
   const isLoading = isLoadingArtikel || isLoadingDelete || isFetchingArtikel;
 
+
   const onDelete = useCallback(
     async (id: any) => {
       console.log(id);
