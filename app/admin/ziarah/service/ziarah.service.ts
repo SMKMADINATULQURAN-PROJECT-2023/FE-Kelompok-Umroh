@@ -6,12 +6,13 @@ import {
   ZiarahResponse,
 } from "../interface/ziarah.interface";
 import useAxiosAuth from "@/hook/useAxiosAuth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
 const useZiarahModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const useGetZiarah = (
     page: number = 1,
@@ -76,6 +77,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -113,6 +115,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -141,6 +144,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);

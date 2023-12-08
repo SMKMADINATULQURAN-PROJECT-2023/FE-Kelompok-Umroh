@@ -13,6 +13,7 @@ import {
   StatusBarUknown,
 } from "@/components/StatusBar";
 import { Artikel } from "../interface/artikel.interface";
+import { useProfileService } from "@/app/auth/service/auth.service";
 
 interface Props {
   data: Artikel;
@@ -21,6 +22,8 @@ interface Props {
 }
 
 const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
+  const { data: dataProfile } = useProfileService();
+  const role = dataProfile?.data.role_id.role_name;
   let statusText;
 
   switch (data.status) {
@@ -85,37 +88,75 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             </p>
           </div>
           <div className="flex items-center space-x-3">
-            <div>
-              <Button
-                width={"full"}
-                type="button"
-                isLoading={isLoading}
-                isDisabled={isLoading}
-                h="35px"
-                backgroundColor={"red.500"}
-                color={"#ffffff"}
-                _hover={{ bgColor: "red.600" }}
-                fontSize={12}
-                onClick={onClickDelete}
-              >
-                <FaTrash color="#ffffff" />
-              </Button>
-            </div>
-            <div>
-              <RouteButton
-                to={`artikel/update-artikel/${data.id}`}
-                title={<FaRegPenToSquare color="#ffffff" />}
-                h="35px"
-                width={"full"}
-                bg={"yellow.500"}
-                color={"white"}
-                justifyContent="flex-start"
-                _hover={{ bg: "yellow.600" }}
-                fontSize={12}
-                isLoading={isLoading}
-                isDisabled={isLoading}
-              />
-            </div>
+            {role === "Admin" ? (
+              <>
+                <div>
+                  <Button
+                    width={"full"}
+                    type="button"
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                    h="35px"
+                    backgroundColor={"red.500"}
+                    color={"#ffffff"}
+                    _hover={{ bgColor: "red.600" }}
+                    fontSize={12}
+                    onClick={onClickDelete}
+                  >
+                    <FaTrash color="#ffffff" />
+                  </Button>
+                </div>
+                <div>
+                  <RouteButton
+                    to={`artikel/update-artikel/${data.id}`}
+                    title={<FaRegPenToSquare color="#ffffff" />}
+                    h="35px"
+                    width={"full"}
+                    bg={"yellow.500"}
+                    color={"white"}
+                    justifyContent="flex-start"
+                    _hover={{ bg: "yellow.600" }}
+                    fontSize={12}
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                  />
+                </div>
+              </>
+            ) : dataProfile?.data.username === data.created_by.username ? (
+              <>
+                <div>
+                  <Button
+                    width={"full"}
+                    type="button"
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                    h="35px"
+                    backgroundColor={"red.500"}
+                    color={"#ffffff"}
+                    _hover={{ bgColor: "red.600" }}
+                    fontSize={12}
+                    onClick={onClickDelete}
+                  >
+                    <FaTrash color="#ffffff" />
+                  </Button>
+                </div>
+                <div>
+                  <RouteButton
+                    to={`artikel/update-artikel/${data.id}`}
+                    title={<FaRegPenToSquare color="#ffffff" />}
+                    h="35px"
+                    width={"full"}
+                    bg={"yellow.500"}
+                    color={"white"}
+                    justifyContent="flex-start"
+                    _hover={{ bg: "yellow.600" }}
+                    fontSize={12}
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                  />
+                </div>
+              </>
+            ) : undefined}
           </div>
         </div>
       </div>

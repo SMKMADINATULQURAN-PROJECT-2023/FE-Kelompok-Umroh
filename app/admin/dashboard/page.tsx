@@ -35,7 +35,7 @@ const Dashboard: NextPage<Props> = ({}) => {
           className="h-full w-full bg-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="absolute inset-0 block bg-gradient-to-t from-white lg:hidden lg:to-transparent"></div>
+        {/* <div className="absolute inset-0 block bg-gradient-to-t from-white lg:hidden lg:to-transparent"></div> */}
 
         <div className="absolute inset-0 flex h-full w-full flex-col justify-between p-5 text-white">
           <div className="flex flex-col items-start">
@@ -74,17 +74,17 @@ const Dashboard: NextPage<Props> = ({}) => {
       <SummaryData />
 
       <section className="mb-[50px] grid grid-cols-1 gap-y-[50px] px-5 lg:mb-[20px] lg:grid-cols-3 lg:gap-x-5 lg:gap-y-0 lg:px-0">
-        <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
+        {/* <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
           <div className="mb-[10px] flex  items-center space-x-3">
             <div className="rounded-[5px] bg-primary p-3">
               <FaEye color="white" size={18} />
             </div>
             <p className="text-[20px] font-bold text-primary">-</p>
           </div>
-          {/* <AreaChart options={options} series={series} /> */}
-        </div>
+          <AreaChart options={options} series={series} />
+        </div> */}
 
-        <div className="w-full overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
+        <div className="w-full col-end-4 overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
           <div className="mb-[10px] flex  items-center space-x-3">
             <div className="rounded-[5px] bg-primary p-3">
               <FaCalendar color="white" size={18} />

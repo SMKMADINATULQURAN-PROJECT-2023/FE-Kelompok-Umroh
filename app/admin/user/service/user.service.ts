@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AdminListPaginationResponse,
   TambahUserPayload,
@@ -12,6 +12,7 @@ import { AxiosResponse } from "axios";
 const useUserModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const useGetUserAdmin = (
     page: number = 1,
@@ -89,6 +90,7 @@ const useUserModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/admin"]);
         },
         onError: (error) => {
           alert("erroor");

@@ -14,6 +14,7 @@ import {
   StatusBarRejected,
   StatusBarUknown,
 } from "@/components/StatusBar";
+import { useProfileService } from "@/app/auth/service/auth.service";
 
 interface Props {
   data: Ziarah;
@@ -22,6 +23,8 @@ interface Props {
 }
 
 const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
+  const { data: dataProfile } = useProfileService();
+  const role = dataProfile?.data.role_id.role_name;
   let statusText;
 
   switch (data.status) {
@@ -65,10 +68,7 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             </div>
           </div>
           <p className="line-clamp-2 text-[13px] text-primary">
-            <HtmlRenderer
-              htmlString={data.description}
-              className="primary"
-            />
+            <HtmlRenderer htmlString={data.description} className="primary" />
           </p>
           <span className="mt-[10px] text-[12px] text-gray-400">
             Dibuat pada{" "}
@@ -99,35 +99,39 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <div>
-              <Button
-                width={"full"}
-                type="button"
-                isLoading={isLoading}
-                isDisabled={isLoading}
-                h="35px"
-                backgroundColor={"red.500"}
-                _hover={{ bgColor: "red.600" }}
-                fontSize={12}
-                onClick={onClickDelete}
-              >
-                <FaTrash color="white" />
-              </Button>
-            </div>
-            <div>
-              <RouteButton
-                to={`ziarah/update-ziarah/${data.id}`}
-                title={<FaRegPenToSquare color="white" />}
-                h="35px"
-                width={"full"}
-                bg={"yellow.500"}
-                justifyContent="flex-start"
-                _hover={{ bg: "yellow.600" }}
-                fontSize={12}
-                isLoading={isLoading}
-                isDisabled={isLoading}
-              />
-            </div>
+            {role === "Admin" ? (
+              <>
+                <div>
+                  <Button
+                    width={"full"}
+                    type="button"
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                    h="35px"
+                    backgroundColor={"red.500"}
+                    _hover={{ bgColor: "red.600" }}
+                    fontSize={12}
+                    onClick={onClickDelete}
+                  >
+                    <FaTrash color="white" />
+                  </Button>
+                </div>
+                <div>
+                  <RouteButton
+                    to={`ziarah/update-ziarah/${data.id}`}
+                    title={<FaRegPenToSquare color="white" />}
+                    h="35px"
+                    width={"full"}
+                    bg={"yellow.500"}
+                    justifyContent="flex-start"
+                    _hover={{ bg: "yellow.600" }}
+                    fontSize={12}
+                    isLoading={isLoading}
+                    isDisabled={isLoading}
+                  />
+                </div>
+              </>
+            ) : undefined}
           </div>
         </div>
       </div>

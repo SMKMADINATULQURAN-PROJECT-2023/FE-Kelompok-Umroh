@@ -28,6 +28,7 @@ import {
 } from "@tanstack/react-table";
 import PaginationMenu from "./PaginationMenu";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useProfileService } from "@/app/auth/service/auth.service";
 
 interface TableProps {
   columns: any[];
@@ -50,8 +51,6 @@ interface TableProps {
 const CustomTable: React.FC<TableProps> = ({
   columns,
   data,
-  actionData,
-  actionColumn = false,
   actionColumnInTable = false,
   onDeleteInTable,
   onUpdateInTable,
@@ -64,9 +63,9 @@ const CustomTable: React.FC<TableProps> = ({
   setPage,
   setPageSize,
 }) => {
+  const { data: dataProfile } = useProfileService();
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  // const [page, setPage] = useState(1);
-  // const [pageSize, setPageSize] = useState(10);
+  const role = dataProfile?.data.role_id.role_name;
 
   const table = useReactTable({
     data,
@@ -79,8 +78,6 @@ const CustomTable: React.FC<TableProps> = ({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
-
-  // console.log("page", table.getState().pagination.pageSize);
 
   return (
     <div className="h-full w-full overflow-y-scroll">
@@ -120,19 +117,15 @@ const CustomTable: React.FC<TableProps> = ({
                   );
                 })}
 
-                {/* {actionColumn && (
-                  <Th className="bg-primary" color={"primary"}>
-                    Action
-                  </Th>
-                )} */}
-
-                {isLoadingInTable
-                  ? undefined
-                  : actionColumnInTable && (
-                      <Th className="bg-primary" color={"primary"}>
-                        Action
-                      </Th>
-                    )}
+                {role === "Admin"
+                  ? isLoadingInTable
+                    ? undefined
+                    : actionColumnInTable && (
+                        <Th className="bg-primary" color={"primary"}>
+                          Action
+                        </Th>
+                      )
+                  : undefined}
               </Tr>
             ))}
           </Thead>
@@ -150,43 +143,41 @@ const CustomTable: React.FC<TableProps> = ({
                     </Td>
                   ))}
 
-                  {/* {actionColumn && (
-                    <Td className="text-primary" color={"primary"}>
-                      {actionData}
-                    </Td>
-                  )} */}
-
-                  {isLoadingInTable
-                    ? undefined
-                    : actionColumnInTable && (
-                        <Td className="" color={"primary"}>
-                          <div className="flex w-full flex-col space-y-2">
-                            <RouteButton
-                              to={`${updateRoute}${row.original?.id}`}
-                              title={<FaRegPenToSquare color="white" />}
-                              h="35px"
-                              width={"full"}
-                              bg={"yellow.500"}
-                              color={"white"}
-                              _hover={{ bg: "yellow.600" }}
-                              fontSize={12}
-                            />
-                            <Button
-                              width={"full"}
-                              type="button"
-                              isLoading={isLoadingInTable}
-                              isDisabled={isDisableInTable}
-                              h="35px"
-                              backgroundColor={"red.500"}
-                              _hover={{ bgColor: "red.600" }}
-                              fontSize={12}
-                              onClick={() => onDeleteInTable(row.original?.id)}
-                            >
-                              <FaTrash color="white" />
-                            </Button>
-                          </div>
-                        </Td>
-                      )}
+                  {role === "Admin"
+                    ? isLoadingInTable
+                      ? undefined
+                      : actionColumnInTable && (
+                          <Td className="" color={"primary"}>
+                            <div className="flex w-full flex-col space-y-2">
+                              <RouteButton
+                                to={`${updateRoute}${row.original?.id}`}
+                                title={<FaRegPenToSquare color="white" />}
+                                h="35px"
+                                width={"full"}
+                                bg={"yellow.500"}
+                                color={"white"}
+                                _hover={{ bg: "yellow.600" }}
+                                fontSize={12}
+                              />
+                              <Button
+                                width={"full"}
+                                type="button"
+                                isLoading={isLoadingInTable}
+                                isDisabled={isDisableInTable}
+                                h="35px"
+                                backgroundColor={"red.500"}
+                                _hover={{ bgColor: "red.600" }}
+                                fontSize={12}
+                                onClick={() =>
+                                  onDeleteInTable(row.original?.id)
+                                }
+                              >
+                                <FaTrash color="white" />
+                              </Button>
+                            </div>
+                          </Td>
+                        )
+                    : undefined}
                 </Tr>
               ))
             ) : (

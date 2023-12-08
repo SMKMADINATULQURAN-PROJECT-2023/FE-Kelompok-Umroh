@@ -1,6 +1,6 @@
 import useAxiosAuth from "@/hook/useAxiosAuth";
 import useNotification from "@/hook/useNotification";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   DoaListPaginationResponse,
   DoaResponse,
@@ -17,6 +17,7 @@ const useDoaModule = () => {
   const { toastError, toastSuccess, toastWarning, toastInfo } =
     useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const useGetDoa = (
     page: number = 1,
@@ -115,6 +116,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -148,6 +150,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa/kategori"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -178,6 +181,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -216,6 +220,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa/kategori"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -242,6 +247,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -270,6 +276,7 @@ const useDoaModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/doa/kategori"]);
         },
         onError: (error) => {
           console.error("error", error);

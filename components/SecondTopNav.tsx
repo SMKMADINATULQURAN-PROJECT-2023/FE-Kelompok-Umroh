@@ -1,6 +1,8 @@
 import React from "react";
 import RouteButton from "./RouteButton";
 import { FaSquarePlus } from "react-icons/fa6";
+import { useProfileService } from "@/app/auth/service/auth.service";
+import { usePathname } from "next/navigation";
 
 interface SecondHeaderProps {
   totalData: number | string;
@@ -21,6 +23,11 @@ const SecondTopNav: React.FC<SecondHeaderProps> = ({
   secondTitle,
   totalSecondData,
 }) => {
+  const { data } = useProfileService();
+  const role = data?.data.role_id.role_name;
+  const pathname = usePathname();
+  const permissionPath = pathname?.split("/")[2];
+
   const renderTitle = (title: string, data: any) => (
     <p className="mb-2 flex items-center text-[20px] font-semibold text-primary">
       {title}{" "}
@@ -54,16 +61,29 @@ const SecondTopNav: React.FC<SecondHeaderProps> = ({
       </div>
 
       <div>
-        <RouteButton
-          to={navigateTo}
-          title={`Tambah ${title}`}
-          width={"100%"}
-          bg={"primary"}
-          color={"white"}
-          justifyContent="flex-start"
-          _hover={{ bg: "secondary" }}
-          leftIcon={<FaSquarePlus color="#ffffff" />}
-        />
+        {permissionPath === "artikel" ? (
+          <RouteButton
+            to={navigateTo}
+            title={`Tambah ${title}`}
+            width={"100%"}
+            bg={"primary"}
+            color={"white"}
+            justifyContent="flex-start"
+            _hover={{ bg: "secondary" }}
+            leftIcon={<FaSquarePlus color="#ffffff" />}
+          />
+        ) : role === "Admin" ? (
+          <RouteButton
+            to={navigateTo}
+            title={`Tambah ${title}`}
+            width={"100%"}
+            bg={"primary"}
+            color={"white"}
+            justifyContent="flex-start"
+            _hover={{ bg: "secondary" }}
+            leftIcon={<FaSquarePlus color="#ffffff" />}
+          />
+        ) : undefined}
       </div>
     </section>
   );

@@ -6,12 +6,13 @@ import {
   TambahPanduanPayload,
   UpdatePanduanPayload,
 } from "../interface/panduan.interface";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
 const usePanduanModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const useGetPanduan = (
     page: number = 1,
@@ -78,6 +79,7 @@ const usePanduanModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/panduan"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -119,6 +121,7 @@ const usePanduanModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/panduan"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -145,6 +148,7 @@ const usePanduanModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/panduan"]);
         },
         onError: (error) => {
           console.error("error", error);
