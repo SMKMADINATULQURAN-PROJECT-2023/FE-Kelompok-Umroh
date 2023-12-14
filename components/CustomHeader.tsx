@@ -139,14 +139,13 @@ const CustomHeader = ({}) => {
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
             <Button bg="primary">
-              {" "}
               <FaGear color="white" />
             </Button>
           </PopoverTrigger>
           <PopoverContent>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverHeader color={'primary'}>Pengaturan</PopoverHeader>
+            <PopoverHeader color={"primary"}>Pengaturan</PopoverHeader>
             <PopoverBody width={"100%"}>
               <div className="flex w-full flex-col items-start space-y-3">
                 {popoverBody.map((_, i) => {

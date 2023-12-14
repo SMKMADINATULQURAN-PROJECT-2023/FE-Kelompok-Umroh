@@ -15,6 +15,7 @@ import {
   StatusBarUknown,
 } from "@/components/StatusBar";
 import { useProfileService } from "@/app/auth/service/auth.service";
+import PopOver from "@/components/PopOver";
 
 interface Props {
   data: Ziarah;
@@ -98,39 +99,49 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             {role === "Admin" ? (
-              <>
-                <div>
-                  <Button
-                    width={"full"}
-                    type="button"
-                    isLoading={isLoading}
-                    isDisabled={isLoading}
-                    h="35px"
-                    backgroundColor={"red.500"}
-                    _hover={{ bgColor: "red.600" }}
-                    fontSize={12}
-                    onClick={onClickDelete}
-                  >
-                    <FaTrash color="white" />
-                  </Button>
+              <PopOver>
+                <div className="flex w-full justify-between gap-x-3">
+                  <div className="w-full">
+                    <Button
+                      width={"full"}
+                      type="button"
+                      isLoading={isLoading}
+                      isDisabled={isLoading}
+                      h="35px"
+                      backgroundColor={"red.500"}
+                      _hover={{ bgColor: "red.600" }}
+                      fontSize={12}
+                      onClick={onClickDelete}
+                    >
+                      <div className="flex w-full items-center justify-center gap-x-1">
+                        <FaTrash color="white" />
+                        <p className="capitalize text-white">hapus</p>
+                      </div>
+                    </Button>
+                  </div>
+                  <div className="w-full">
+                    <RouteButton
+                      to={`ziarah/update-ziarah/${data.id}`}
+                      title={
+                        <div className="flex w-full items-center justify-center gap-x-1">
+                          <FaRegPenToSquare color="white" />
+                          <p className="capitalize text-white">edit</p>
+                        </div>
+                      }
+                      h="35px"
+                      width={"full"}
+                      bg={"yellow.500"}
+                      justifyContent="flex-start"
+                      _hover={{ bg: "yellow.600" }}
+                      fontSize={12}
+                      isLoading={isLoading}
+                      isDisabled={isLoading}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <RouteButton
-                    to={`ziarah/update-ziarah/${data.id}`}
-                    title={<FaRegPenToSquare color="white" />}
-                    h="35px"
-                    width={"full"}
-                    bg={"yellow.500"}
-                    justifyContent="flex-start"
-                    _hover={{ bg: "yellow.600" }}
-                    fontSize={12}
-                    isLoading={isLoading}
-                    isDisabled={isLoading}
-                  />
-                </div>
-              </>
+              </PopOver>
             ) : undefined}
           </div>
         </div>

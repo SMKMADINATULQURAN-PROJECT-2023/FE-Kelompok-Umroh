@@ -2,12 +2,12 @@
 import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import Image from "next/image";
-import { FaCalendar, FaEye } from "react-icons/fa6";
-import { Calendar } from "./component";
 import { useProfileService } from "@/app/auth/service/auth.service";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SummaryData } from "./sections";
+import Kalender from "./sections/kalender.section";
+import JadwalSholat from "./sections/jadwalSholat.section";
 
 interface Props {}
 
@@ -74,25 +74,8 @@ const Dashboard: NextPage<Props> = ({}) => {
       <SummaryData />
 
       <section className="mb-[50px] grid grid-cols-1 gap-y-[50px] px-5 lg:mb-[20px] lg:grid-cols-3 lg:gap-x-5 lg:gap-y-0 lg:px-0">
-        {/* <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
-          <div className="mb-[10px] flex  items-center space-x-3">
-            <div className="rounded-[5px] bg-primary p-3">
-              <FaEye color="white" size={18} />
-            </div>
-            <p className="text-[20px] font-bold text-primary">-</p>
-          </div>
-          <AreaChart options={options} series={series} />
-        </div> */}
-
-        <div className="w-full col-end-4 overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
-          <div className="mb-[10px] flex  items-center space-x-3">
-            <div className="rounded-[5px] bg-primary p-3">
-              <FaCalendar color="white" size={18} />
-            </div>
-            <p className="text-[20px] font-bold text-primary ">Kalender</p>
-          </div>
-          <Calendar />
-        </div>
+        <JadwalSholat />
+        <Kalender />
       </section>
     </div>
   );
@@ -100,6 +83,9 @@ const Dashboard: NextPage<Props> = ({}) => {
 
 export default Dashboard;
 
+{
+  /* <AreaChart options={options} series={series} /> */
+}
 // const options = {
 //   chart: {
 //     foreColor: "#ffffff",
