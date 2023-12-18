@@ -13,8 +13,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // primary: '#262A56',
-        // secondary: '#1c1e3b',
         primary: '#1E5236',
         secondary: '#003F37',
         third: '#F6DB30',
@@ -22,8 +20,6 @@ module.exports = {
         abu: '#CECECE',
       },
       backgroundColor: {
-        // primary: '#262A56',
-        // secondary: '#1c1e3b',
         primary: '#1E5236',
         secondary: '#003F37',
         third: '#F6DB30',

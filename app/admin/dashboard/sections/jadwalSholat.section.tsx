@@ -1,8 +1,10 @@
 import { FC, useEffect } from "react";
 import { FaClock, FaLocationCrosshairs } from "react-icons/fa6";
-import useGeolocation from "../service/geolocation.service";
-import useJadwalSholatModule from "../service/jadwalSholat.service";
+import Skeleton from "react-loading-skeleton";
 import dayjs from "dayjs";
+import "react-loading-skeleton/dist/skeleton.css";
+import useJadwalSholatModule from "../service/jadwalSholat.service";
+import useGeolocation from "../service/geolocation.service";
 
 interface JadwalSholatProps {}
 
@@ -54,10 +56,10 @@ const JadwalSholat: FC<JadwalSholatProps> = ({}) => {
   }, [geolocationData?.address.county, datakota?.data?.[0]?.id, refetchIdKota]);
   return (
     <div className="col-span-2 flex w-full flex-col overflow-hidden rounded-[10px] bg-white p-5 shadow-md">
-      <div className="mb-[10px] flex items-center justify-between gap-x-7">
+      <div className="mb-7 flex items-center justify-between gap-x-7 lg:mb-[10px]">
         <div className="flex items-center gap-x-3">
-          <div className="rounded-[5px] bg-primary p-3">
-            <FaClock className="text-lg text-white" />
+          <div className="rounded-[5px] bg-primary bg-opacity-20 p-3">
+            <FaClock className="text-lg text-primary" />
           </div>
           <p className="text-lg font-bold capitalize text-primary">
             jadwal sholat
@@ -70,25 +72,50 @@ const JadwalSholat: FC<JadwalSholatProps> = ({}) => {
           ) : isError ? (
             <p>Error fetching geolocation</p>
           ) : (
-            <p className="w-full text-sm">{placeName}</p>
+            <p className="line-clamp-2 w-full text-sm lg:line-clamp-none">
+              {placeName}
+            </p>
           )}
         </div>
       </div>
 
-      <div className="grid w-full grid-cols-8">
+      <div className="grid h-full w-full grid-cols-2 items-center gap-x-3 gap-y-7 lg:grid-cols-4 lg:gap-y-0">
         {JADWAL_SHOLAT.map((jadwal, i) => {
           return (
-            <div key={jadwal.nama} className="flex flex-col gap-y-4">
-              <h1>{jadwal.nama}</h1>
-              <p className="font-bold">
+            <div
+              key={jadwal.nama}
+              className="flex w-full flex-col items-center gap-y-2 lg:gap-y-4"
+            >
+              <h1 className="font-medium capitalize text-abu">{jadwal.nama}</h1>
+              <div className="w-full">
                 {isFetchingJadwalSholat || isLoadingJadwalSholat ? (
-                  <p>loading</p>
+                  <div className={`w-full flex-none`}>
+                    <Skeleton
+                      height={50}
+                      baseColor="#9FA1B5"
+                      highlightColor="#ffffff"
+                    />
+                  </div>
                 ) : isErrorJadwalSholat ? (
-                  <p>error</p>
+                  <p className="text-center font-mono text-xl font-bold capitalize">
+                    error
+                  </p>
                 ) : (
-                  jadwal.waktu || "00:00"
+                  (
+                    <p className="text-center font-mono text-xl font-bold capitalize">
+                      {jadwal?.waktu}
+                    </p>
+                  ) || (
+                    <div className={`w-full flex-none`}>
+                      <Skeleton
+                        height={50}
+                        baseColor="#9FA1B5"
+                        highlightColor="#ffffff"
+                      />
+                    </div>
+                  )
                 )}
-              </p>
+              </div>
             </div>
           );
         })}

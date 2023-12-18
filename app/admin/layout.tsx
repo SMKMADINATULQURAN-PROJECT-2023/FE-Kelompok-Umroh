@@ -118,11 +118,14 @@ const NavigationButton = ({
       transition="all 200ms ease-in-out"
       isDisabled={isDisabled}
       textTransform="capitalize"
-      color={isSelected ? "white" : "primary"}
+      color={"primary"}
+      boxShadow={
+        isSelected ? "inset 5px 0px 0px 0px rgba(30,82,54,1)" : "none"
+      }
       variant={isSelected ? "ghost" : "solid"}
-      backgroundColor={isSelected ? "primary" : "white"}
+      backgroundColor={isSelected ? "rgba(30, 82, 54, 0.2)" : "white"}
       _hover={{
-        backgroundColor: "abu",
+        backgroundColor: "primary",
         color: "white",
         transition: "all 200ms ease-in-out",
       }}
@@ -163,7 +166,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                         pl={10}
                         py={3}
                         _hover={{
-                          backgroundColor: "abu",
+                          backgroundColor: "primary",
                           color: "white",
                           transition: "all 200ms ease-in-out",
                         }}

@@ -36,10 +36,16 @@ const CustomHeader = ({}) => {
       button: (
         <Link href={"/admin/profile"}>
           <Button
+            borderRadius={"none"}
+            py={"25px"}
             variant={"ghost"}
             width={"100%"}
             justifyContent="flex-start"
             color={"primary"}
+            _hover={{
+              bg: "rgba(30,82,54,0.2)",
+              boxShadow: "inset 3px 0px 0px 0px rgba(30,82,54,1)",
+            }}
           >
             Profil
           </Button>
@@ -50,10 +56,16 @@ const CustomHeader = ({}) => {
       button: (
         <Link href={"/admin/notifikasi"}>
           <Button
+            borderRadius={"none"}
+            py={"25px"}
             variant={"ghost"}
             width={"100%"}
             justifyContent="flex-start"
             color={"primary"}
+            _hover={{
+              bg: "rgba(30,82,54,0.2)",
+              boxShadow: "inset 3px 0px 0px 0px rgba(30,82,54,1)",
+            }}
           >
             Notifikasi
           </Button>
@@ -66,11 +78,15 @@ const CustomHeader = ({}) => {
         <Button
           variant={"ghost"}
           width={"100%"}
-          bg={"red.500"}
-          color={"white"}
+          borderRadius={"none"}
+          py={"25px"}
+          color={"red"}
           justifyContent="flex-start"
-          _hover={{ bg: "red.600" }}
           onClick={() => signOut()}
+          _hover={{
+            bg: "rgba(229,62,62,0.2)",
+            boxShadow: "inset 3px 0px 0px 0px rgba(229,62,62,1)",
+          }}
         >
           Keluar
         </Button>
@@ -138,16 +154,16 @@ const CustomHeader = ({}) => {
 
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
-            <Button bg="primary">
-              <FaGear color="white" />
-            </Button>
+            <div className="cursor-pointer rounded-[5px] bg-primary bg-opacity-20 p-3 hover:bg-opacity-100">
+              <FaGear className="text-primary hover:text-white" />
+            </div>
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent overflow={"hidden"}>
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverHeader color={"primary"}>Pengaturan</PopoverHeader>
-            <PopoverBody width={"100%"}>
-              <div className="flex w-full flex-col items-start space-y-3">
+            <PopoverBody width={"100%"} p={0}>
+              <div className="flex w-full flex-col items-start">
                 {popoverBody.map((_, i) => {
                   return (
                     <div className="w-full" key={i}>
