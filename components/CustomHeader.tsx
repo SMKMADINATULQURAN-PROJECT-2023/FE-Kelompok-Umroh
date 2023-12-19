@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Avatar,
   Breadcrumb,
@@ -27,6 +27,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
+  const route = useRouter();
   const { data, isLoading, isFetching } = useProfileService();
   const loading = isLoading || isFetching;
 
@@ -95,7 +96,7 @@ const CustomHeader = ({}) => {
   ];
   return (
     <div className="mb-[20px] hidden w-full items-start justify-between lg:flex">
-      <div className="flex w-[75%] flex-col">
+      <div className="flex w-[75%] h-full flex-col gap-y-2">
         <div className="w-fit rounded-md bg-white px-5 py-1 shadow-md">
           <Breadcrumb
             spacing="8px"
@@ -115,6 +116,12 @@ const CustomHeader = ({}) => {
               );
             })}
           </Breadcrumb>
+        </div>
+        <div
+          className="cursor-pointer w-fit rounded bg-white p-2 shadow-md hover:bg-primary"
+          onClick={() => route.back()}
+        >
+          <FaArrowLeft className="text-primary hover:text-white" />
         </div>
       </div>
 

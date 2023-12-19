@@ -73,12 +73,13 @@ const FilterDrawer: React.FC<Props> = ({
         aria-label="Filter menu"
         ref={btnRef}
         onClick={onOpen}
-        variant="outline"
-        border={"primary"}
-        bg={isOpen ? "primary" : "transparent"}
-        color={"primary"}
+        bg={isOpen ? "primary" : "rgba(30, 82, 54, 0.2)"}
+        color={isOpen ? "white" : "primary"}
         icon={<FaFilter />}
-        _hover={{ bg: "primary", color: "white" }}
+        _hover={{
+          backgroundColor: "primary",
+          color: "white",
+        }}
       />
 
       <Drawer

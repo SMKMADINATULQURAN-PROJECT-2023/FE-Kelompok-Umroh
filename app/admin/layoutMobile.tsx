@@ -44,7 +44,7 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
         <Drawer placement={"top"} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
           <DrawerContent>
-            <DrawerHeader mb={10}>
+            <DrawerHeader>
               <div className="flex w-full items-center justify-between space-x-3 py-3">
                 <div className="flex w-full items-center justify-start space-x-3">
                   <div className={`${loading ? "w-[30%]" : ""}`}>
@@ -90,8 +90,13 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
                     aria-label="Filter menu"
                     onClick={onOpen}
                     variant="solid"
-                    bg={"primary"}
-                    icon={<FaPenToSquare color="white" />}
+                    color={"primary"}
+                    bg={"rgba(30, 82, 54, 0.2)"}
+                    icon={<FaPenToSquare className="" />}
+                    _hover={{
+                      backgroundColor: "primary",
+                      color: "white",
+                    }}
                   />
                 </Link>
               </div>
@@ -117,11 +122,9 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
                               size={"lg"}
                               width={"full"}
                               type="button"
-                              // height="50px"
                               transition="all 200ms ease-in-out"
                               isDisabled={_.isDisabled}
                               textTransform="capitalize"
-                              border={"primary"}
                               color={
                                 multipleNav === item.to.split("/").pop()
                                   ? "white"
@@ -135,12 +138,17 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
                               backgroundColor={
                                 multipleNav === item.to.split("/").pop()
                                   ? "primary"
-                                  : "transparent"
+                                  : "rgba(30, 82, 54, 0.2)"
+                              }
+                              fontWeight={
+                                multipleNav === item.to.split("/").pop()
+                                  ? "bold"
+                                  : "normal"
                               }
                               _hover={{
                                 backgroundColor: "primary",
-                                transition: "all 200ms ease-in-out",
                                 color: "white",
+                                transition: "all 200ms ease-in-out",
                               }}
                             >
                               {item.name}
@@ -161,20 +169,19 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
                           size={"lg"}
                           width={"full"}
                           type="button"
-                          // height="50px"
                           transition="all 200ms ease-in-out"
+                          fontWeight={isSelected ? "bold" : "normal"}
                           isDisabled={_.isDisabled}
                           textTransform="capitalize"
-                          border={"primary"}
                           color={isSelected ? "white" : "primary"}
                           variant={isSelected ? "solid" : "outline"}
                           backgroundColor={
-                            isSelected ? "primary" : "transparent"
+                            isSelected ? "primary" : "rgba(30, 82, 54, 0.2)"
                           }
                           _hover={{
                             backgroundColor: "primary",
-                            transition: "all 200ms ease-in-out",
                             color: "white",
+                            transition: "all 200ms ease-in-out",
                           }}
                         >
                           {_.nav}
@@ -191,10 +198,8 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
                     type="button"
                     transition="all 200ms ease-in-out"
                     textTransform="uppercase"
-                    border={"1px solid red"}
                     color={"red"}
-                    variant={"outline"}
-                    backgroundColor={"transparent"}
+                    backgroundColor={"rgba(229,62,62,0.2)"}
                     _hover={{
                       backgroundColor: "red",
                       transition: "all 200ms ease-in-out",
@@ -220,7 +225,7 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
         onClick={onOpen}
         className={`${
           isOpen ? "translate-x-40 rotate-180" : "translate-x-0 rotate-0"
-        } fixed right-8 top-8 z-[900] block cursor-pointer rounded-full border border-primary bg-white p-3 text-white shadow-lg duration-[1.2s] lg:hidden`}
+        } fixed right-8 top-8 z-[900] block cursor-pointer rounded border border-primary bg-white p-3 shadow-lg duration-[1.2s] lg:hidden`}
       >
         <FaBars className="text-primary" />
       </section>

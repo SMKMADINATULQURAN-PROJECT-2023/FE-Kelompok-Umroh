@@ -21,11 +21,12 @@ const usePanduanModule = () => {
     created_by: string = "",
     kategori_panduan: string = "",
     gender: string = "",
+    keyword: string = "",
   ) => {
     const getPanduan = async (): Promise<PanduanPaginationResponse> => {
       return axiosClient
         .get(
-          `/panduan?kategori_panduan=${kategori_panduan}&page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&gender=${gender}`,
+          `/panduan?kategori_panduan=${kategori_panduan}&page=${page}&pageSize=${pageSize}&status=${status}&created_by=${created_by}&gender=${gender}&keyword=${keyword}`,
         )
         .then((res) => res.data);
     };

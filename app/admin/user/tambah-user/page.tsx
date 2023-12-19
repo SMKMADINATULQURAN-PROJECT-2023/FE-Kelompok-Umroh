@@ -46,7 +46,7 @@ const TambahUser: NextPage = () => {
       onSuccess: () => {
         resetForm();
         setValues(createUserSchema.getDefault());
-        return router.replace("/admin/user");
+        return router.replace("/admin/user/admin");
       },
     });
   };

@@ -67,9 +67,7 @@ const Profile: NextPage<Props> = ({}) => {
                       >
                         {_.title}
                       </h1>
-                      <p className={"text-abu text-[12px]"}>
-                        {_.description}
-                      </p>
+                      <p className={"text-[12px] text-abu"}>{_.description}</p>
                     </Tab>
                   );
                 })}
@@ -91,7 +89,7 @@ const Profile: NextPage<Props> = ({}) => {
 
       <section className="mb-8 w-full lg:mb-0">
         <p className="text-center font-mono text-[12px] lg:text-left">
-          ⓒ AL - HILAL {currentYear}
+          ⓒ {process.env.NEXT_PUBLIC_APP_NAME} {currentYear}
         </p>
       </section>
     </div>

@@ -62,8 +62,10 @@ export const useProfileService = () => {
   };
 
   const { data, isFetching, isLoading, refetch } = useQuery({
-    queryKey: ["/admin/profile"],
+    queryKey: ["profile_admin"],
     queryFn: () => getProfile(),
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
   });
 
   return { data, isFetching, isLoading, refetch };
@@ -71,6 +73,8 @@ export const useProfileService = () => {
 
 export const useUpdateProfile = () => {
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
+
   const { toastSuccess, toastError, toastWarning } = useNotification();
 
   const { mutate, isLoading } = useMutation(
@@ -94,6 +98,7 @@ export const useUpdateProfile = () => {
     {
       onSuccess: (response) => {
         toastSuccess(response.data.message);
+        queryClient.invalidateQueries(["/profile_admin"]);
       },
       onError: (error) => {
         console.error("error", error);

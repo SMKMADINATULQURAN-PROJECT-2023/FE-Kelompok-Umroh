@@ -45,7 +45,7 @@ const TableUserAdmin: React.FC<Props> = ({}) => {
   return (
     <div>
       <SecondTopNav
-        navigateTo="user/tambah-user"
+        navigateTo="/admin/user/tambah-user"
         title="User"
         totalData={dataAdmin?.pagination.total ?? 0}
         isLoading={isLoading}

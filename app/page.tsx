@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useLoginService } from "./auth/service/auth.service";
 import Loader from "@/components/Loader";
 import dayjs from "dayjs";
+import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
 
@@ -176,13 +177,63 @@ const Home: NextPage<Props> = () => {
         </div>
 
         <div className="absolute bottom-4 left-4 rounded bg-primary bg-opacity-25">
-          <p className="px-3 py-1 text-[12px] font-semibold text-primary font-mono">
-            ⓒ AL - HILAL {currentYear}
+          <p className="px-3 py-1 font-mono text-xs text-primary">
+            ⓒ {process.env.NEXT_PUBLIC_APP_NAME} {currentYear}
           </p>
+        </div>
+        <div className="absolute -left-12 -top-12 z-20 hidden lg:block">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={200}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/bungaSatu.png"}
+          />
+        </div>
+        <div className="absolute left-10 top-0 z-10 hidden lg:block">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={100}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/lentera.png"}
+          />
         </div>
       </section>
 
-      <section className="hidden h-full w-[40%] rounded-tl-[70px] bg-primary lg:block"></section>
+      <section className="relative hidden h-full w-[40%] rounded-tl-[70px] bg-primary lg:block">
+        <div className="absolute -right-20 -top-14 z-20">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={350}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/bungaTiga.png"}
+          />
+        </div>
+
+        <div className="absolute bottom-0 right-0 z-10 rotate-180">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={700}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/ornamentArabTrans.svg"}
+          />
+        </div>
+      </section>
     </div>
   );
 };

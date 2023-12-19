@@ -44,6 +44,35 @@ const SummaryData: React.FC<Props> = ({}) => {
           </div>
         ))}
       </div>
+      <div className="hidden grid-cols-3 gap-5 lg:grid">
+        {secondRowItems.map((_, i) => (
+          <div
+            key={i}
+            className="flex w-full items-center justify-between rounded-[10px] bg-white p-5 shadow-md"
+          >
+            <div className="flex flex-col items-start">
+              <p className="text-abu">{_.item}</p>
+              {isLoading ? (
+                <div
+                  className={`${isLoading ? "w-14" : "w-full"} rounded-[15px]`}
+                >
+                  <Skeleton
+                    height={25}
+                    baseColor="#9FA1B5"
+                    highlightColor="#ffffff"
+                  />
+                </div>
+              ) : (
+                <p className="text-[20px] font-bold text-primary">{_.total}</p>
+              )}
+            </div>
+            <div className="rounded-[5px] bg-primary bg-opacity-20 p-3">
+              {_.icon}
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div className="block lg:hidden">
         <Swiper
           spaceBetween={20}
@@ -87,35 +116,6 @@ const SummaryData: React.FC<Props> = ({}) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
-
-      <div className="hidden grid-cols-3 gap-5 lg:grid">
-        {secondRowItems.map((_, i) => (
-          <div
-            key={i}
-            className="flex w-full items-center justify-between rounded-[10px] bg-white p-5 shadow-md"
-          >
-            <div className="flex flex-col items-start">
-              <p className="text-abu">{_.item}</p>
-              {isLoading ? (
-                <div
-                  className={`${isLoading ? "w-14" : "w-full"} rounded-[15px]`}
-                >
-                  <Skeleton
-                    height={25}
-                    baseColor="#9FA1B5"
-                    highlightColor="#ffffff"
-                  />
-                </div>
-              ) : (
-                <p className="text-[20px] font-bold text-primary">{_.total}</p>
-              )}
-            </div>
-            <div className="rounded-[5px] bg-primary bg-opacity-20 p-3">
-              {_.icon}
-            </div>
-          </div>
-        ))}
       </div>
       <div className="block lg:hidden">
         <Swiper

@@ -30,10 +30,12 @@ const ScrollToTopButton: React.FC = () => {
       <button
         onClick={scrollToTop}
         className={`${
-          showScrollButton ? "translate-x-0 rotate-0" : "translate-x-40 rotate-180"
-        } fixed  bottom-8 right-8 z-[100] block rounded-full border border-primary bg-white p-3 shadow-lg duration-700 lg:hidden`}
+          showScrollButton
+            ? "translate-x-0 rotate-0"
+            : "translate-x-40 rotate-180"
+        } fixed  bottom-8 right-8 z-[100] block rounded bg-primary bg-opacity-20 p-3 shadow-lg duration-700 hover:bg-primary lg:hidden`}
       >
-        <FaAngleUp color="#262a56" />
+        <FaAngleUp className="text-primary hover:text-white" />
       </button>
     </>
   );

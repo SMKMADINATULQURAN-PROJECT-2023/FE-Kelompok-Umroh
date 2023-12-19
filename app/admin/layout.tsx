@@ -8,6 +8,7 @@ import {
   FaPlaneDeparture,
   FaMapLocationDot,
   FaHandsHolding,
+  FaTriangleExclamation,
 } from "react-icons/fa6";
 import Link from "next/link";
 import {
@@ -88,6 +89,14 @@ const dashmenu = [
     isMultiple: false,
     multipleNav: [],
   },
+  {
+    nav: "laporan",
+    isDisabled: false,
+    to: "/admin/laporan",
+    icon: FaTriangleExclamation,
+    isMultiple: false,
+    multipleNav: [],
+  },
 ];
 
 const NavigationButton = ({
@@ -119,14 +128,13 @@ const NavigationButton = ({
       isDisabled={isDisabled}
       textTransform="capitalize"
       color={"primary"}
-      boxShadow={
-        isSelected ? "inset 5px 0px 0px 0px rgba(30,82,54,1)" : "none"
-      }
+      boxShadow={isSelected ? "inset 5px 0px 0px 0px rgba(30,82,54,1)" : "none"}
       variant={isSelected ? "ghost" : "solid"}
       backgroundColor={isSelected ? "rgba(30, 82, 54, 0.2)" : "white"}
       _hover={{
-        backgroundColor: "primary",
-        color: "white",
+        backgroundColor: "rgba(30, 82, 54, 0.2)",
+        boxShadow: "inset 5px 0px 0px 0px rgba(30,82,54,1)",
+        color: "primary",
         transition: "all 200ms ease-in-out",
       }}
     >
@@ -152,7 +160,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <section className="noScrollbar sticky top-0 col-span-1 hidden h-screen w-full flex-col items-center justify-start space-y-12 overflow-y-scroll bg-white py-[30px] shadow-lg lg:flex">
           <Link href={"/admin/dashboard"}>
             <div className="w-full text-center text-[25px] font-extrabold uppercase text-primary underline underline-offset-4">
-              al - hilal
+              {process.env.NEXT_PUBLIC_APP_NAME}
             </div>
           </Link>
           <div className="grid w-full grid-cols-1">

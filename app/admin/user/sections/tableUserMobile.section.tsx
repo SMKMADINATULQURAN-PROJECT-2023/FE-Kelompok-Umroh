@@ -45,7 +45,7 @@ const TableUserMobile: React.FC<Props> = ({}) => {
   return (
     <div>
       <SecondTopNav
-        navigateTo="user/tambah-user"
+        navigateTo="/admin/user/tambah-user"
         title="User"
         totalData={dataMobile?.pagination.total ?? 0}
         isLoading={isLoading}
