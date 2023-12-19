@@ -15,6 +15,7 @@ const PanduanSection: React.FC<Props> = ({}) => {
   const [created_by, setCreated_by] = useState("");
   const [kategori, setKategori] = useState("");
   const [gender, setGender] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { useGetPanduan, useDeletePanduan } = usePanduanModule();
 
@@ -24,7 +25,15 @@ const PanduanSection: React.FC<Props> = ({}) => {
     isFetching,
     isLoading: isLoadingPanduan,
     refetch,
-  } = useGetPanduan(page, pageSize, status, created_by, kategori, gender);
+  } = useGetPanduan(
+    page,
+    pageSize,
+    status,
+    created_by,
+    kategori,
+    gender,
+    keyword,
+  );
   const { isLoading: isLoadingDelete, mutate } = useDeletePanduan();
 
   const onDelete = useCallback(
@@ -65,11 +74,12 @@ const PanduanSection: React.FC<Props> = ({}) => {
       <section className="mb-[20px] w-full px-5 lg:px-0">
         <PanduanFilterSection
           isLoading={isLoading}
-          setCreated_by={setCreated_by}
-          setKategori={setKategori}
-          setStatus={setStatus}
-          setGender={setGender}
           refetch={refetch}
+          setCreated_by={setCreated_by}
+          setKeyword={setKeyword}
+          setStatus={setStatus}
+          setKategori={setKategori}
+          setGender={setGender}
         />
         <CustomTable
           columns={panduanColumn}

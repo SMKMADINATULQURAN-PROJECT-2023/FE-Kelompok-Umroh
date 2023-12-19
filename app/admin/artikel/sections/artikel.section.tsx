@@ -70,13 +70,15 @@ const ArtikelSection: React.FC<Props> = ({}) => {
         isLoading={isLoadingArtikel || isLoadingDelete}
       />
 
-      <ArtikelFilterSection
-        isLoading={isLoading}
-        refetch={refetchArtikel}
-        setCreated_by={setCreated_by}
-        setKeyword={setKeyword}
-        setStatus={setStatus}
-      />
+      <section className="px-5 lg:px-0">
+        <ArtikelFilterSection
+          isLoading={isLoading}
+          refetch={refetchArtikel}
+          setCreated_by={setCreated_by}
+          setKeyword={setKeyword}
+          setStatus={setStatus}
+        />
+      </section>
 
       <section className="mb-5 grid w-full grid-cols-1 grid-rows-3 gap-4 px-5 lg:grid-cols-2 lg:px-0">
         {isErrorArtikel ? (
@@ -87,7 +89,7 @@ const ArtikelSection: React.FC<Props> = ({}) => {
               <Skeleton
                 height={200}
                 baseColor="#9FA1B5"
-                highlightColor="#1c1e3b"
+                highlightColor="#003F37"
               />
             </div>
           ))

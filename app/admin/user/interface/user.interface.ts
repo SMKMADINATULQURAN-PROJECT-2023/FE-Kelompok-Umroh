@@ -28,6 +28,18 @@ interface UserMobile extends CommonUserProperties {
   jenis_kelamin: string;
 }
 
+export interface UserAdminFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
+export interface UserMobileFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
 export interface AdminResponse {
   data: UserAdmin;
 }

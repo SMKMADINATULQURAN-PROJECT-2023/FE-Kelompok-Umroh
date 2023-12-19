@@ -50,17 +50,19 @@ const PaginationMenu: NextPage<Props> = ({
           <div className="flex items-center space-x-2">
             <Button
               size={"sm"}
-              backgroundColor={"#262A56"}
+              backgroundColor={"primary"}
               isDisabled={firstPageButtonIsDisabled}
               onClick={firstPageButtonOnClick}
+              _hover={{ bg: "secondary" }}
             >
               <FaAnglesLeft color="#ffffff" />
             </Button>
             <Button
               size={"sm"}
-              backgroundColor={"#262A56"}
+              backgroundColor={"primary"}
               isDisabled={previousPageButtonIsDisabled}
               onClick={previousPageButtonOnClick}
+              _hover={{ bg: "secondary" }}
             >
               <FaAngleLeft color="#ffffff" />
             </Button>
@@ -71,7 +73,7 @@ const PaginationMenu: NextPage<Props> = ({
               type="number"
               size={"sm"}
               borderRadius={"5px"}
-              border={"1px solid #262A56"}
+              border={"primary"}
               width={"60px"}
               value={inputValue}
               onChange={inputPageOnChange}
@@ -82,17 +84,19 @@ const PaginationMenu: NextPage<Props> = ({
           <div className="flex items-center space-x-2">
             <Button
               size={"sm"}
-              backgroundColor={"#262A56"}
+              backgroundColor={"primary"}
               isDisabled={nextPageButtonIsDisabled}
               onClick={nextPageButtonOnClick}
+              _hover={{ bg: "secondary" }}
             >
               <FaAngleRight color="#ffffff" />
             </Button>
             <Button
               size={"sm"}
-              backgroundColor={"#262A56"}
+              backgroundColor={"primary"}
               isDisabled={lastPageButtonIsDisabled}
               onClick={lastPageButtonOnClick}
+              _hover={{ bg: "secondary" }}
             >
               <FaAnglesRight color="#ffffff" />
             </Button>
@@ -118,8 +122,10 @@ const PaginationMenu: NextPage<Props> = ({
               <Button
                 size={"sm"}
                 key={pageSize}
-                backgroundColor={pageSize === currentPageSize ? "#262a56" : ""}
-                color={pageSize === currentPageSize ? "white" : "#262a56"}
+                backgroundColor={
+                  pageSize === currentPageSize ? "primary" : "abu"
+                }
+                color={pageSize === currentPageSize ? "white" : "primary"}
                 onClick={() => pageSizeOnClick(pageSize)}
                 className={`rounded-full px-3 py-1`}
               >

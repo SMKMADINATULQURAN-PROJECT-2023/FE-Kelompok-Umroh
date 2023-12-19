@@ -6,12 +6,13 @@ import {
   ZiarahResponse,
 } from "../interface/ziarah.interface";
 import useAxiosAuth from "@/hook/useAxiosAuth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
 const useZiarahModule = () => {
   const { toastError, toastSuccess, toastWarning } = useNotification();
   const axiosClient = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const useGetZiarah = (
     page: number = 1,
@@ -28,8 +29,10 @@ const useZiarahModule = () => {
         .then((res) => res.data);
     };
     const { data, isError, isFetching, isLoading, refetch } = useQuery({
-      queryKey: ["lokasi_ziarah"],
+      queryKey: ["lokasi_ziarah", page, pageSize, status, created_by, keyword],
       queryFn: () => getZiarah(),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isError, isFetching, isLoading, refetch };
@@ -44,6 +47,8 @@ const useZiarahModule = () => {
       queryKey: [`lokasi_ziarah/${id}`, id],
       queryFn: () => getDetail(),
       enabled: !!id,
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
     });
 
     return { data, isError, isFetching, isLoading, refetch };
@@ -72,6 +77,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -109,6 +115,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);
@@ -137,6 +144,7 @@ const useZiarahModule = () => {
       {
         onSuccess: (response) => {
           toastSuccess(response.data.message);
+          queryClient.invalidateQueries(["/lokasi_ziarah"]);
         },
         onError: (error) => {
           console.error("error", error);

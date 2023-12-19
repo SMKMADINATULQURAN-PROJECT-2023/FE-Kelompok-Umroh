@@ -23,14 +23,17 @@ interface DashMenu {
   isDisabled: boolean;
   to: string;
   icon: JSX.Element | IconType;
+  isMultiple: boolean;
+  multipleNav: { name: string; to: string }[];
 }
 
 interface Props {
   data: Array<DashMenu>;
   currentNav: string | undefined;
+  multipleNav: string | undefined;
 }
 
-const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
+const LayoutMobile: React.FC<Props> = ({ data, currentNav, multipleNav }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: dataProfile, isLoading, isFetching } = useProfileService();
   const loading = isLoading || isFetching;
@@ -41,7 +44,7 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
         <Drawer placement={"top"} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
           <DrawerContent>
-            <DrawerHeader mb={10}>
+            <DrawerHeader>
               <div className="flex w-full items-center justify-between space-x-3 py-3">
                 <div className="flex w-full items-center justify-start space-x-3">
                   <div className={`${loading ? "w-[30%]" : ""}`}>
@@ -87,8 +90,13 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
                     aria-label="Filter menu"
                     onClick={onOpen}
                     variant="solid"
-                    bg={"#262A56"}
-                    icon={<FaPenToSquare color="white" />}
+                    color={"primary"}
+                    bg={"rgba(30, 82, 54, 0.2)"}
+                    icon={<FaPenToSquare className="" />}
+                    _hover={{
+                      backgroundColor: "primary",
+                      color: "white",
+                    }}
                   />
                 </Link>
               </div>
@@ -99,31 +107,81 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
                 <div className="mb-10 grid w-full grid-cols-2 gap-5">
                   {data.map((_, i) => {
                     const isSelected = currentNav === _.nav;
-                    return (
+                    return _.isMultiple ? (
+                      _.multipleNav.map((item, index) => {
+                        return (
+                          <Link
+                            href={`/admin/${item.to.toLowerCase()}`}
+                            key={i}
+                            onClick={onClose}
+                            className={`${_.isDisabled ? "hidden" : "block"}`}
+                          >
+                            <Button
+                              fontSize={13}
+                              key={i}
+                              size={"lg"}
+                              width={"full"}
+                              type="button"
+                              transition="all 200ms ease-in-out"
+                              isDisabled={_.isDisabled}
+                              textTransform="capitalize"
+                              color={
+                                multipleNav === item.to.split("/").pop()
+                                  ? "white"
+                                  : "primary"
+                              }
+                              variant={
+                                multipleNav === item.to.split("/").pop()
+                                  ? "solid"
+                                  : "outline"
+                              }
+                              backgroundColor={
+                                multipleNav === item.to.split("/").pop()
+                                  ? "primary"
+                                  : "rgba(30, 82, 54, 0.2)"
+                              }
+                              fontWeight={
+                                multipleNav === item.to.split("/").pop()
+                                  ? "bold"
+                                  : "normal"
+                              }
+                              _hover={{
+                                backgroundColor: "primary",
+                                color: "white",
+                                transition: "all 200ms ease-in-out",
+                              }}
+                            >
+                              {item.name}
+                            </Button>
+                          </Link>
+                        );
+                      })
+                    ) : (
                       <Link
                         href={`/admin/${_.nav.toLowerCase()}`}
                         key={i}
                         onClick={onClose}
+                        className={`${_.isDisabled ? "hidden" : "block"}`}
                       >
                         <Button
-                          fontSize={15}
+                          fontSize={13}
                           key={i}
+                          size={"lg"}
                           width={"full"}
                           type="button"
-                          height="50px"
                           transition="all 200ms ease-in-out"
+                          fontWeight={isSelected ? "bold" : "normal"}
                           isDisabled={_.isDisabled}
                           textTransform="capitalize"
-                          border={"1px solid #262a56"}
-                          color={isSelected ? "white" : "#262a56"}
+                          color={isSelected ? "white" : "primary"}
                           variant={isSelected ? "solid" : "outline"}
                           backgroundColor={
-                            isSelected ? "#262a56" : "transparent"
+                            isSelected ? "primary" : "rgba(30, 82, 54, 0.2)"
                           }
                           _hover={{
-                            backgroundColor: "#262a56",
-                            transition: "all 200ms ease-in-out",
+                            backgroundColor: "primary",
                             color: "white",
+                            transition: "all 200ms ease-in-out",
                           }}
                         >
                           {_.nav}
@@ -134,16 +192,14 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
                 </div>
                 <div className="w-full grid-cols-1">
                   <Button
-                    fontSize={15}
+                    fontSize={13}
+                    size={"lg"}
                     width={"full"}
                     type="button"
-                    height="50px"
                     transition="all 200ms ease-in-out"
                     textTransform="uppercase"
-                    border={"1px solid red"}
                     color={"red"}
-                    variant={"outline"}
-                    backgroundColor={"transparent"}
+                    backgroundColor={"rgba(229,62,62,0.2)"}
                     _hover={{
                       backgroundColor: "red",
                       transition: "all 200ms ease-in-out",
@@ -169,9 +225,9 @@ const LayoutMobile: React.FC<Props> = ({ data, currentNav }) => {
         onClick={onOpen}
         className={`${
           isOpen ? "translate-x-40 rotate-180" : "translate-x-0 rotate-0"
-        } fixed right-8 top-8 z-[900] block cursor-pointer rounded-full border border-primary bg-white p-3 text-white shadow-lg duration-[1.2s] lg:hidden`}
+        } fixed right-8 top-8 z-[900] block cursor-pointer rounded border border-primary bg-white p-3 shadow-lg duration-[1.2s] lg:hidden`}
       >
-        <FaBars color="#262a56" />
+        <FaBars className="text-primary" />
       </section>
     </div>
   );

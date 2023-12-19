@@ -1,13 +1,15 @@
-import CustomDrawer from "@/components/CustomDrawer";
-import React from "react";
+import React, { useCallback } from "react";
 import * as yup from "yup";
 import { PanduanFilter } from "../interface/panduan.interface";
 import { useFormik } from "formik";
 import CustomSelect from "@/components/CustomSelect";
+import FilterDrawer from "@/components/FilterDrawer";
+import CustomInput from "@/components/CustomInput";
 
 interface Props {
   isLoading: boolean;
   setStatus: any;
+  setKeyword: any;
   setKategori: any;
   setCreated_by: any;
   setGender: any;
@@ -19,6 +21,7 @@ const PanduanFilterSection: React.FC<Props> = ({
   setCreated_by,
   setKategori,
   setStatus,
+  setKeyword,
   setGender,
   refetch,
 }) => {
@@ -48,23 +51,30 @@ const PanduanFilterSection: React.FC<Props> = ({
     status: yup.string().default("").optional(),
     created_by: yup.string().default("").optional(),
     gender: yup.string().default("").optional(),
+    keyword: yup.string().default("").optional(),
     kategori_panduan: yup.string().default("").optional(),
   });
 
-  const onSubmit = async (values: PanduanFilter) => {
-    setCreated_by(values.created_by);
-    setGender(values.gender);
-    setKategori(values.kategori_panduan);
-    setStatus(values.status);
-    return refetch();
-  };
-  const onReset = async (values: PanduanFilter) => {
+  const onSubmit = useCallback(
+    async (values: PanduanFilter) => {
+      setCreated_by(values.created_by);
+      setGender(values.gender);
+      setKeyword(values.keyword);
+      setKategori(values.kategori_panduan);
+      setStatus(values.status);
+      return refetch();
+    },
+    [setCreated_by, setKeyword, setStatus, setGender, setKategori, refetch],
+  );
+
+  const onReset = useCallback(async () => {
     setCreated_by("");
+    setKeyword("");
     setGender("");
     setKategori("");
     setStatus("");
     return refetch();
-  };
+  }, [setCreated_by, setKeyword, setStatus, setGender, setKategori, refetch]);
 
   const formik = useFormik<PanduanFilter>({
     initialValues: panduanFilterSchema.getDefault(),
@@ -86,7 +96,7 @@ const PanduanFilterSection: React.FC<Props> = ({
   } = formik;
   return (
     <div className="flex w-full items-center justify-end">
-      <CustomDrawer
+      <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -97,6 +107,16 @@ const PanduanFilterSection: React.FC<Props> = ({
         values={values}
       >
         <div className="flex w-full flex-col space-y-7">
+          <CustomInput
+            id="keyword"
+            title="Kata kunci"
+            type="text"
+            values={values.keyword}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            isInvalid={!!errors?.keyword}
+            errorMessage={errors?.keyword}
+          />
           <CustomSelect
             id="gender"
             title="Panduan Untuk"
@@ -134,7 +154,7 @@ const PanduanFilterSection: React.FC<Props> = ({
             })}
           </CustomSelect>
         </div>
-      </CustomDrawer>
+      </FilterDrawer>
     </div>
   );
 };

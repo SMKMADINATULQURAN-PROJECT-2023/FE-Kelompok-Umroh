@@ -1,9 +1,9 @@
 "use client";
 import { NextPage } from "next";
-import useDoaModule from "../../service/doa.service";
+import useDoaModule from "../../../service/doa.service";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import { UpdateKategoriDoaPayload } from "../../interface/doa.interface";
+import { UpdateKategoriDoaPayload } from "../../../interface/doa.interface";
 import { Form, FormikProvider, useFormik } from "formik";
 import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";

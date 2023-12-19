@@ -28,7 +28,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const CustomDrawer: React.FC<Props> = ({
+const FilterDrawer: React.FC<Props> = ({
   formik,
   handleSubmit,
   isLoading,
@@ -73,10 +73,13 @@ const CustomDrawer: React.FC<Props> = ({
         aria-label="Filter menu"
         ref={btnRef}
         onClick={onOpen}
-        variant="outline"
-        border={"1px solid #262a56"}
-        bg={isOpen ? "#262a56" : "transparent"}
-        icon={<FaFilter color={isOpen ? "white" : "#262a56"} />}
+        bg={isOpen ? "primary" : "rgba(30, 82, 54, 0.2)"}
+        color={isOpen ? "white" : "primary"}
+        icon={<FaFilter />}
+        _hover={{
+          backgroundColor: "primary",
+          color: "white",
+        }}
       />
 
       <Drawer
@@ -170,4 +173,4 @@ const CustomDrawer: React.FC<Props> = ({
   );
 };
 
-export default CustomDrawer;
+export default FilterDrawer;

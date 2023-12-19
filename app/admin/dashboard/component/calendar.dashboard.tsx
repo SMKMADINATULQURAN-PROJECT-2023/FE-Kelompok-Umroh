@@ -8,7 +8,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const Calendar = () => {
   const [value, onChange] = useState<Value>(new Date());
   return (
-    <div>
+    <div suppressHydrationWarning>
       <ReactCalendar
         onChange={onChange}
         value={value}

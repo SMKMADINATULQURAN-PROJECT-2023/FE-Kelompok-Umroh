@@ -5,8 +5,18 @@ import HtmlRenderer from "@/hook/useMarkdownConvert";
 import "dayjs/locale/id";
 import dayjs from "dayjs";
 import { FaMapMarkedAlt } from "react-icons/fa";
-import { Avatar, Button } from "@chakra-ui/react";
-import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
+import {
+  Avatar,
+  Button,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+} from "@chakra-ui/react";
+import {
+  FaRegPenToSquare,
+  FaTrash,
+  FaTriangleExclamation,
+} from "react-icons/fa6";
 import RouteButton from "@/components/RouteButton";
 import {
   StatusBarApproved,
@@ -14,6 +24,10 @@ import {
   StatusBarRejected,
   StatusBarUknown,
 } from "@/components/StatusBar";
+import { useProfileService } from "@/app/auth/service/auth.service";
+import PopOver from "@/components/PopOver";
+import CustomMenuButton from "@/components/MenuButton";
+import { AddIcon } from "@chakra-ui/icons";
 
 interface Props {
   data: Ziarah;
@@ -22,6 +36,8 @@ interface Props {
 }
 
 const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
+  const { data: dataProfile } = useProfileService();
+  const role = dataProfile?.data.role_id.role_name;
   let statusText;
 
   switch (data.status) {
@@ -65,10 +81,7 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
             </div>
           </div>
           <p className="line-clamp-2 text-[13px] text-primary">
-            <HtmlRenderer
-              htmlString={data.description}
-              className="primary"
-            />
+            <HtmlRenderer htmlString={data.description} className="primary" />
           </p>
           <span className="mt-[10px] text-[12px] text-gray-400">
             Dibuat pada{" "}
@@ -98,36 +111,70 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <div>
-              <Button
-                width={"full"}
-                type="button"
-                isLoading={isLoading}
-                isDisabled={isLoading}
-                h="35px"
-                backgroundColor={"red.500"}
-                _hover={{ bgColor: "red.600" }}
-                fontSize={12}
-                onClick={onClickDelete}
-              >
-                <FaTrash color="white" />
-              </Button>
-            </div>
-            <div>
-              <RouteButton
-                to={`ziarah/update-ziarah/${data.id}`}
-                title={<FaRegPenToSquare color="white" />}
-                h="35px"
-                width={"full"}
-                bg={"yellow.500"}
-                justifyContent="flex-start"
-                _hover={{ bg: "yellow.600" }}
-                fontSize={12}
-                isLoading={isLoading}
-                isDisabled={isLoading}
-              />
-            </div>
+          <div className="flex items-center">
+            {role === "Admin" ? (
+              <CustomMenuButton>
+                <MenuGroup title="Action">
+                  <MenuItem
+                    color={"red.500"}
+                    icon={<FaTrash className="" />}
+                    onClick={onClickDelete}
+                  >
+                    <Button
+                      type="button"
+                      isLoading={isLoading}
+                      isDisabled={isLoading}
+                      h="35px"
+                      backgroundColor={"transparent"}
+                      fontSize={12}
+                    >
+                      <p className="text-base font-normal capitalize text-red-500">
+                        hapus
+                      </p>
+                    </Button>
+                  </MenuItem>
+                  <MenuItem
+                    color={"yellow.500"}
+                    icon={<FaRegPenToSquare className="" />}
+                    as="a"
+                    href={`ziarah/update-ziarah/${data.id}`}
+                  >
+                    <RouteButton
+                      title={
+                        <p className="text-base font-normal capitalize text-yellow-500">
+                          edit
+                        </p>
+                      }
+                      h="35px"
+                      bg={"transparent"}
+                      fontSize={12}
+                      isLoading={isLoading}
+                      isDisabled={isLoading}
+                    />
+                  </MenuItem>
+                </MenuGroup>
+                <MenuDivider />
+                <MenuGroup title="Other">
+                  <MenuItem
+                    color={"red.500"}
+                    icon={<FaTriangleExclamation className="" />}
+                  >
+                    <Button
+                      type="button"
+                      isLoading={isLoading}
+                      isDisabled={isLoading}
+                      h="35px"
+                      backgroundColor={"transparent"}
+                      fontSize={12}
+                    >
+                      <p className="text-base font-normal capitalize text-red-500">
+                        laporkan
+                      </p>
+                    </Button>
+                  </MenuItem>
+                </MenuGroup>
+              </CustomMenuButton>
+            ) : undefined}
           </div>
         </div>
       </div>

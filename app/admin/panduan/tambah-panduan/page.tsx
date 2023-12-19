@@ -11,7 +11,7 @@ import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import Image from "next/image";
 import CustomSelect from "@/components/CustomSelect";
 

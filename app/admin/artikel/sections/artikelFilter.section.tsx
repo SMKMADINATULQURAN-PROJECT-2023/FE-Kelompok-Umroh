@@ -1,9 +1,15 @@
-import CustomDrawer from "@/components/CustomDrawer";
-import React from "react";
-import * as yup from "yup";
+import React, { useCallback } from "react";
 import { useFormik } from "formik";
+import * as yup from "yup";
 import { ArtikelFilter } from "../interface/artikel.interface";
 import CustomInput from "@/components/CustomInput";
+import FilterDrawer from "@/components/FilterDrawer";
+
+const artikelFilterSchema = yup.object().shape({
+  status: yup.string().default("").optional(),
+  created_by: yup.string().default("").optional(),
+  keyword: yup.string().default("").optional(),
+});
 
 interface Props {
   isLoading: boolean;
@@ -20,24 +26,22 @@ const ArtikelFilterSection: React.FC<Props> = ({
   setKeyword,
   refetch,
 }) => {
-  const artikelFilterSchema = yup.object().shape({
-    status: yup.string().default("").optional(),
-    created_by: yup.string().default("").optional(),
-    keyword: yup.string().default("").optional(),
-  });
+  const onSubmit = useCallback(
+    async (values: ArtikelFilter) => {
+      setCreated_by(values.created_by);
+      setKeyword(values.keyword);
+      setStatus(values.status);
+      return refetch();
+    },
+    [setCreated_by, setKeyword, setStatus, refetch],
+  );
 
-  const onSubmit = async (values: ArtikelFilter) => {
-    setCreated_by(values.created_by);
-    setKeyword(values.keyword);
-    setStatus(values.status);
-    return refetch();
-  };
-  const onReset = async (values: ArtikelFilter) => {
+  const onReset = useCallback(async () => {
     setCreated_by("");
     setKeyword("");
     setStatus("");
     return refetch();
-  };
+  }, [setCreated_by, setKeyword, setStatus, refetch]);
 
   const formik = useFormik<ArtikelFilter>({
     initialValues: artikelFilterSchema.getDefault(),
@@ -47,19 +51,11 @@ const ArtikelFilterSection: React.FC<Props> = ({
     onReset: onReset,
   });
 
-  const {
-    handleChange,
-    handleSubmit,
-    setFieldValue,
-    handleBlur,
-    values,
-    errors,
-    resetForm,
-    setValues,
-  } = formik;
+  const { handleChange, handleSubmit, handleBlur, values, errors } = formik;
+
   return (
     <div className="flex w-full items-center justify-end">
-      <CustomDrawer
+      <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -81,7 +77,7 @@ const ArtikelFilterSection: React.FC<Props> = ({
             errorMessage={errors?.keyword}
           />
         </div>
-      </CustomDrawer>
+      </FilterDrawer>
     </div>
   );
 };

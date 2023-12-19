@@ -19,7 +19,7 @@ interface Props extends InputProps {
   title: string;
   id: string;
   errorMessage: string | undefined;
-  values: string | number;
+  values: string | number | undefined;
   handleChange: ChangeEventHandler<HTMLInputElement>;
   handleBlur: FocusEventHandler<HTMLInputElement>;
   isInvalid: boolean;
@@ -53,7 +53,7 @@ const CustomInput: React.FC<Props> = ({
         <FormLabel
           cursor="pointer"
           style={{ width: "fit-content" }}
-          color={backgroundColor || "#262A56"}
+          color={backgroundColor || "primary"}
           htmlFor={id}
           fontWeight=""
         >
@@ -69,8 +69,8 @@ const CustomInput: React.FC<Props> = ({
             value={values}
             onChange={handleChange}
             onBlur={handleBlur}
-            color="#262A56"
-            border={"1px solid #262A56"}
+            color="primary"
+            border={"primary"}
             _hover={inputHoverStyles}
             variant="outline"
             placeholder={`Masukkan ${title}`}

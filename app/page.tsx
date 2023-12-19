@@ -16,6 +16,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useLoginService } from "./auth/service/auth.service";
 import Loader from "@/components/Loader";
+import dayjs from "dayjs";
+import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
 
@@ -36,6 +38,7 @@ const Home: NextPage<Props> = () => {
   const [show, setShow] = useState<boolean>(false);
   const { mutate, isLoading } = useLoginService();
   const { data: session, status } = useSession();
+  const currentYear = dayjs().year();
   const router = useRouter();
 
   const formik = useFormik({
@@ -66,11 +69,11 @@ const Home: NextPage<Props> = () => {
 
   return (
     <div className="flex h-screen w-screen bg-white">
-      <section className="flex h-full w-full items-center justify-center p-7 lg:w-[60%]">
+      <section className="relative flex h-full w-full items-center justify-center p-7 lg:w-[60%]">
         <div className="w-full lg:w-[50%]">
           <div className="mb-[50px]">
-            <p className="text-[35px] font-bold text-black">LOGIN</p>
-            <p className="text-black">
+            <p className="text-[35px] font-bold text-primary">LOGIN</p>
+            <p className="text-primary">
               Masukkan email dan password untuk masuk!
             </p>
           </div>
@@ -80,7 +83,7 @@ const Home: NextPage<Props> = () => {
                 <Stack spacing={5} className="mb-10">
                   <FormControl isInvalid={!!errors?.email}>
                     <FormLabel
-                      color="#262A56"
+                      color="primary"
                       htmlFor="email"
                       fontWeight="semibold"
                     >
@@ -108,7 +111,7 @@ const Home: NextPage<Props> = () => {
 
                   <FormControl isInvalid={!!errors?.password}>
                     <FormLabel
-                      color="#262A56"
+                      color="primary"
                       htmlFor="password"
                       fontWeight="semibold"
                     >
@@ -134,7 +137,7 @@ const Home: NextPage<Props> = () => {
                           type="button"
                           h="1.75rem"
                           size="sm"
-                          color={"black"}
+                          color={"primary"}
                           onClick={() => {
                             setShow(!show);
                           }}
@@ -147,8 +150,8 @@ const Home: NextPage<Props> = () => {
                       <FormErrorMessage color={"red"}>
                         {errors?.password}
                       </FormErrorMessage>
-                      <Link href={'/lupa-password'}>
-                        <p className="biru cursor-pointer text-right hover:pr-2 hover:text-[#1c1e3b]">
+                      <Link href={"/lupa-password"}>
+                        <p className="mt-2 cursor-pointer text-right text-primary hover:pr-2 hover:text-secondary">
                           Lupa password
                         </p>
                       </Link>
@@ -163,8 +166,8 @@ const Home: NextPage<Props> = () => {
                   isDisabled={isLoading}
                   h="50px"
                   color={"#ffffff"}
-                  backgroundColor={"#262A56"}
-                  _hover={{ bgColor: "#1c1e3b" }}
+                  backgroundColor={"primary"}
+                  _hover={{ bg: "secondary" }}
                 >
                   LOGIN
                 </Button>
@@ -172,9 +175,65 @@ const Home: NextPage<Props> = () => {
             </FormikProvider>
           </div>
         </div>
+
+        <div className="absolute bottom-4 left-4 rounded bg-primary bg-opacity-25">
+          <p className="px-3 py-1 font-mono text-xs text-primary">
+            ⓒ {process.env.NEXT_PUBLIC_APP_NAME} {currentYear}
+          </p>
+        </div>
+        <div className="absolute -left-12 -top-12 z-20 hidden lg:block">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={200}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/bungaSatu.png"}
+          />
+        </div>
+        <div className="absolute left-10 top-0 z-10 hidden lg:block">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={100}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/lentera.png"}
+          />
+        </div>
       </section>
 
-      <section className="hidden h-full w-[40%] rounded-tl-[70px] bg-[#262A56] lg:block"></section>
+      <section className="relative hidden h-full w-[40%] rounded-tl-[70px] bg-primary lg:block">
+        <div className="absolute -right-20 -top-14 z-20">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={350}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/bungaTiga.png"}
+          />
+        </div>
+
+        <div className="absolute bottom-0 right-0 z-10 rotate-180">
+          <Image
+            className=""
+            objectFit="cover"
+            objectPosition="center"
+            width={700}
+            height={0}
+            quality={100}
+            alt={"playstore"}
+            src={"/assets/images/ornamentArabTrans.svg"}
+          />
+        </div>
+      </section>
     </div>
   );
 };

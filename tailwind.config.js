@@ -13,16 +13,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#262A56',
-        secondary: '#1c1e3b',
-        abu: '#9FA1B5',
-        sectionBg: '#f8f9fe',
+        primary: '#1E5236',
+        secondary: '#003F37',
+        third: '#F6DB30',
+        hitam: '#4a4a4a',
+        abu: '#CECECE',
       },
       backgroundColor: {
-        primary: '#262A56',
-        secondary: '#1c1e3b',
-        abu: '#9FA1B5',
-        sectionBg: '#f8f9fe',
+        primary: '#1E5236',
+        secondary: '#003F37',
+        third: '#F6DB30',
+        hitam: '#4a4a4a',
+        abu: '#CECECE',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

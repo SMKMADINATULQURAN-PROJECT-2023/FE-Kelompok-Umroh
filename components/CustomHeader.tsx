@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Avatar,
   Breadcrumb,
@@ -27,6 +27,7 @@ import { useProfileService } from "@/app/auth/service/auth.service";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
+  const route = useRouter();
   const { data, isLoading, isFetching } = useProfileService();
   const loading = isLoading || isFetching;
 
@@ -35,7 +36,18 @@ const CustomHeader = ({}) => {
     {
       button: (
         <Link href={"/admin/profile"}>
-          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+          <Button
+            borderRadius={"none"}
+            py={"25px"}
+            variant={"ghost"}
+            width={"100%"}
+            justifyContent="flex-start"
+            color={"primary"}
+            _hover={{
+              bg: "rgba(30,82,54,0.2)",
+              boxShadow: "inset 3px 0px 0px 0px rgba(30,82,54,1)",
+            }}
+          >
             Profil
           </Button>
         </Link>
@@ -44,7 +56,18 @@ const CustomHeader = ({}) => {
     {
       button: (
         <Link href={"/admin/notifikasi"}>
-          <Button variant={"ghost"} width={"100%"} justifyContent="flex-start">
+          <Button
+            borderRadius={"none"}
+            py={"25px"}
+            variant={"ghost"}
+            width={"100%"}
+            justifyContent="flex-start"
+            color={"primary"}
+            _hover={{
+              bg: "rgba(30,82,54,0.2)",
+              boxShadow: "inset 3px 0px 0px 0px rgba(30,82,54,1)",
+            }}
+          >
             Notifikasi
           </Button>
         </Link>
@@ -56,11 +79,15 @@ const CustomHeader = ({}) => {
         <Button
           variant={"ghost"}
           width={"100%"}
-          bg={"red.500"}
-          color={"white"}
+          borderRadius={"none"}
+          py={"25px"}
+          color={"red"}
           justifyContent="flex-start"
-          _hover={{ bg: "red.600" }}
           onClick={() => signOut()}
+          _hover={{
+            bg: "rgba(229,62,62,0.2)",
+            boxShadow: "inset 3px 0px 0px 0px rgba(229,62,62,1)",
+          }}
         >
           Keluar
         </Button>
@@ -69,7 +96,7 @@ const CustomHeader = ({}) => {
   ];
   return (
     <div className="mb-[20px] hidden w-full items-start justify-between lg:flex">
-      <div className="flex w-[75%] flex-col">
+      <div className="flex w-[75%] h-full flex-col gap-y-2">
         <div className="w-fit rounded-md bg-white px-5 py-1 shadow-md">
           <Breadcrumb
             spacing="8px"
@@ -77,11 +104,11 @@ const CustomHeader = ({}) => {
           >
             {path?.slice(2).map((_, i) => {
               return (
-                <BreadcrumbItem key={i} color={"#262a56"} isCurrentPage>
+                <BreadcrumbItem key={i} color={"primary"} isCurrentPage>
                   <BreadcrumbLink
                     href={""}
                     className="text-primary"
-                    color={"#262a56"}
+                    color={"primary"}
                   >
                     {_}
                   </BreadcrumbLink>
@@ -89,6 +116,12 @@ const CustomHeader = ({}) => {
               );
             })}
           </Breadcrumb>
+        </div>
+        <div
+          className="cursor-pointer w-fit rounded bg-white p-2 shadow-md hover:bg-primary"
+          onClick={() => route.back()}
+        >
+          <FaArrowLeft className="text-primary hover:text-white" />
         </div>
       </div>
 
@@ -118,7 +151,9 @@ const CustomHeader = ({}) => {
             </div>
           ) : (
             <div className="flex flex-col">
-              <p className="text-primary">{data?.data.username}</p>
+              <p className="truncate font-semibold text-primary">
+                {data?.data.username}
+              </p>
               <p className="text-primary">{data?.data.role_id.role_name}</p>
             </div>
           )}
@@ -126,17 +161,16 @@ const CustomHeader = ({}) => {
 
         <Popover placement="left-start" closeOnBlur={true}>
           <PopoverTrigger>
-            <Button bg="#262a56">
-              {" "}
-              <FaGear color="white" />
-            </Button>
+            <div className="cursor-pointer rounded-[5px] bg-primary bg-opacity-20 p-3 hover:bg-opacity-100">
+              <FaGear className="text-primary hover:text-white" />
+            </div>
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent overflow={"hidden"}>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverHeader>Pengaturan</PopoverHeader>
-            <PopoverBody width={"100%"}>
-              <div className="flex w-full flex-col items-start space-y-3">
+            <PopoverHeader color={"primary"}>Pengaturan</PopoverHeader>
+            <PopoverBody width={"100%"} p={0}>
+              <div className="flex w-full flex-col items-start">
                 {popoverBody.map((_, i) => {
                   return (
                     <div className="w-full" key={i}>

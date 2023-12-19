@@ -29,7 +29,6 @@ interface Doa {
   kategori_id: Kategori | number | string;
 }
 
-
 interface KategoriDoa {
   id: number;
   kategori_name: string;
@@ -45,6 +44,19 @@ interface KategoriDoa {
 export interface DoaResponse {
   data: Doa;
 }
+
+export interface DoaFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
+export interface KategoriFilter {
+  status: string;
+  created_by: string;
+  keyword: string;
+}
+
 export interface KategoriDoaResponse {
   data: KategoriDoa;
 }

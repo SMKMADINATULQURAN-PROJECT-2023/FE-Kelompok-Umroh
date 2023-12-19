@@ -5,8 +5,8 @@ export default function useNotification() {
 
   function toastSuccess(message: string) {
     toast({
-      position: "top-right",
       title: "Berhasil",
+      position: "top-right",
       description: message,
       status: "success",
       duration: 4000,
@@ -15,18 +15,18 @@ export default function useNotification() {
   }
   function toastInfo(message: string) {
     toast({
+      title: "Info",
       position: "top-right",
-      title: "Berhasil",
       description: message,
       status: "info",
       duration: 4000,
       isClosable: true,
     });
   }
-  function toastError() {
+  function toastError(message: string = "Ada Kesalahan") {
     toast({
       title: "Error",
-      description: "Ada Kesalahan",
+      description: message,
       status: "error",
       duration: 5000,
       isClosable: true,
@@ -34,7 +34,7 @@ export default function useNotification() {
   }
   function toastWarning(message: string) {
     toast({
-      title: "Warning",
+      title: "Peringatan",
       description: message,
       status: "warning",
       duration: 5000,

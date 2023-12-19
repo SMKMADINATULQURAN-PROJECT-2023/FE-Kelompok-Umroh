@@ -7,9 +7,10 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --primary: #262a56;
+  --primary: #1E5236;
   --abu: #9fa1b5;
   --abutrans: #9fa1b590;
+  --repeated-color: #1E5236; /* New variable for the repeated color */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,36 +20,36 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
 p,
 h1,
 h2,
 h3,
 h4,
 a {
-  color: #262a56;
+  color: var(--repeated-color);
 }
+
 * {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   font-family: "Poppins", sans-serif;
-  /* overflow: hidden; */
-  /* outline: red dashed 1px; */
 }
 
 .noScrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* custom-table.module.css or global CSS */
 .putih * {
   color: white !important;
 }
+
 .primary * {
-  color: #262a56 !important;
+  color: var(--repeated-color) !important;
 }
-/* Add custom CSS classes for narrow columns */
+
 .narrow-column {
   width: 250px;
   white-space: normal;
@@ -91,11 +92,11 @@ body {
 .biru {
   color: #1564c0;
 }
+
 .birugelap {
   color: #034fa4;
 }
 
-/* react calendar */
 .react-calendar {
   width: 100%;
   max-width: 100%;
@@ -103,9 +104,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
 }
+
 .react-calendar * {
   border-radius: 10px;
 }
+
 .react-calendar--doubleView {
   width: 700px;
 }
@@ -114,18 +117,22 @@ body {
   display: flex;
   margin: -0.5em;
 }
+
 .react-calendar__navigation {
-  color: #262a56; /* Gaya yang ingin Anda berikan */
+  color: var(--repeated-color); /* Gaya yang ingin Anda berikan */
 }
+
 .react-calendar * {
-  color: #262a56; /* Gaya yang ingin Anda berikan */
+  color: var(--repeated-color); /* Gaya yang ingin Anda berikan */
 }
+
 .react-calendar__navigation * {
-  color: #262a56; /* Gaya yang ingin Anda berikan */
+  color: var(--repeated-color); /* Gaya yang ingin Anda berikan */
   color: inherit; /* Mengembalikan warna ke warisan (putih) */
 }
+
 .react-calendar__month-view__weekdays__weekday abbr {
-  color: #262a56;
+  color: var(--repeated-color);
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer > * {
@@ -157,6 +164,7 @@ body {
   height: 44px;
   margin-bottom: 1em;
 }
+
 .react-calendar__navigation button {
   margin: 0 5px;
 }
@@ -184,14 +192,6 @@ body {
 
 .react-calendar__month-view__weekdays__weekday {
   padding: 0.5em;
-}
-
-.react-calendar__month-view__weekNumbers .react-calendar__tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75em;
-  font-weight: bold;
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -228,8 +228,9 @@ body {
 }
 
 .react-calendar__tile--now {
-  background: #262a56;
+  background: var(--repeated-color);
 }
+
 .react-calendar__tile--now abbr {
   color: white !important;
 }
@@ -249,7 +250,7 @@ body {
 }
 
 .react-calendar__tile--active {
-  background: #262a56;
+  background: var(--repeated-color);
   border-radius: 10px;
 }
 
@@ -265,8 +266,9 @@ body {
 }
 
 .react-calendar__month-view__days__day abbr {
-  color: #262a56;
+  color: var(--repeated-color);
 }
+
 .react-calendar__tile--active abbr {
   color: white;
 }

@@ -10,8 +10,8 @@ export interface Ziarah {
   status: string;
   file_update: any;
   location: string;
-  latitude: string | undefined;
-  longitude: string | undefined;
+  latitude: number;
+  longitude: number;
   created_at: string;
   updated_at: string;
   created_by: {

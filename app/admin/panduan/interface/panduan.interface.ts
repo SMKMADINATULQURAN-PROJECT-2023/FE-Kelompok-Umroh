@@ -24,6 +24,7 @@ interface Panduan {
 }
 
 export interface PanduanFilter {
+  keyword: string;
   kategori_panduan: string;
   gender: string;
   status: string;

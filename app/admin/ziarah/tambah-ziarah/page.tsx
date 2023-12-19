@@ -7,7 +7,7 @@ import { NextPage } from "next";
 import * as yup from "yup";
 import Image from "next/image";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import { useState } from "react";
 import { TambahZiarahPayload } from "../interface/ziarah.interface";
 import useZiarahModule from "../service/ziarah.service";
@@ -30,8 +30,10 @@ const TambahZiarah: NextPage<Props> = ({}) => {
       .nullable()
       .default(undefined)
       .required("Wajib isi"),
-    latitude: yup.string().nullable().default("21.422510"),
-    longitude: yup.string().nullable().default("39.826168"),
+    latitude: yup.number().default(0).required(),
+    longitude: yup.number().default(0).required(),
+    // latitude: yup.string().nullable().default("21.422510"),
+    // longitude: yup.string().nullable().default("39.826168"),
   });
 
   const onSubmit = async (values: TambahZiarahPayload) => {
@@ -139,6 +141,26 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                   handleBlur={handleBlur}
                   isInvalid={!!errors?.location}
                   errorMessage={errors?.location}
+                />
+                <CustomInput
+                  id="latitude"
+                  title="Latitude"
+                  type="number"
+                  values={values.latitude}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.latitude}
+                  errorMessage={errors?.latitude}
+                />
+                <CustomInput
+                  id="longitude"
+                  title="Longitude"
+                  type="number"
+                  values={values.longitude}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.longitude}
+                  errorMessage={errors?.longitude}
                 />
 
                 <div

@@ -9,7 +9,7 @@ import { UpdateZiarahPayload } from "../../interface/ziarah.interface";
 import { useRouter } from "next/navigation";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
 import { Avatar, Button } from "@chakra-ui/react";
-import CustomTextArea from "@/components/CustomTextarea";
+import CustomTextArea from "@/components/CustomRichText";
 import Image from "next/image";
 import CustomInput from "@/components/CustomInput";
 
@@ -47,26 +47,23 @@ const UpdateZiarah: NextPage<Props> = ({
       .required("Wajib isi"),
     description: yup
       .string()
-      .nullable()
       .default(dataZiarah?.data.description ?? "")
       .required("Wajib isi"),
     file_update: yup
       .mixed()
-      .nullable()
       .default(dataZiarah?.data.thumbnail ?? undefined)
       .required("Wajib isi"),
     latitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.latitude ?? ""),
+      .number()
+      .default(dataZiarah?.data.latitude ?? 0)
+      .required(),
     longitude: yup
-      .string()
-      .nullable()
-      .default(dataZiarah?.data.longitude ?? ""),
+      .number()
+      .default(dataZiarah?.data.longitude ?? 0)
+      .required(),
   });
 
   const onSubmit = async (payload: UpdateZiarahPayload) => {
-    console.log(payload);
     mutate(
       { id: params.id, payload: payload },
       {
@@ -178,8 +175,31 @@ const UpdateZiarah: NextPage<Props> = ({
                   isInvalid={!!errors?.location}
                   errorMessage={errors?.location}
                 />
+                <CustomInput
+                  id="latitude"
+                  title="Latitude"
+                  type="number"
+                  values={values.latitude}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.latitude}
+                  errorMessage={errors?.latitude}
+                />
+                <CustomInput
+                  id="longitude"
+                  title="Longitude"
+                  type="number"
+                  values={values.longitude}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  isInvalid={!!errors?.longitude}
+                  errorMessage={errors?.longitude}
+                />
 
-                <div className="col-span-1 lg:col-span-2 mb-12 w-full" onBlur={handleBlur}>
+                <div
+                  className="col-span-1 mb-12 w-full lg:col-span-2"
+                  onBlur={handleBlur}
+                >
                   <CustomTextArea
                     className="h-[600px]"
                     id="description"
