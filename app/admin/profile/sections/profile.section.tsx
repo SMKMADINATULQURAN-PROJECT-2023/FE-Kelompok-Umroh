@@ -77,7 +77,7 @@ const ProfileSection: React.FC<Props> = ({}) => {
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
           <div className="flex h-full w-full flex-col space-y-10 lg:space-y-5">
-            <div className="flex w-full items-center space-x-5 overflow-x-hidden rounded-none bg-primary p-5 lg:rounded-[10px]">
+            <div className="flex w-full items-center space-x-5 overflow-x-hidden rounded-none bg-primary bg-opacity-20 border border-primary p-5 lg:rounded-[10px]">
               <div className="flex items-center">
                 {values.file_edit_profile ? (
                   <div className="overflow-hidden">
@@ -99,7 +99,7 @@ const ProfileSection: React.FC<Props> = ({}) => {
               </div>
               <div className="flex flex-col items-start">
                 <input
-                  className="w-fit cursor-pointer text-white"
+                  className="w-fit cursor-pointer text-primary"
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
@@ -115,7 +115,7 @@ const ProfileSection: React.FC<Props> = ({}) => {
                   }}
                 />
                 {values.file_edit_profile && (
-                  <span className="text-white">
+                  <span className="text-primary">
                     {(values.file_edit_profile.size / (1024 * 1024)).toFixed(2)}{" "}
                     MB
                   </span>
@@ -123,7 +123,7 @@ const ProfileSection: React.FC<Props> = ({}) => {
               </div>
             </div>
 
-            <div className="grid w-full grid-cols-1 gap-x-5 gap-y-5 rounded-[10px] border-primary px-5 lg:grid-cols-2 lg:gap-y-3 lg:border lg:p-7">
+            <div className="grid w-full grid-cols-1 gap-x-5 gap-y-5 px-5 lg:gap-y-5 lg:px-0 lg:py-7">
               <CustomInput
                 id="username"
                 title="Username"
@@ -144,20 +144,23 @@ const ProfileSection: React.FC<Props> = ({}) => {
                 isInvalid={!!errors?.email}
                 errorMessage={errors?.email}
               />
-              <div className="col-span-1 mt-5 flex w-full items-center justify-between space-x-5 lg:col-span-2 lg:mt-10 lg:space-x-0">
+              <div className="mt-5 flex w-full items-center justify-between space-x-5 lg:mt-10 lg:space-x-0">
                 <div className="w-full lg:w-[30%]">
                   <Button
                     width={"full"}
                     fontWeight="normal"
                     type="reset"
-                    colorScheme={"red"}
-                    variant={"outline"}
+                    bg={"rgba(229,62,62,0.2)"}
                     isLoading={isLoading}
                     isDisabled={isLoading}
                     h="45px"
                     color={"red.500"}
                     leftIcon={<FaRotateLeft color="##E53E3E" />}
                     onClick={handleReset}
+                    _hover={{
+                      color: "white",
+                      bg: "red.500",
+                    }}
                   >
                     Kembali Semula
                   </Button>

@@ -25,10 +25,8 @@ const Profile: NextPage<Props> = ({}) => {
   ];
 
   return (
-    <div className="flex h-screen w-full flex-col justify-between lg:h-full">
-      <section className="w-full">
-        <CustomHeader />
-
+    <div className="flex h-screen w-full flex-col">
+      <section className="">
         <section className="mb-10 w-full">
           <Tabs
             className={
@@ -47,16 +45,16 @@ const Profile: NextPage<Props> = ({}) => {
                       onClick={
                         i === tabMenu.length - 1 ? () => signOut() : undefined
                       }
-                      selectedClassName={
+                      selectedClassName={`${
                         i === tabMenu.length - 1
-                          ? "lg:py-4 px-4 lg:px-4 bg-red-500 tab-text lg:w-full w-[120%]"
-                          : "lg:py-4 px-4 lg:px-4 bg-primary tab-text lg:w-full w-[120%]"
-                      }
+                          ? "lg:py-4 px-4 lg:px-4 bg-red-500 lg:w-full w-[120%]"
+                          : "lg:py-4 px-4 lg:px-4 bg-primary lg:w-full w-[120%] tab-text"
+                      } profile-tab`}
                       className={`${
                         i === tabMenu.length - 1
-                          ? "w-[50%] border-red-500 px-5 py-3 text-red-500 lg:w-full"
-                          : "w-full border-primary py-3"
-                      } custom-tab flex cursor-pointer flex-col items-start rounded-[10px] border px-4 py-2`}
+                          ? "w-[50%] bg-red-500 bg-opacity-20 px-5 py-3 text-red-500  lg:w-full"
+                          : "w-full bg-primary bg-opacity-20 py-3"
+                      } custom-tab flex cursor-pointer flex-col items-start rounded-lg px-4 py-2`}
                     >
                       <h1
                         className={`${
@@ -67,7 +65,9 @@ const Profile: NextPage<Props> = ({}) => {
                       >
                         {_.title}
                       </h1>
-                      <p className={"text-[12px] text-abu"}>{_.description}</p>
+                      <p className={"text-[12px] text-primary"}>
+                        {_.description}
+                      </p>
                     </Tab>
                   );
                 })}
@@ -88,7 +88,7 @@ const Profile: NextPage<Props> = ({}) => {
       </section>
 
       <section className="mb-8 w-full lg:mb-0">
-        <p className="text-center font-mono text-[12px] lg:text-left">
+        <p className="text-center font-mono text-xs lg:text-right">
           ⓒ {process.env.NEXT_PUBLIC_APP_NAME} {currentYear}
         </p>
       </section>

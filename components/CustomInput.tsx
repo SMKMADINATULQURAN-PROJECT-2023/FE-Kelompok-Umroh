@@ -45,7 +45,8 @@ const CustomInput: React.FC<Props> = ({
 }) => {
   const inputHoverStyles = {
     backgroundColor:
-      hoverStyles?.backgroundColor || backgroundColor || "#eeeeee",
+      hoverStyles?.backgroundColor || backgroundColor || "primary",
+    color: "white",
   };
   return (
     <>
@@ -70,9 +71,10 @@ const CustomInput: React.FC<Props> = ({
             onChange={handleChange}
             onBlur={handleBlur}
             color="primary"
-            border={"primary"}
+            border={'primary'}
+            bg={"rgba(30, 82, 54, 0.2)"}
             _hover={inputHoverStyles}
-            variant="outline"
+            variant="filled"
             placeholder={`Masukkan ${title}`}
             {...props}
           />

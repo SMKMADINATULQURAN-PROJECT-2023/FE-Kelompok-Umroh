@@ -94,10 +94,10 @@ const TambahPanduan: NextPage<Props> = ({}) => {
           >
             <div className="grid h-full w-full grid-cols-2 items-center gap-10">
               <div className="col-span-2 flex h-full w-full flex-col justify-between overflow-x-hidden">
-                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
+                <div className="flex h-full w-full items-center gap-5 rounded-none border border-primary bg-primary bg-opacity-20 p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_create ? (
-                      <div className="overflow-hidden rounded-[10px] border border-white">
+                      <div className="overflow-hidden rounded-[10px] bg-primary">
                         <Image
                           width={200}
                           height={200}
@@ -107,14 +107,14 @@ const TambahPanduan: NextPage<Props> = ({}) => {
                         />
                       </div>
                     ) : (
-                      <div className="rounded-[10px] border border-white p-5">
+                      <div className="rounded-[10px] bg-primary p-5">
                         <Avatar size="xl" name="-" src="" bg={"transparent"} />
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col items-start">
                     <input
-                      className="w-fit cursor-pointer text-white"
+                      className="w-fit cursor-pointer text-primary"
                       type="file"
                       onBlur={handleBlur}
                       accept="image/*"
@@ -130,7 +130,7 @@ const TambahPanduan: NextPage<Props> = ({}) => {
                       }}
                     />
                     {values.file_create && (
-                      <span className="text-white">
+                      <span className="text-primary">
                         {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>
