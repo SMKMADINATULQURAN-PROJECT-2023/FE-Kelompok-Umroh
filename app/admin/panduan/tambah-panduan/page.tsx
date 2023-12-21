@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TambahPanduanPayload } from "../interface/panduan.interface";
 import { Form, FormikProvider, useFormik } from "formik";
-import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { FaSquarePlus, FaTrash } from "react-icons/fa6";
@@ -86,9 +85,7 @@ const TambahPanduan: NextPage<Props> = ({}) => {
   } = formik;
 
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full">
         <FormikProvider value={formik}>
           <Form

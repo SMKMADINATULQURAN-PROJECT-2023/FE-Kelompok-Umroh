@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import useZiarahModule from "../../service/ziarah.service";
 import { useState } from "react";
@@ -94,9 +93,7 @@ const UpdateZiarah: NextPage<Props> = ({
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full">
         <FormikProvider value={formik}>
           <Form

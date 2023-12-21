@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -32,8 +31,6 @@ const TambahZiarah: NextPage<Props> = ({}) => {
       .required("Wajib isi"),
     latitude: yup.number().default(0).required(),
     longitude: yup.number().default(0).required(),
-    // latitude: yup.string().nullable().default("21.422510"),
-    // longitude: yup.string().nullable().default("39.826168"),
   });
 
   const onSubmit = async (values: TambahZiarahPayload) => {
@@ -65,9 +62,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full">
         <FormikProvider value={formik}>
           <Form

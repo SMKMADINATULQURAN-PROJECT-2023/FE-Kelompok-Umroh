@@ -3,19 +3,7 @@ import Image from "next/image";
 import HtmlRenderer from "@/hook/useMarkdownConvert";
 import "dayjs/locale/id";
 import dayjs from "dayjs";
-import {
-  Avatar,
-  Button,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-} from "@chakra-ui/react";
-import {
-  FaRegPenToSquare,
-  FaTrash,
-  FaTriangleExclamation,
-} from "react-icons/fa6";
-import RouteButton from "@/components/RouteButton";
+import { Avatar } from "@chakra-ui/react";
 import {
   StatusBarApproved,
   StatusBarProcessed,
@@ -24,8 +12,7 @@ import {
 } from "@/components/StatusBar";
 import { Artikel } from "../interface/artikel.interface";
 import { useProfileService } from "@/app/auth/service/auth.service";
-import PopOver from "@/components/PopOver";
-import CustomMenuButton from "@/components/MenuButton";
+import ArtikelActionMenu from "./ArtikelActionMenu.component";
 
 interface Props {
   data: Artikel;
@@ -99,133 +86,14 @@ const ArtikelCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
               {data.created_by.username}
             </p>
           </div>
-          <div className="flex items-center">
-            {role === "Admin" ? (
-              <CustomMenuButton>
-                <MenuGroup title="Action">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTrash className="" />}
-                    onClick={onClickDelete}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        hapus
-                      </p>
-                    </Button>
-                  </MenuItem>
-                  <MenuItem
-                    color={"yellow.500"}
-                    icon={<FaRegPenToSquare className="" />}
-                    as="a"
-                    href={`artikel/update-artikel/${data.id}`}
-                  >
-                    <RouteButton
-                      title={
-                        <p className="text-base font-normal capitalize text-yellow-500">
-                          edit
-                        </p>
-                      }
-                      h="35px"
-                      bg={"transparent"}
-                      fontSize={12}
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                    />
-                  </MenuItem>
-                </MenuGroup>
-                <MenuDivider />
-                <MenuGroup title="Other">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTriangleExclamation className="" />}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        laporkan
-                      </p>
-                    </Button>
-                  </MenuItem>
-                </MenuGroup>
-              </CustomMenuButton>
-            ) : dataProfile?.data.username === data.created_by.username ? (
-              <CustomMenuButton>
-                <MenuGroup title="Action">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTrash className="" />}
-                    onClick={onClickDelete}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        hapus
-                      </p>
-                    </Button>
-                  </MenuItem>
-                  <MenuItem
-                    color={"yellow.500"}
-                    icon={<FaRegPenToSquare className="" />}
-                    as="a"
-                    href={`artikel/update-artikel/${data.id}`}
-                  >
-                    <RouteButton
-                      title={
-                        <p className="text-base font-normal capitalize text-yellow-500">
-                          edit
-                        </p>
-                      }
-                      h="35px"
-                      bg={"transparent"}
-                      fontSize={12}
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                    />
-                  </MenuItem>
-                </MenuGroup>
-                <MenuDivider />
-                <MenuGroup title="Other">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTriangleExclamation className="" />}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        laporkan
-                      </p>
-                    </Button>
-                  </MenuItem>
-                </MenuGroup>
-              </CustomMenuButton>
-            ) : undefined}
-          </div>
+
+          <ArtikelActionMenu
+            data={data}
+            dataProfile={dataProfile}
+            isLoading={isLoading}
+            onClickDelete={onClickDelete}
+            role={role}
+          />
         </div>
       </div>
     </div>

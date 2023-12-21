@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { UpdatePanduanPayload } from "../../interface/panduan.interface";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useState } from "react";
-import { CustomHeader } from "@/components";
 import Image from "next/image";
 import { Avatar, Button } from "@chakra-ui/react";
 import CustomInput from "@/components/CustomInput";
@@ -118,9 +117,7 @@ const UpdatePanduan: NextPage<Props> = ({
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full">
         <FormikProvider value={formik}>
           <Form

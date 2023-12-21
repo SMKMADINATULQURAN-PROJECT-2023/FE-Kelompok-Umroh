@@ -5,19 +5,7 @@ import HtmlRenderer from "@/hook/useMarkdownConvert";
 import "dayjs/locale/id";
 import dayjs from "dayjs";
 import { FaMapMarkedAlt } from "react-icons/fa";
-import {
-  Avatar,
-  Button,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-} from "@chakra-ui/react";
-import {
-  FaRegPenToSquare,
-  FaTrash,
-  FaTriangleExclamation,
-} from "react-icons/fa6";
-import RouteButton from "@/components/RouteButton";
+import { Avatar } from "@chakra-ui/react";
 import {
   StatusBarApproved,
   StatusBarProcessed,
@@ -25,9 +13,7 @@ import {
   StatusBarUknown,
 } from "@/components/StatusBar";
 import { useProfileService } from "@/app/auth/service/auth.service";
-import PopOver from "@/components/PopOver";
-import CustomMenuButton from "@/components/MenuButton";
-import { AddIcon } from "@chakra-ui/icons";
+import ZiarahActionMenu from "./ZiarahActionMenu.component";
 
 interface Props {
   data: Ziarah;
@@ -111,71 +97,14 @@ const ZiarahCard: NextPage<Props> = ({ data, isLoading, onClickDelete }) => {
               </p>
             </div>
           </div>
-          <div className="flex items-center">
-            {role === "Admin" ? (
-              <CustomMenuButton>
-                <MenuGroup title="Action">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTrash className="" />}
-                    onClick={onClickDelete}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        hapus
-                      </p>
-                    </Button>
-                  </MenuItem>
-                  <MenuItem
-                    color={"yellow.500"}
-                    icon={<FaRegPenToSquare className="" />}
-                    as="a"
-                    href={`ziarah/update-ziarah/${data.id}`}
-                  >
-                    <RouteButton
-                      title={
-                        <p className="text-base font-normal capitalize text-yellow-500">
-                          edit
-                        </p>
-                      }
-                      h="35px"
-                      bg={"transparent"}
-                      fontSize={12}
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                    />
-                  </MenuItem>
-                </MenuGroup>
-                <MenuDivider />
-                <MenuGroup title="Other">
-                  <MenuItem
-                    color={"red.500"}
-                    icon={<FaTriangleExclamation className="" />}
-                  >
-                    <Button
-                      type="button"
-                      isLoading={isLoading}
-                      isDisabled={isLoading}
-                      h="35px"
-                      backgroundColor={"transparent"}
-                      fontSize={12}
-                    >
-                      <p className="text-base font-normal capitalize text-red-500">
-                        laporkan
-                      </p>
-                    </Button>
-                  </MenuItem>
-                </MenuGroup>
-              </CustomMenuButton>
-            ) : undefined}
-          </div>
+
+          <ZiarahActionMenu
+            data={data}
+            dataProfile={dataProfile}
+            isLoading={isLoading}
+            onClickDelete={onClickDelete}
+            role={role}
+          />
         </div>
       </div>
     </div>
