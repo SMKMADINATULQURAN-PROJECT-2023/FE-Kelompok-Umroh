@@ -58,6 +58,7 @@ const Home: NextPage<Props> = () => {
       router.push("/admin/dashboard");
     }
   }, [session]);
+  
 
   if (session) {
     return (
@@ -68,7 +69,7 @@ const Home: NextPage<Props> = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen bg-white">
+    <div className="flex h-screen w-screen overflow-hidden bg-white">
       <section className="relative flex h-full w-full items-center justify-center p-7 lg:w-[60%]">
         <div className="w-full lg:w-[50%]">
           <div className="mb-[50px]">
