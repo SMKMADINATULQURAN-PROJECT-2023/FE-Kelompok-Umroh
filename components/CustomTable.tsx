@@ -9,9 +9,17 @@ import {
   Td,
   TableContainer,
   Button,
+  MenuGroup,
+  MenuItem,
+  MenuDivider,
 } from "@chakra-ui/react";
 import RouteButton from "./RouteButton";
-import { FaRegPenToSquare, FaTrash } from "react-icons/fa6";
+import {
+  FaClipboardList,
+  FaRegPenToSquare,
+  FaTrash,
+  FaTriangleExclamation,
+} from "react-icons/fa6";
 import {
   TiArrowSortedDown,
   TiArrowSortedUp,
@@ -29,6 +37,7 @@ import {
 import PaginationMenu from "./PaginationMenu";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useProfileService } from "@/app/auth/service/auth.service";
+import CustomMenuButton from "./MenuButton";
 
 interface TableProps {
   columns: any[];
@@ -38,7 +47,7 @@ interface TableProps {
   actionColumnInTable?: any;
   onDeleteInTable?: any;
   onUpdateInTable?: any;
-  isLoadingInTable?: any;
+  isLoadingInTable?: boolean;
   isErrorInTable?: any;
   isDisableInTable?: any;
   updateRoute?: any;
@@ -121,7 +130,7 @@ const CustomTable: React.FC<TableProps> = ({
                   ? isLoadingInTable
                     ? undefined
                     : actionColumnInTable && (
-                        <Th className="bg-primary" color={"primary"}>
+                        <Th className="bg-primary" color={"white"}>
                           Action
                         </Th>
                       )
@@ -147,34 +156,110 @@ const CustomTable: React.FC<TableProps> = ({
                     ? isLoadingInTable
                       ? undefined
                       : actionColumnInTable && (
-                          <Td className="" color={"primary"}>
-                            <div className="flex w-full flex-col space-y-2">
-                              <RouteButton
-                                to={`${updateRoute}${row.original?.id}`}
-                                title={<FaRegPenToSquare color="white" />}
-                                h="35px"
-                                width={"full"}
-                                bg={"yellow.500"}
-                                color={"white"}
-                                _hover={{ bg: "yellow.600" }}
-                                fontSize={12}
-                              />
-                              <Button
-                                width={"full"}
-                                type="button"
-                                isLoading={isLoadingInTable}
-                                isDisabled={isDisableInTable}
-                                h="35px"
-                                backgroundColor={"red.500"}
-                                _hover={{ bgColor: "red.600" }}
-                                fontSize={12}
-                                onClick={() =>
-                                  onDeleteInTable(row.original?.id)
-                                }
-                              >
-                                <FaTrash color="white" />
-                              </Button>
-                            </div>
+                          <Td>
+                            <CustomMenuButton>
+                              {dataProfile?.data.username ===
+                              row.original?.created_by.username ? (
+                                <MenuGroup title="Aksi">
+                                  <MenuItem
+                                    color={"yellow.500"}
+                                    icon={<FaRegPenToSquare className="" />}
+                                    as="a"
+                                    href={`${updateRoute}${row.original?.id}`}
+                                    _hover={{
+                                      bg: "rgba(214,158,46,0.2)",
+                                      boxShadow:
+                                        "inset 3px 0px 0px 0px rgba(214,158,46,1)",
+                                    }}
+                                  >
+                                    <RouteButton
+                                      title={
+                                        <p className="text-base font-normal capitalize text-yellow-500">
+                                          edit
+                                        </p>
+                                      }
+                                      h="35px"
+                                      bg={"transparent"}
+                                      fontSize={12}
+                                      isLoading={isLoadingInTable}
+                                      isDisabled={isLoadingInTable}
+                                    />
+                                  </MenuItem>
+                                  <MenuItem
+                                    color={"red.500"}
+                                    icon={<FaTrash className="" />}
+                                    onClick={() =>
+                                      onDeleteInTable(row.original?.id)
+                                    }
+                                    _hover={{
+                                      bg: "rgba(229,62,62,0.2)",
+                                      boxShadow:
+                                        "inset 3px 0px 0px 0px rgba(229,62,62,1)",
+                                    }}
+                                  >
+                                    <Button
+                                      type="button"
+                                      isLoading={isLoadingInTable}
+                                      isDisabled={isLoadingInTable}
+                                      h="35px"
+                                      backgroundColor={"transparent"}
+                                      fontSize={12}
+                                    >
+                                      <p className="text-base font-normal capitalize text-red-500">
+                                        hapus
+                                      </p>
+                                    </Button>
+                                  </MenuItem>
+                                  <MenuItem
+                                    color={"primary"}
+                                    icon={<FaClipboardList className="" />}
+                                    _hover={{
+                                      bg: "rgba(30,82,54,0.2)",
+                                      boxShadow:
+                                        "inset 3px 0px 0px 0px rgba(30,82,54,1)",
+                                    }}
+                                  >
+                                    <Button
+                                      type="button"
+                                      isLoading={isLoadingInTable}
+                                      isDisabled={isLoadingInTable}
+                                      h="35px"
+                                      backgroundColor={"transparent"}
+                                      fontSize={12}
+                                    >
+                                      <p className="text-base font-normal capitalize text-primary">
+                                        ubah status
+                                      </p>
+                                    </Button>
+                                  </MenuItem>
+                                </MenuGroup>
+                              ) : undefined}
+                              <MenuDivider />
+                              <MenuGroup title="Lainnya">
+                                <MenuItem
+                                  color={"red.500"}
+                                  icon={<FaTriangleExclamation className="" />}
+                                >
+                                  <Button
+                                    type="button"
+                                    isLoading={isLoadingInTable}
+                                    isDisabled={isLoadingInTable}
+                                    h="35px"
+                                    backgroundColor={"transparent"}
+                                    fontSize={12}
+                                    _hover={{
+                                      bg: "rgba(229,62,62,0.2)",
+                                      boxShadow:
+                                        "inset 3px 0px 0px 0px rgba(229,62,62,1)",
+                                    }}
+                                  >
+                                    <p className="text-base font-normal capitalize text-red-500">
+                                      laporkan
+                                    </p>
+                                  </Button>
+                                </MenuItem>
+                              </MenuGroup>
+                            </CustomMenuButton>
                           </Td>
                         )
                     : undefined}
@@ -189,7 +274,6 @@ const CustomTable: React.FC<TableProps> = ({
                       height={70}
                       count={6}
                       baseColor="#9FA1B5"
-                      // highlightColor="#003F37"
                     />
                   ) : (
                     "Tidak ditemukan."

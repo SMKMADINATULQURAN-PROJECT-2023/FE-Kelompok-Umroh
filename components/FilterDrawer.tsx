@@ -1,7 +1,6 @@
 import React from "react";
 import { FaFilter } from "react-icons/fa6";
 import {
-  Input,
   useDisclosure,
   Drawer,
   DrawerBody,
@@ -25,7 +24,9 @@ interface Props {
   handleChange: any;
   handleBlur: any;
   errors: any;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  noStatus?: boolean;
+  noCreatedBy?: boolean;
 }
 
 const FilterDrawer: React.FC<Props> = ({
@@ -37,6 +38,8 @@ const FilterDrawer: React.FC<Props> = ({
   handleChange,
   handleBlur,
   errors,
+  noStatus = false,
+  noCreatedBy = false,
   children,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -68,7 +71,7 @@ const FilterDrawer: React.FC<Props> = ({
     },
   ];
   return (
-    <div className="mb-5">
+    <div className="">
       <IconButton
         aria-label="Filter menu"
         ref={btnRef}
@@ -101,42 +104,46 @@ const FilterDrawer: React.FC<Props> = ({
               <DrawerBody>
                 {children}
                 <div className="mt-7 flex flex-col space-y-7">
-                  <CustomSelect
-                    id="status"
-                    title="Status"
-                    size={"lg"}
-                    values={values.status.toString()}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                    isInvalid={!!errors?.status}
-                    errorMessage={errors?.status}
-                  >
-                    {statusOption.map((_, i) => {
-                      return (
-                        <option value={_.value} key={i}>
-                          {_.label}
-                        </option>
-                      );
-                    })}
-                  </CustomSelect>
-                  <CustomSelect
-                    id="created_by"
-                    title="Dibuat oleh"
-                    size={"lg"}
-                    values={values.created_by.toString()}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                    isInvalid={!!errors?.created_by}
-                    errorMessage={errors?.created_by}
-                  >
-                    {isMineOption.map((_, i) => {
-                      return (
-                        <option value={_.value} key={i}>
-                          {_.label}
-                        </option>
-                      );
-                    })}
-                  </CustomSelect>
+                  {noStatus ? undefined : (
+                    <CustomSelect
+                      id="status"
+                      title="Status"
+                      size={"lg"}
+                      values={values.status.toString()}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isInvalid={!!errors?.status}
+                      errorMessage={errors?.status}
+                    >
+                      {statusOption.map((_, i) => {
+                        return (
+                          <option value={_.value} key={i}>
+                            {_.label}
+                          </option>
+                        );
+                      })}
+                    </CustomSelect>
+                  )}
+                  {noCreatedBy ? undefined : (
+                    <CustomSelect
+                      id="created_by"
+                      title="Dipublikasi Oleh"
+                      size={"lg"}
+                      values={values.created_by.toString()}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isInvalid={!!errors?.created_by}
+                      errorMessage={errors?.created_by}
+                    >
+                      {isMineOption.map((_, i) => {
+                        return (
+                          <option value={_.value} key={i}>
+                            {_.label}
+                          </option>
+                        );
+                      })}
+                    </CustomSelect>
+                  )}
                 </div>
               </DrawerBody>
 

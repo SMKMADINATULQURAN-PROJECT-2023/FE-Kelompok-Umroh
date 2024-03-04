@@ -11,18 +11,22 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  InputLeftAddon,
   InputProps,
   InputRightElement,
 } from "@chakra-ui/react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 interface Props extends InputProps {
-  title: string;
   id: string;
   errorMessage: string | undefined;
   values: string | number | undefined;
   handleChange: ChangeEventHandler<HTMLInputElement>;
   handleBlur: FocusEventHandler<HTMLInputElement>;
   isInvalid: boolean;
+  noLabel?: boolean;
+  isInputLeftAddon?: boolean;
+  title?: string;
   type?: HTMLInputTypeAttribute;
   backgroundColor?: string;
   hoverStyles?: Record<string, any>; // You can customize this type to match your needs
@@ -41,6 +45,8 @@ const CustomInput: React.FC<Props> = ({
   backgroundColor,
   hoverStyles,
   type,
+  noLabel = false,
+  isInputLeftAddon = false,
   ...props
 }) => {
   const inputHoverStyles = {
@@ -49,8 +55,8 @@ const CustomInput: React.FC<Props> = ({
     color: "white",
   };
   return (
-    <>
-      <FormControl isInvalid={isInvalid}>
+    <FormControl isInvalid={isInvalid}>
+      {noLabel ? undefined : (
         <FormLabel
           cursor="pointer"
           style={{ width: "fit-content" }}
@@ -61,30 +67,35 @@ const CustomInput: React.FC<Props> = ({
           {title}
           <span className="text-red-500">*</span>
         </FormLabel>
-        <InputGroup size="lg">
-          <Input
-            style={style}
-            as="input"
-            type={type || "text"}
-            id={id}
-            value={values}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            color="primary"
-            border={'primary'}
-            bg={"rgba(30, 82, 54, 0.2)"}
-            _hover={inputHoverStyles}
-            variant="filled"
-            placeholder={`Masukkan ${title}`}
-            {...props}
-          />
-        </InputGroup>
+      )}
+      <InputGroup size="lg">
+        {isInputLeftAddon ? (
+          <InputLeftAddon bg={"primary"} border={"primary"} color={"white"}>
+            <FaMagnifyingGlass />
+          </InputLeftAddon>
+        ) : undefined}
+        <Input
+          style={style}
+          as="input"
+          type={type || "text"}
+          id={id}
+          value={values}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          color="primary"
+          border={"primary"}
+          bg={"rgba(30, 82, 54, 0.2)"}
+          _hover={inputHoverStyles}
+          variant="filled"
+          placeholder={`Masukkan ${title}`}
+          {...props}
+        />
+      </InputGroup>
 
-        <FormErrorMessage size="xs" color="red" fontWeight="">
-          {errorMessage}
-        </FormErrorMessage>
-      </FormControl>
-    </>
+      <FormErrorMessage size="xs" color="red" fontWeight="">
+        {errorMessage}
+      </FormErrorMessage>
+    </FormControl>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import FilterDrawer from "@/components/FilterDrawer";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -61,8 +61,30 @@ const ZiarahFilterSection: React.FC<Props> = ({
     resetForm,
     setValues,
   } = formik;
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setKeyword(values.keyword);
+    }, 700);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [values.keyword]);
   return (
-    <div className="flex w-full items-center justify-end">
+    <div className="flex w-full items-center justify-between mb-5">
+      <div className="w-1/2">
+        <CustomInput
+          id="keyword"
+          title="tempat ziarah, deskripsi, lokasi, dibuat oleh"
+          noLabel
+          isInputLeftAddon
+          type="text"
+          values={values.keyword}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          isInvalid={!!errors?.keyword}
+          errorMessage={errors?.keyword}
+        />
+      </div>
       <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
@@ -72,20 +94,7 @@ const ZiarahFilterSection: React.FC<Props> = ({
         handleBlur={handleBlur}
         handleChange={handleChange}
         values={values}
-      >
-        <div className="flex w-full flex-col space-y-7">
-          <CustomInput
-            id="keyword"
-            title="Kata kunci"
-            type="text"
-            values={values.keyword}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            isInvalid={!!errors?.keyword}
-            errorMessage={errors?.keyword}
-          />
-        </div>
-      </FilterDrawer>
+      ></FilterDrawer>
     </div>
   );
 };

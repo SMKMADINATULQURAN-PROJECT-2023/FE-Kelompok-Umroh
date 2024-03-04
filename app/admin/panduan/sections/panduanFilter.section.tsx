@@ -1,10 +1,40 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import * as yup from "yup";
 import { PanduanFilter } from "../interface/panduan.interface";
 import { useFormik } from "formik";
 import CustomSelect from "@/components/CustomSelect";
 import FilterDrawer from "@/components/FilterDrawer";
 import CustomInput from "@/components/CustomInput";
+
+const panduanFilterSchema = yup.object().shape({
+  keyword: yup.string().default("").optional(),
+  status: yup.string().default("").optional(),
+  created_by: yup.string().default("").optional(),
+  gender: yup.string().default("").optional(),
+  kategori_panduan: yup.string().default("").optional(),
+});
+
+const kategoriOption = [
+  {
+    value: "Umrah",
+    label: "Umrah",
+  },
+  {
+    value: "Haji",
+    label: "Haji",
+  },
+];
+
+const genderOption = [
+  {
+    value: "Laki-Laki",
+    label: "Laki - Laki",
+  },
+  {
+    value: "Perempuan",
+    label: "Perempuan",
+  },
+];
 
 interface Props {
   isLoading: boolean;
@@ -25,36 +55,6 @@ const PanduanFilterSection: React.FC<Props> = ({
   setGender,
   refetch,
 }) => {
-  const kategoriOption = [
-    {
-      value: "Umrah",
-      label: "Umrah",
-    },
-    {
-      value: "Haji",
-      label: "Haji",
-    },
-  ];
-
-  const genderOption = [
-    {
-      value: "Laki-Laki",
-      label: "Laki - Laki",
-    },
-    {
-      value: "Perempuan",
-      label: "Perempuan",
-    },
-  ];
-
-  const panduanFilterSchema = yup.object().shape({
-    status: yup.string().default("").optional(),
-    created_by: yup.string().default("").optional(),
-    gender: yup.string().default("").optional(),
-    keyword: yup.string().default("").optional(),
-    kategori_panduan: yup.string().default("").optional(),
-  });
-
   const onSubmit = useCallback(
     async (values: PanduanFilter) => {
       setCreated_by(values.created_by);
@@ -94,8 +94,31 @@ const PanduanFilterSection: React.FC<Props> = ({
     resetForm,
     setValues,
   } = formik;
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setKeyword(values.keyword);
+
+    }, 700);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [values.keyword]);
   return (
-    <div className="flex w-full items-center justify-end">
+    <div className="mb-5 flex w-full items-center justify-between">
+      <div className="w-1/2">
+        <CustomInput
+          id="keyword"
+          title="Kata kunci"
+          type="text"
+          noLabel
+          isInputLeftAddon
+          values={values.keyword}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          isInvalid={!!errors?.keyword}
+          errorMessage={errors?.keyword}
+        />
+      </div>
       <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
@@ -107,16 +130,6 @@ const PanduanFilterSection: React.FC<Props> = ({
         values={values}
       >
         <div className="flex w-full flex-col space-y-7">
-          <CustomInput
-            id="keyword"
-            title="Kata kunci"
-            type="text"
-            values={values.keyword}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            isInvalid={!!errors?.keyword}
-            errorMessage={errors?.keyword}
-          />
           <CustomSelect
             id="gender"
             title="Panduan Untuk"
