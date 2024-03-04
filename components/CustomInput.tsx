@@ -68,7 +68,7 @@ const CustomInput: React.FC<Props> = ({
           <span className="text-red-500">*</span>
         </FormLabel>
       )}
-      <InputGroup size="lg">
+      <InputGroup size="md">
         {isInputLeftAddon ? (
           <InputLeftAddon bg={"primary"} border={"primary"} color={"white"}>
             <FaMagnifyingGlass />

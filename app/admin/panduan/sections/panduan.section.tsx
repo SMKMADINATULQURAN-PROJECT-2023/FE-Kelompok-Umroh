@@ -93,6 +93,7 @@ const PanduanSection: React.FC<Props> = ({}) => {
           pageSize={pageSize}
           setPage={setPage}
           setPageSize={setPageSize}
+          totalData={dataPanduan?.pagination.total}
         />
       </section>
     </div>

@@ -10,7 +10,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import * as yup from "yup";
-import { Form, Formik, FormikProvider, useFormik } from "formik";
+import { Form, FormikProvider, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

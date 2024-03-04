@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import { signOut } from "next-auth/react";

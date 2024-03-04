@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomInput from "@/components/CustomInput";
-import FilterDrawer from "@/components/FilterDrawer";
 import type { UserMobileFilter } from "../interface/user.interface";
 
 const userMobileFilterSchema = yup.object().shape({
@@ -78,16 +77,6 @@ const UserMobileFilter: React.FC<Props> = ({
           errorMessage={errors?.keyword}
         />
       </div>
-      {/* <FilterDrawer
-        formik={formik}
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-        refetch={refetch}
-        errors={errors}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        values={values}
-      ></FilterDrawer> */}
     </div>
   );
 };

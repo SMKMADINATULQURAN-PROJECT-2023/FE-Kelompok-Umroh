@@ -83,6 +83,7 @@ const TableDoa: React.FC<Props> = ({}) => {
           actionColumnInTable
           updateRoute={"doa/update-doa/"}
           onDeleteInTable={(id: number) => onDeleteDoa(id)}
+          totalData={dataDoa?.pagination.total}
         />
       </section>
     </div>

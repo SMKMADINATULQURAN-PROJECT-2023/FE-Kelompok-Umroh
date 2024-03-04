@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import CustomTable from "@/components/CustomTable";
 import RouteButton from "@/components/RouteButton";
 import { StatusBarApproved, StatusBarProcessed } from "@/components/StatusBar";
@@ -102,7 +101,6 @@ const Paket: NextPage = () => {
   const data = React.useMemo(() => fakeData, []);
   return (
     <div className="h-full w-full">
-      <CustomHeader />
 
       <section className="mb-[20px] flex w-full items-center justify-between rounded-[10px] bg-primary p-5">
         <div className="flex flex-col items-start">

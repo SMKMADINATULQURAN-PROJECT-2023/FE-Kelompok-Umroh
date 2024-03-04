@@ -1,4 +1,3 @@
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import TableUserMobile from "../sections/tableUserMobile.section";
 

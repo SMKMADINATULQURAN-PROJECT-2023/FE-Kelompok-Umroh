@@ -25,7 +25,7 @@ import {
 import LayoutMobile from "./layoutMobile";
 import { MdArticle, MdPermDeviceInformation } from "react-icons/md";
 import { IconType } from "react-icons/lib";
-import { CustomHeader } from "@/components";
+import CustomHeader from "@/components/CustomHeader";
 
 const dashmenu = [
   {
@@ -176,8 +176,9 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                         py={3}
                         textTransform={'capitalize'}
                         _hover={{
-                          backgroundColor: "primary",
-                          color: "white",
+                          backgroundColor: "rgba(30, 82, 54, 0.2)",
+                          boxShadow: "inset 5px 0px 0px 0px rgba(30,82,54,1)",
+                          color: "primary",
                           transition: "all 200ms ease-in-out",
                         }}
                       >

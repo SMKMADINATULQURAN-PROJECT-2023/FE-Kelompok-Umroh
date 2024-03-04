@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Avatar,
   Breadcrumb,
@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FaArrowLeft, FaGear } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 import {
   Popover,
   PopoverTrigger,
@@ -24,10 +24,10 @@ import { signOut } from "next-auth/react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useProfileService } from "@/app/auth/service/auth.service";
+import RealTimeClock from "./RealTimeClock";
 
 const CustomHeader = ({}) => {
   const pathname = usePathname();
-  const route = useRouter();
   const { data, isLoading, isFetching } = useProfileService();
   const loading = isLoading || isFetching;
 
@@ -94,6 +94,7 @@ const CustomHeader = ({}) => {
       ),
     },
   ];
+
   return (
     <div className="mb-[20px] hidden h-fit w-full items-start justify-between lg:flex">
       <div className="flex h-full w-[75%] flex-col gap-y-2">
@@ -117,11 +118,8 @@ const CustomHeader = ({}) => {
             })}
           </Breadcrumb>
         </div>
-        <div
-          className="w-fit cursor-pointer rounded bg-white p-2 shadow-md hover:bg-primary"
-          onClick={() => route.back()}
-        >
-          <FaArrowLeft className="text-primary hover:text-white" />
+        <div className="w-fit cursor-pointer rounded bg-white py-2 px-5 shadow-md">
+          <RealTimeClock />
         </div>
       </div>
 
