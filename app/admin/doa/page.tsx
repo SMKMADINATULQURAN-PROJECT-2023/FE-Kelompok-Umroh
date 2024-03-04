@@ -1,4 +1,3 @@
-import { CustomHeader } from "@/components";
 import type { NextPage } from "next";
 import TableDoa from "./sections/tableDoa.section";
 

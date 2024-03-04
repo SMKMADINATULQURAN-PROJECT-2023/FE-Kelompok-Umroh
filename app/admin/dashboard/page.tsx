@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useProfileService } from "@/app/auth/service/auth.service";

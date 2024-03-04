@@ -1,4 +1,3 @@
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 
 interface Props {}
@@ -6,7 +5,7 @@ interface Props {}
 const TambahPaket: NextPage<Props> = ({}) => {
   return (
     <div className="h-full w-full ">
-      <CustomHeader />
+      {/* <CustomHeader /> */}
     </div>
   );
 };
