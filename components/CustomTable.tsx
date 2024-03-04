@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import {
   Table,
   Thead,
@@ -38,6 +38,7 @@ import PaginationMenu from "./PaginationMenu";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useProfileService } from "@/app/auth/service/auth.service";
 import CustomMenuButton from "./MenuButton";
+import usePagination from "@/hook/usePagination";
 
 interface TableProps {
   columns: any[];
@@ -55,6 +56,7 @@ interface TableProps {
   pageSize?: number;
   setPage?: any;
   setPageSize?: any;
+  totalData?: number;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -71,11 +73,21 @@ const CustomTable: React.FC<TableProps> = ({
   pageSize = 10,
   setPage,
   setPageSize,
+  totalData,
 }) => {
   const { data: dataProfile } = useProfileService();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const role = dataProfile?.data.role_id.role_name;
+  const paginationData = useMemo(() => {
+    return {
+      page: page ?? 1,
+      pageSize: pageSize ?? 10,
+      paginationTotal: totalData ?? 0,
+    };
+  }, [page, pageSize, totalData]);
 
+  const { totalPages, isCanPrevious, isCanNext } =
+    usePagination(paginationData);
   const table = useReactTable({
     data,
     columns,
@@ -287,12 +299,12 @@ const CustomTable: React.FC<TableProps> = ({
 
       <PaginationMenu
         className={""}
-        firstPageButtonIsDisabled={!table.getCanPreviousPage()}
+        firstPageButtonIsDisabled={isCanPrevious}
         firstPageButtonOnClick={() => {
           setPage(1);
           return table.setPageIndex(0);
         }}
-        previousPageButtonIsDisabled={!table.getCanPreviousPage()}
+        previousPageButtonIsDisabled={isCanPrevious}
         previousPageButtonOnClick={() => {
           setPage(page - 1);
           return table.previousPage();
@@ -304,18 +316,15 @@ const CustomTable: React.FC<TableProps> = ({
           setPage(pageSum + 1);
           table.setPageIndex(pageSum);
         }}
-        nextPageButtonIsDisabled={!table.getCanNextPage()}
+        nextPageButtonIsDisabled={isCanNext}
         nextPageButtonOnClick={() => {
           setPage(page + 1);
           return table.nextPage();
         }}
-        lastPageButtonIsDisabled={!table.getCanNextPage()}
-        lastPageButtonOnClick={() => {
-          setPage(table.getPageCount() - 1);
-          return table.setPageIndex(table.getPageCount() - 1);
-        }}
+        lastPageButtonIsDisabled={isCanNext}
+        lastPageButtonOnClick={() => setPage(totalPages)}
         pageFrom={table.getState().pagination.pageIndex + 1}
-        pageTo={table.getPageCount()}
+        pageTo={totalPages}
         currentPageSize={table.getState().pagination.pageSize}
         pageSizeOnClick={(size: number) => {
           setPageSize(size);

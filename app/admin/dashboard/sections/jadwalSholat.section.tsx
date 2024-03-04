@@ -87,18 +87,18 @@ const JadwalSholat: FC<JadwalSholatProps> = ({}) => {
               className="flex w-full flex-col items-center gap-y-2 lg:gap-y-4"
             >
               <h1 className="font-medium capitalize text-abu">{jadwal.nama}</h1>
-              <div className="w-full">
+              <div className="w-full flex justify-center">
                 {isFetchingJadwalSholat || isLoadingJadwalSholat ? (
-                  <div className={`w-full flex-none`}>
+                  <div className={`w-1/2 flex-none`}>
                     <Skeleton
-                      height={50}
+                      height={40}
                       baseColor="#9FA1B5"
                       highlightColor="#ffffff"
                     />
                   </div>
                 ) : isErrorJadwalSholat ? (
-                  <p className="text-center font-mono text-xl font-bold capitalize">
-                    error
+                  <p className="text-center font-mono text-base font-bold">
+                    Terjadi Kesalahan
                   </p>
                 ) : (
                   (

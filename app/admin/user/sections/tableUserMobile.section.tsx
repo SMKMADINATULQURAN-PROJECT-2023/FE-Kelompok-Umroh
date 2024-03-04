@@ -68,6 +68,7 @@ const TableUserMobile: React.FC<Props> = ({}) => {
           pageSize={pageSize}
           setPage={setPage}
           setPageSize={setPageSize}
+          totalData={dataMobile?.pagination.total}
         />
       </section>
     </div>

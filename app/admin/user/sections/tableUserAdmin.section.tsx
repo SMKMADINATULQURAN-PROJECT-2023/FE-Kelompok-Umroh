@@ -68,6 +68,7 @@ const TableUserAdmin: React.FC<Props> = ({}) => {
           pageSize={pageSize}
           setPage={setPage}
           setPageSize={setPageSize}
+          totalData={dataAdmin?.pagination.total}
         />
       </section>
     </div>

@@ -85,6 +85,7 @@ const TableKategoriDoa: React.FC<Props> = ({}) => {
           actionColumnInTable
           updateRoute={"kategori/update-kategori-doa/"}
           onDeleteInTable={(id: number) => onDeleteKategori(id)}
+          totalData={dataKategori?.pagination.total}
         />
       </section>
     </div>
