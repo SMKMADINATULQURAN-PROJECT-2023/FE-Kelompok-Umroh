@@ -25,6 +25,7 @@ import {
 import LayoutMobile from "./layoutMobile";
 import { MdArticle, MdPermDeviceInformation } from "react-icons/md";
 import { IconType } from "react-icons/lib";
+import { CustomHeader } from "@/components";
 
 const dashmenu = [
   {
@@ -123,7 +124,7 @@ const NavigationButton = ({
       pl={isMultiple ? 14 : 10}
       type="button"
       height="50px"
-      fontWeight={isSelected ? "bold" : "normal"}
+      fontWeight={isSelected ? "medium" : "normal"}
       transition="all 200ms ease-in-out"
       isDisabled={isDisabled}
       textTransform="capitalize"
@@ -173,6 +174,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       <AccordionButton
                         pl={10}
                         py={3}
+                        textTransform={'capitalize'}
                         _hover={{
                           backgroundColor: "primary",
                           color: "white",
@@ -185,7 +187,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                           w="full"
                         >
                           <Icon as={_.icon} mr={4} />{" "}
-                          <Box fontWeight={"medium"}>{_.nav}</Box>
+                          <Box fontWeight={""}>{_.nav}</Box>
                         </Flex>
                         <AccordionIcon />
                       </AccordionButton>
@@ -224,7 +226,8 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           multipleNav={multipleNav}
         />
 
-        <section className="col-span-6 bg-[#eff2f8] pb-7 lg:p-5">
+        <section className="col-span-6 h-full w-full bg-[#eff2f8] pb-7 lg:p-5">
+          <CustomHeader/>
           {children}
         </section>
       </section>

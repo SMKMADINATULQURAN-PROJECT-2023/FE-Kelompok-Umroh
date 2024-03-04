@@ -6,7 +6,6 @@ import useArtikelModule from "../service/artikel.service";
 import { useState } from "react";
 import { TambahArtikelPayload } from "../interface/artikel.interface";
 import { Form, FormikProvider, useFormik } from "formik";
-import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import Image from "next/image";
 import { Avatar, Button } from "@chakra-ui/react";
@@ -62,9 +61,7 @@ const TambahArtikel: NextPage<Props> = ({}) => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full ">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form

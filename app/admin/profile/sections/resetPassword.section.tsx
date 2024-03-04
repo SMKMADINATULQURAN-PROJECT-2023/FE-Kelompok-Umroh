@@ -79,7 +79,7 @@ const ResetPasswordSection: React.FC<Props> = ({}) => {
     <div>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
-          <div className="grid w-full grid-cols-1 gap-x-5 gap-y-5 rounded-[10px] border-primary px-5 lg:grid-cols-2 lg:gap-y-3 lg:border lg:p-7">
+          <div className="grid h-full w-full grid-cols-1 gap-x-5 gap-y-5 px-5 lg:gap-y-7 lg:px-0">
             <CustomInput
               id="new_password"
               title="Password Baru"
@@ -100,20 +100,23 @@ const ResetPasswordSection: React.FC<Props> = ({}) => {
               isInvalid={!!errors?.confirm_password}
               errorMessage={errors?.confirm_password}
             />
-            <div className="col-span-1 mt-5 flex w-full items-center justify-between space-x-5 lg:col-span-2 lg:mt-10 lg:space-x-0">
+            <div className="mt-5 flex w-full items-center justify-between space-x-5 lg:mt-10">
               <div className="w-full lg:w-[30%]">
                 <Button
                   width={"full"}
                   fontWeight="normal"
                   type="reset"
-                  colorScheme={"red"}
-                  variant={"outline"}
+                  bg={"rgba(229,62,62,0.2)"}
                   isLoading={isLoading}
                   isDisabled={isLoading}
                   h="45px"
                   color={"red.500"}
                   leftIcon={<FaRotateLeft color="##E53E3E" />}
                   onClick={handleReset}
+                  _hover={{
+                    color: "white",
+                    bg: "red.500",
+                  }}
                 >
                   Kembali Semula
                 </Button>

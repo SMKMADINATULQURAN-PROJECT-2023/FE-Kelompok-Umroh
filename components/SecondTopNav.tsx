@@ -31,7 +31,7 @@ const SecondTopNav: React.FC<SecondHeaderProps> = ({
   const renderTitle = (title: string, data: any) => (
     <p className="mb-2 flex items-center text-[20px] font-semibold text-primary">
       {title}{" "}
-      <span className="ml-3 rounded-[22px] bg-primary px-3 py-1 text-[11px] font-normal text-white lg:text-[13px]">
+      <span className="ml-3 rounded-full bg-primary bg-opacity-20 px-3 py-1 text-xs font-normal text-primary lg:text-[13px]">
         {isLoading ? "Loading..." : data} {title}
       </span>
     </p>

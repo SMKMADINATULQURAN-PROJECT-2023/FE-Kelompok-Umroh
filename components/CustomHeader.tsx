@@ -95,8 +95,8 @@ const CustomHeader = ({}) => {
     },
   ];
   return (
-    <div className="mb-[20px] hidden w-full items-start justify-between lg:flex">
-      <div className="flex w-[75%] h-full flex-col gap-y-2">
+    <div className="mb-[20px] hidden h-fit w-full items-start justify-between lg:flex">
+      <div className="flex h-full w-[75%] flex-col gap-y-2">
         <div className="w-fit rounded-md bg-white px-5 py-1 shadow-md">
           <Breadcrumb
             spacing="8px"
@@ -118,7 +118,7 @@ const CustomHeader = ({}) => {
           </Breadcrumb>
         </div>
         <div
-          className="cursor-pointer w-fit rounded bg-white p-2 shadow-md hover:bg-primary"
+          className="w-fit cursor-pointer rounded bg-white p-2 shadow-md hover:bg-primary"
           onClick={() => route.back()}
         >
           <FaArrowLeft className="text-primary hover:text-white" />

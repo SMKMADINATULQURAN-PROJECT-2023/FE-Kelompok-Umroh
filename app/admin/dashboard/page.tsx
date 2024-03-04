@@ -15,9 +15,7 @@ const Dashboard: NextPage<Props> = ({}) => {
   const { data, isFetching, isLoading: isLoadingProfile } = useProfileService();
 
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="relative mb-[50px] h-60 w-full overflow-hidden shadow-md lg:mb-[20px] lg:rounded-[10px]">
         <Image
           src={"/assets/images/kaabah.jpeg"}

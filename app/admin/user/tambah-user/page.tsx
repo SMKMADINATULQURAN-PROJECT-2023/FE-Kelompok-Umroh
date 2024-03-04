@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import type { NextPage } from "next";
 import * as yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
@@ -69,9 +68,7 @@ const TambahUser: NextPage = () => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full ">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form

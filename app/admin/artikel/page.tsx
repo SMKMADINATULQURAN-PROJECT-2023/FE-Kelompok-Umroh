@@ -4,8 +4,7 @@ import ArtikelSection from "./sections/artikel.section";
 
 const Artikel: NextPage = () => {
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
+    <div className="">
       <ArtikelSection />
     </div>
   );

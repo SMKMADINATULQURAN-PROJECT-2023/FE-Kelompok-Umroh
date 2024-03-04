@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import CustomInput from "@/components/CustomInput";
 import { Avatar, Button } from "@chakra-ui/react";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -32,8 +31,6 @@ const TambahZiarah: NextPage<Props> = ({}) => {
       .required("Wajib isi"),
     latitude: yup.number().default(0).required(),
     longitude: yup.number().default(0).required(),
-    // latitude: yup.string().nullable().default("21.422510"),
-    // longitude: yup.string().nullable().default("39.826168"),
   });
 
   const onSubmit = async (values: TambahZiarahPayload) => {
@@ -65,9 +62,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
     setValues,
   } = formik;
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full">
         <FormikProvider value={formik}>
           <Form
@@ -76,10 +71,10 @@ const TambahZiarah: NextPage<Props> = ({}) => {
           >
             <div className="grid h-full w-full grid-cols-2 items-center gap-10">
               <div className="col-span-2 flex h-full w-full flex-col justify-between overflow-x-hidden">
-                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary p-5 lg:rounded-[10px]">
+                <div className="flex h-full w-full items-center gap-5 rounded-none bg-primary border border-primary bg-opacity-20 p-5 lg:rounded-[10px]">
                   <div className="flex items-center">
                     {values.file_create ? (
-                      <div className="overflow-hidden rounded-[10px] border border-white">
+                      <div className="overflow-hidden rounded-[10px] bg-primary">
                         <Image
                           width={200}
                           height={200}
@@ -89,14 +84,14 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                         />
                       </div>
                     ) : (
-                      <div className="rounded-[10px] border border-white p-5">
+                      <div className="rounded-[10px] bg-primary p-5">
                         <Avatar size="xl" name="-" src="" bg={"transparent"} />
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col items-start">
                     <input
-                      className="w-fit cursor-pointer text-white"
+                      className="w-fit cursor-pointer text-primary"
                       type="file"
                       onBlur={handleBlur}
                       accept="image/*"
@@ -112,7 +107,7 @@ const TambahZiarah: NextPage<Props> = ({}) => {
                       }}
                     />
                     {values.file_create && (
-                      <span className="text-white">
+                      <span className="text-primary">
                         {(values.file_create.size / (1024 * 1024)).toFixed(2)}{" "}
                         MB
                       </span>

@@ -6,8 +6,7 @@ interface Props {}
 
 const Doa: NextPage<Props> = () => {
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
+    <div className="">
       <TableDoa />
     </div>
   );

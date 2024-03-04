@@ -4,8 +4,7 @@ import ZiarahSection from "./sections/ziarah.section";
 
 const Ziarah: NextPage = () => {
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
+    <div className="">
       <ZiarahSection />
     </div>
   );

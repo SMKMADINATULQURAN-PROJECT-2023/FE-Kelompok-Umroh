@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import type { NextPage } from "next";
 import * as yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
@@ -132,8 +131,113 @@ const TambahDoa: NextPage<Props> = ({}) => {
     }
   }, [values.kategori_id]);
   return (
-    <div className="h-full w-full ">
-      <CustomHeader />
+    <div className="">
+      <section className="mt-10 w-full lg:mt-0">
+        <FormikProvider value={formik}>
+          <Form
+            className="flex h-full flex-col space-y-5"
+            onSubmit={handleSubmit}
+          >
+            <div className="grid w-full grid-cols-1 gap-10 px-5 lg:px-0">
+              <CustomInput
+                id="name"
+                title="Nama Do'a"
+                type="text"
+                values={values.name}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.name}
+                errorMessage={errors?.name}
+              />
+              <CustomInput
+                id="arab"
+                title="Do'a (Arab)"
+                type="text"
+                values={values.arab}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.arab}
+                errorMessage={errors?.arab}
+              />
+              <CustomInput
+                id="latin"
+                title="Do'a (Latin)"
+                type="text"
+                values={values.latin}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.latin}
+                errorMessage={errors?.latin}
+              />
+              <CustomInput
+                id="arti"
+                title="Do'a (Arti)"
+                type="text"
+                values={values.arti}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.arti}
+                errorMessage={errors?.arti}
+              />
+              <CustomSelect
+                id="kategori_id"
+                title="Kategori Do'a"
+                size={"lg"}
+                values={values.kategori_id.toString()}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                isInvalid={!!errors?.kategori_id}
+                errorMessage={errors?.kategori_id}
+              >
+                {dataKategori?.data.map((_, i) => {
+                  return (
+                    <option value={_.id} key={i}>
+                      {_.kategori_name}
+                    </option>
+                  );
+                })}
+                <option value="tambah_doa">+ Tambah Kategori Do'a</option>
+              </CustomSelect>
+            </div>
+
+            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
+              <div className="w-full lg:w-[20%]">
+                <Button
+                  width={"full"}
+                  fontWeight="normal"
+                  type="reset"
+                  colorScheme={"red"}
+                  variant={"outline"}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                  h="45px"
+                  color={"red.500"}
+                  leftIcon={<FaTrash color="##E53E3E" />}
+                  onClick={() => formik.resetForm()}
+                >
+                  Reset Form
+                </Button>
+              </div>
+              <div className="w-full lg:w-[20%]">
+                <Button
+                  width={"full"}
+                  fontWeight="normal"
+                  type="submit"
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                  h="45px"
+                  backgroundColor={"blue.500"}
+                  color={"#ffffff"}
+                  leftIcon={<FaSquarePlus color="#ffffff" />}
+                  _hover={{ bgColor: "blue.600" }}
+                >
+                  Tambah Do'a
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </FormikProvider>
+      </section>
 
       <>
         <Modal
@@ -263,113 +367,6 @@ const TambahDoa: NextPage<Props> = ({}) => {
           </ModalContent>
         </Modal>
       </>
-
-      <section className="mt-10 w-full lg:mt-0">
-        <FormikProvider value={formik}>
-          <Form
-            className="flex h-full flex-col space-y-5"
-            onSubmit={handleSubmit}
-          >
-            <div className="grid w-full grid-cols-1 gap-10 px-5 lg:px-0">
-              <CustomInput
-                id="name"
-                title="Nama Do'a"
-                type="text"
-                values={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.name}
-                errorMessage={errors?.name}
-              />
-              <CustomInput
-                id="arab"
-                title="Do'a (Arab)"
-                type="text"
-                values={values.arab}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.arab}
-                errorMessage={errors?.arab}
-              />
-              <CustomInput
-                id="latin"
-                title="Do'a (Latin)"
-                type="text"
-                values={values.latin}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.latin}
-                errorMessage={errors?.latin}
-              />
-              <CustomInput
-                id="arti"
-                title="Do'a (Arti)"
-                type="text"
-                values={values.arti}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.arti}
-                errorMessage={errors?.arti}
-              />
-              <CustomSelect
-                id="kategori_id"
-                title="Kategori Do'a"
-                size={"lg"}
-                values={values.kategori_id.toString()}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                isInvalid={!!errors?.kategori_id}
-                errorMessage={errors?.kategori_id}
-              >
-                {dataKategori?.data.map((_, i) => {
-                  return (
-                    <option value={_.id} key={i}>
-                      {_.kategori_name}
-                    </option>
-                  );
-                })}
-                <option value="tambah_doa">+ Tambah Kategori Do'a</option>
-              </CustomSelect>
-            </div>
-
-            <div className="flex w-full items-center justify-between space-x-5 px-5 lg:px-0">
-              <div className="w-full lg:w-[20%]">
-                <Button
-                  width={"full"}
-                  fontWeight="normal"
-                  type="reset"
-                  colorScheme={"red"}
-                  variant={"outline"}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
-                  h="45px"
-                  color={"red.500"}
-                  leftIcon={<FaTrash color="##E53E3E" />}
-                  onClick={() => formik.resetForm()}
-                >
-                  Reset Form
-                </Button>
-              </div>
-              <div className="w-full lg:w-[20%]">
-                <Button
-                  width={"full"}
-                  fontWeight="normal"
-                  type="submit"
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
-                  h="45px"
-                  backgroundColor={"blue.500"}
-                  color={"#ffffff"}
-                  leftIcon={<FaSquarePlus color="#ffffff" />}
-                  _hover={{ bgColor: "blue.600" }}
-                >
-                  Tambah Do'a
-                </Button>
-              </div>
-            </div>
-          </Form>
-        </FormikProvider>
-      </section>
     </div>
   );
 };

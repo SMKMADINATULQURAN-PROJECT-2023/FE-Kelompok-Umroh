@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import CustomInput from "@/components/CustomInput";
@@ -53,9 +53,32 @@ const UserAdminFilter: React.FC<Props> = ({
 
   const { handleChange, handleSubmit, handleBlur, values, errors } = formik;
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setKeyword(values.keyword);
+    }, 700);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [values.keyword]);
+
   return (
-    <div className="flex w-full items-center justify-end">
-      <FilterDrawer
+    <div className="mb-5 flex w-full items-center justify-between">
+      <div className="w-[50%]">
+        <CustomInput
+          id="keyword"
+          noLabel
+          isInputLeftAddon
+          title="username, email, role"
+          size={"md"}
+          type="text"
+          values={values.keyword}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          isInvalid={!!errors?.keyword}
+          errorMessage={errors?.keyword}
+        />
+      </div>
+      {/* <FilterDrawer
         formik={formik}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
@@ -64,20 +87,7 @@ const UserAdminFilter: React.FC<Props> = ({
         handleBlur={handleBlur}
         handleChange={handleChange}
         values={values}
-      >
-        <div className="flex w-full flex-col space-y-7">
-          <CustomInput
-            id="keyword"
-            title="Kata kunci"
-            type="text"
-            values={values.keyword}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            isInvalid={!!errors?.keyword}
-            errorMessage={errors?.keyword}
-          />
-        </div>
-      </FilterDrawer>
+      ></FilterDrawer> */}
     </div>
   );
 };

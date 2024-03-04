@@ -7,10 +7,10 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --primary: #1E5236;
+  --primary: #1e5236;
   --abu: #9fa1b5;
   --abutrans: #9fa1b590;
-  --repeated-color: #1E5236; /* New variable for the repeated color */
+  --repeated-color: #1e5236; /* New variable for the repeated color */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,6 +40,11 @@ a {
 
 .noScrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.profile-tab,
+.profile-tab p {
+  @apply bg-primary text-abu hover:shadow-primary !important;
 }
 
 .putih * {

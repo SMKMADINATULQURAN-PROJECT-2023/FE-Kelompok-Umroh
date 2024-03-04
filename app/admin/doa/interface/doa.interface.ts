@@ -5,7 +5,7 @@ interface Kategori {
   kategori_name: string;
 }
 
-interface Doa {
+export interface Doa {
   id: number;
   name: string;
   arab: string;

@@ -6,8 +6,7 @@ interface Props {}
 
 const UserAdmin: NextPage<Props> = ({}) => {
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
+    <div className="">
       <TableUserAdmin />
     </div>
   );

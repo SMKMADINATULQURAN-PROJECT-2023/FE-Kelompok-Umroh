@@ -1,5 +1,4 @@
 "use client";
-import { CustomHeader } from "@/components";
 import { NextPage } from "next";
 import useArtikelModule from "../../service/artikel.service";
 import { useRouter } from "next/navigation";
@@ -93,9 +92,7 @@ const UpdateArtikel: NextPage<Props> = ({
   } = formik;
 
   return (
-    <div className="h-full w-full">
-      <CustomHeader />
-
+    <div className="">
       <section className="w-full rounded-[10px]">
         <FormikProvider value={formik}>
           <Form
