@@ -161,7 +161,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <section className="noScrollbar sticky top-0 col-span-1 hidden h-screen w-full flex-col items-center justify-start space-y-12 overflow-y-scroll bg-white py-[30px] shadow-lg lg:flex">
           <Link href={"/admin/dashboard"}>
             <div className="w-full text-center text-[25px] font-extrabold uppercase text-primary underline underline-offset-4">
-              {process.env.NEXT_PUBLIC_APP_NAME}
+              Rihratul
             </div>
           </Link>
           <div className="grid w-full grid-cols-1">
@@ -174,7 +174,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       <AccordionButton
                         pl={10}
                         py={3}
-                        textTransform={'capitalize'}
+                        textTransform={"capitalize"}
                         _hover={{
                           backgroundColor: "rgba(30, 82, 54, 0.2)",
                           boxShadow: "inset 5px 0px 0px 0px rgba(30,82,54,1)",
@@ -228,7 +228,7 @@ const RootLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         />
 
         <section className="col-span-6 h-full w-full bg-[#eff2f8] pb-7 lg:p-5">
-          <CustomHeader/>
+          <CustomHeader />
           {children}
         </section>
       </section>
