@@ -21,7 +21,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Al - Hilal",
+  title: "Rihlatul",
   description: "website umroh",
 };
 

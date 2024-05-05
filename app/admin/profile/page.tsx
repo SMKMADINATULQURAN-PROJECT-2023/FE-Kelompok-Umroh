@@ -88,7 +88,7 @@ const Profile: NextPage<Props> = ({}) => {
 
       <section className="mb-8 w-full lg:mb-0">
         <p className="text-center font-mono text-xs lg:text-right">
-          ⓒ {process.env.NEXT_PUBLIC_APP_NAME} {currentYear}
+          ⓒ Rihlatul {currentYear}
         </p>
       </section>
     </div>
