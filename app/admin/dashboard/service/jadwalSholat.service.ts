@@ -25,7 +25,7 @@ const useJadwalSholatModule = () => {
   const useGetIdKota = (kota: string = "") => {
     const getCityId = async (kota: string): Promise<IdKotaData> => {
       try {
-        const apiUrl = `https://api.myquran.com/v1/sholat/kota/cari/${kota}`;
+        const apiUrl = `https://api.myquran.com/v2/sholat/kota/cari/${kota}`;
         const response = await axios.get(apiUrl);
         const data: IdKotaData = response.data;
         return data;
@@ -40,6 +40,7 @@ const useJadwalSholatModule = () => {
         queryFn: () => getCityId(kota),
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 30,
+        refetchOnWindowFocus: false,
       });
 
     return { data, isFetching, isLoading, isError, refetch };
@@ -58,7 +59,7 @@ const useJadwalSholatModule = () => {
       tanggal: number,
     ): Promise<JadwalsholatData> => {
       try {
-        const apiUrl = `https://api.myquran.com/v1/sholat/jadwal/${idKota}/${tahun}/${bulan}/${tanggal}`;
+        const apiUrl = `https://api.myquran.com/v2/sholat/jadwal/${idKota}/${tahun}/${bulan}/${tanggal}`;
         const response = await axios.get(apiUrl);
         const data: JadwalsholatData = response.data;
         return data;
@@ -69,10 +70,11 @@ const useJadwalSholatModule = () => {
 
     const { data, isFetching, isLoading, isError, refetch } =
       useQuery<JadwalsholatData>({
-        queryKey: ["jadwal_sholat"],
+        queryKey: ["jadwal_sholat", [idKota]],
         queryFn: () => getJadwalSholat(idKota, tahun, bulan, tanggal),
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 30,
+        refetchOnWindowFocus: false,
       });
 
     return { data, isFetching, isLoading, isError, refetch };

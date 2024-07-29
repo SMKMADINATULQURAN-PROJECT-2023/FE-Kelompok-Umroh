@@ -33,7 +33,8 @@ const JadwalSholat: FC<JadwalSholatProps> = ({}) => {
     refetch: refetchJadwalSholat,
   } = useGetJadwalSholat(idKota, currentYear, currentMonth, currentDate);
 
-  console.log("jadwal", jadwalSholatData?.data?.jadwal.imsak);
+  console.log("jadwal", jadwalSholatData?.data?.jadwal);
+  console.log(idKota);
 
   const placeName = geolocationData?.display_name || "-";
 
